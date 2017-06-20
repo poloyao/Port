@@ -1,0 +1,42 @@
+﻿<UserControl
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm" xmlns:ViewModels="clr-namespace:YZXDMS.ViewModels"
+             xmlns:dxlc="http://schemas.devexpress.com/winfx/2008/xaml/layoutcontrol" xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors" x:Class="YZXDMS.Views.PortView"
+             mc:Ignorable="d"
+             DataContext="{dxmvvm:ViewModelSource Type={x:Type ViewModels:PortViewModel}}"
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+
+        <dxlc:DataLayoutControl CurrentItem="{Binding Item}" AutoGenerateItems="False">
+            <dxlc:DataLayoutItem Binding="{Binding Name}" Label="名称"/>
+
+            <dxlc:DataLayoutItem Binding="{Binding Port.PortName}" Label="串口"/>
+            <dxlc:DataLayoutItem Binding="{Binding Port.BaudRate}" Label="波特率"/>
+            <dxlc:DataLayoutItem Binding="{Binding Port.DataBits}" Label="数据位"/>
+            <dxlc:DataLayoutItem Binding="{Binding Port.Parity}" Label="奇偶校验" />
+            <dxlc:DataLayoutItem Binding="{Binding Port.StopBits}" Label="停止位"/>
+
+            <dxlc:DataLayoutItem Binding="{Binding DeviceProperty}" Label="设备性质"/>
+            <dxlc:DataLayoutItem Binding="{Binding Protocol}" Label="协议厂商"/>
+
+            <dxlc:DataLayoutItem Binding="{Binding StartMode}" Label="启动模式"/>
+
+        </dxlc:DataLayoutControl>
+
+
+        <StackPanel Orientation="Horizontal" Grid.Row="1" FlowDirection="RightToLeft">
+            <Button HorizontalAlignment="Right" Content="取消"/>
+            <Button HorizontalAlignment="Right" Command="{Binding SaveCommand}" Content="保存"/>
+        </StackPanel>
+
+
+    </Grid>
+</UserControl>
