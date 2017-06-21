@@ -9,8 +9,12 @@
              DataContext="{dxmvvm:ViewModelSource Type={x:Type ViewModels:MasterViewModel}}"
              d:DesignHeight="300" d:DesignWidth="500">
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
         <Button Command="{Binding InitDeviceCommand}" Content="初始化参数" HorizontalAlignment="Left" Margin="16,20,0,0" VerticalAlignment="Top" Width="92"/>
-       
+
         <dxga:StateIndicatorControl StateIndex="{Binding IsPLM}" HorizontalAlignment="Left" Margin="16,88,0,0" VerticalAlignment="Top" Height="32" Width="34">
             <dxga:StateIndicatorControl.Model>
                 <dxga:LampStateIndicatorModel/>
@@ -26,7 +30,7 @@
 
         <dxe:TextEdit Text="{Binding ResultData}" HorizontalAlignment="Left" Margin="69,183,0,0" VerticalAlignment="Top" Width="58"/>
         <Label  Content="结果数据" HorizontalAlignment="Left" Margin="16,183,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.207,2.353"/>
-        <dxga:DigitalGaugeControl Text="{Binding DGC}" Margin="161,10,0,0" VerticalAlignment="Top" Height="150">
+        <dxga:DigitalGaugeControl Text="{Binding DGC}" Margin="161,10,0,0" VerticalAlignment="Top" Height="150" >
             <dxga:DigitalGaugeControl.Layers>
                 <dxga:DigitalGaugeLayer/>
             </dxga:DigitalGaugeControl.Layers>
@@ -39,7 +43,38 @@
             </dxga:DigitalGaugeControl.SymbolView>
         </dxga:DigitalGaugeControl>
         <Button x:Name="button1_Copy" Content="重置" Command="{Binding ResetCommand}" HorizontalAlignment="Left" Margin="16,233,0,0" VerticalAlignment="Top" Width="92"/>
-        <DatePicker HorizontalAlignment="Left" Margin="192,194,0,0" VerticalAlignment="Top"/>
 
+        <Grid Grid.Column="1">
+            <dxga:StateIndicatorControl StateIndex="{Binding IsPLM2}" HorizontalAlignment="Left" Margin="16,88,0,0" VerticalAlignment="Top" Height="32" Width="34">
+                <dxga:StateIndicatorControl.Model>
+                    <dxga:LampStateIndicatorModel/>
+                </dxga:StateIndicatorControl.Model>
+            </dxga:StateIndicatorControl>
+            <Label  Content="光电实时情况" HorizontalAlignment="Left" Margin="55,98,0,0" VerticalAlignment="Top"/>
+            <dxga:StateIndicatorControl StateIndex="{Binding PumpStatus2}" HorizontalAlignment="Left" Margin="16,132,0,0" VerticalAlignment="Top" Height="32" Width="34">
+                <dxga:StateIndicatorControl.Model>
+                    <dxga:ArrowStateIndicatorModel/>
+                </dxga:StateIndicatorControl.Model>
+            </dxga:StateIndicatorControl>
+            <Label  Content="气泵状态" HorizontalAlignment="Left" Margin="55,142,0,0" VerticalAlignment="Top"/>
+
+            <dxe:TextEdit Text="{Binding ResultData2}" HorizontalAlignment="Left" Margin="69,183,0,0" VerticalAlignment="Top" Width="58"/>
+            <Label  Content="结果数据" HorizontalAlignment="Left" Margin="16,183,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.207,2.353"/>
+
+            <dxga:DigitalGaugeControl Text="{Binding DGC2}" Margin="161,10,0,0" VerticalAlignment="Top" Height="150" >
+                <dxga:DigitalGaugeControl.Layers>
+                    <dxga:DigitalGaugeLayer/>
+                </dxga:DigitalGaugeControl.Layers>
+                <dxga:DigitalGaugeControl.SymbolView>
+                    <dxga:MatrixView8x14 >
+                        <!--<dxga:MatrixView8x14.Animation>
+                        <dxga:CreepingLineAnimation RefreshTime="00:00:00.5" Repeat="True"/>
+                    </dxga:MatrixView8x14.Animation>-->
+                    </dxga:MatrixView8x14>
+                </dxga:DigitalGaugeControl.SymbolView>
+            </dxga:DigitalGaugeControl>
+          
+        </Grid>
+        
     </Grid>
 </UserControl>

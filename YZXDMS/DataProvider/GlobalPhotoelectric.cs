@@ -29,7 +29,14 @@ namespace YZXDMS.DataProvider
         {
             var speedInfo = Helper.DeviceHelper.GetDetectionInfo(Models.DetectionType.Speed);
             var plm = speedInfo.AssistList.First(x => x.AssistDevice.AssistType == Models.AssistDeviceType.Photoelectric);
-            items.Enqueue(new PhotoelectricModel() { device = plm.AssistDevice });
+            items.Enqueue(new PhotoelectricModel() { device = plm.AssistDevice, WayNumber = 1 });
+            items.Enqueue(new PhotoelectricModel() { device = plm.AssistDevice, WayNumber = 2 });
+            items.Enqueue(new PhotoelectricModel() { device = plm.AssistDevice, WayNumber = 3 });
+            items.Enqueue(new PhotoelectricModel() { device = plm.AssistDevice, WayNumber = 4 });
+            items.Enqueue(new PhotoelectricModel() { device = plm.AssistDevice, WayNumber = 5 });
+            items.Enqueue(new PhotoelectricModel() { device = plm.AssistDevice, WayNumber = 6 });
+            items.Enqueue(new PhotoelectricModel() { device = plm.AssistDevice, WayNumber = 7 });
+            items.Enqueue(new PhotoelectricModel() { device = plm.AssistDevice, WayNumber = 8 });
             PhotoelectricModel pm = GlobalPhotoelectric.GetPhotoelectricModel(plm.AssistDevice);
             pm.device.config.Port.DataReceived += (s, e) =>
             {
@@ -68,6 +75,27 @@ namespace YZXDMS.DataProvider
                         {
                             result = bytesData[i + 1];
                             pm.IsTrigger = result > 0x00 ? true : false;
+                            if (result > 0x00)
+                            {
+                                switch (result)
+                                {
+                                    case 0x01:
+                                        items.ElementAt(0).IsTrigger = true;
+                                        break;
+                                    case 0x02:
+                                        items.ElementAt(1).IsTrigger = true;
+                                        break;
+                                    case 0x03:
+                                        items.ElementAt(0).IsTrigger = true;
+                                        items.ElementAt(1).IsTrigger = true;
+                                        break;
+                                }
+                            }
+                            else
+                            {
+                                items.ElementAt(0).IsTrigger = false;
+                                items.ElementAt(1).IsTrigger = false;
+                            }
 
                             i += 2;
                         }
@@ -103,6 +131,8 @@ namespace YZXDMS.DataProvider
     public class PhotoelectricModel: System.ComponentModel.INotifyPropertyChanged
     {
         public AssistDeviceModel device { get; set; }
+
+        public int WayNumber { get; set; }
 
         public bool IsTrigger
         {

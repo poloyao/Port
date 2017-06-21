@@ -30,7 +30,7 @@ namespace YZXDMS.Helper
         void InitPort()
         {
 
-            var port = new System.IO.Ports.SerialPort("COM1", 9600, System.IO.Ports.Parity.None, 8, System.IO.Ports.StopBits.One);
+            var port = new System.IO.Ports.SerialPort("COM12", 9600, System.IO.Ports.Parity.None, 8, System.IO.Ports.StopBits.One);
 
 
             Detections.Add(new DetectionModel()
@@ -42,7 +42,7 @@ namespace YZXDMS.Helper
                     DeviceProperty = DeviceProperty.检测设备,
                     StartMode = StartMode.即用即关,
                     Protocol = "XX协议",
-                    Port = new System.IO.Ports.SerialPort("COM3", 9600, System.IO.Ports.Parity.None, 8, System.IO.Ports.StopBits.One)
+                    Port = new System.IO.Ports.SerialPort("COM10", 9600, System.IO.Ports.Parity.None, 8, System.IO.Ports.StopBits.One)
                 },
                 AssistList = new List<AssistDeviceOrder>()
                 {

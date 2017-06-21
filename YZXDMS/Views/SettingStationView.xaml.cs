@@ -15,18 +15,13 @@ using System.Windows.Shapes;
 namespace YZXDMS.Views
 {
     /// <summary>
-    /// Interaction logic for SettingLinkPortView.xaml
+    /// Interaction logic for SettingStationView.xaml
     /// </summary>
-    public partial class SettingLinkPortView : UserControl
+    public partial class SettingStationView : UserControl
     {
-        public SettingLinkPortView()
+        public SettingStationView()
         {
             InitializeComponent();
-        }
-
-        private void TreeListDragDropManager_Drop(object sender, DevExpress.Xpf.Grid.DragDrop.TreeListDropEventArgs e)
-        {
-
         }
     }
 }

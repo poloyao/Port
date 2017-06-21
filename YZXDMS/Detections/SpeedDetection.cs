@@ -37,7 +37,7 @@ namespace YZXDMS.Detections
         public SpeedDetection()
         {
             Init();
-           // _dectect.config.Port.DataReceived += Port_DataReceived;
+            //_dectect.config.Port.DataReceived += Port_DataReceived;
         }
 
         void Init()
@@ -45,8 +45,8 @@ namespace YZXDMS.Detections
             //获取此检测模块所有涉及的内容
             _dectect = DeviceHelper.GetDetectionInfo(DetectionType.Speed);
             _dectect.config.Port.DataReceived += Port_DataReceived;
-            //OpenPort();
-            //Reset();
+            OpenPort();
+            Reset();
         }
 
         /// <summary>
@@ -76,47 +76,105 @@ namespace YZXDMS.Detections
         {
             if (_dectect.config.Port.IsOpen)
                 return;//throw new Exception();
-
-            _dectect.config.Port.DataReceived += Port_DataReceived;
-            if (!_dectect.config.Port.IsOpen)
+            else
                 _dectect.config.Port.Open();
+            
+        }
+
+        public void ClosePort()
+        {
+            if (_dectect.config.Port.IsOpen)
+                _dectect.config.Port.Close();
+            else
+                return;
         }
 
         private void Port_DataReceived(object sender, System.IO.Ports.SerialDataReceivedEventArgs e)
         {
-            //协议
-            var protocol = _dectect.config.Protocol;
-            //根据取值模式选择
-            switch (_valueMode)
-            {
-                case SpeedValueMode.RealTime:
-                    break;
-                case SpeedValueMode.Final:
-                    break;
-            }
+            ////协议
+            //var protocol = _dectect.config.Protocol;
+            ////根据取值模式选择
+            //switch (_valueMode)
+            //{
+            //    case SpeedValueMode.RealTime:
+            //        break;
+            //    case SpeedValueMode.Final:
+            //        break;
+            //}
 
-            //解析计算结果。。。。
+            ////解析计算结果。。。。
+
+            //try
+            //{
+            //    //两种情况
+
+            //    //1。正常
+            //    _resultData = new Random(Guid.NewGuid().GetHashCode()).Next(1, 100);
+            //    _resutlStatus = true;
+
+            //    //2.有异常
+            //    //throw new Exception();
+
+            //}
+            //catch (Exception)
+            //{
+            //    _resutlStatus = false;
+            //    _resultData = -1;
+
+            //    //上抛异常或在此进行处理
+            //    throw;
+            //}
+
+            var serialPort = sender as System.IO.Ports.SerialPort;
+            byte[] bytesData = new byte[0];
+            byte[] bytesTemp = new byte[0];
+            int bytesRead;
+            byte result = 0x00;
 
             try
             {
-                //两种情况
+                //获取接收缓冲区中字节数
+                bytesRead = serialPort.BytesToRead;
+                //保存上一次没处理完的数据
+                if (bytesData.Length > 0)
+                {
+                    bytesTemp = new byte[bytesData.Length];
+                    bytesData.CopyTo(bytesTemp, 0);
+                    bytesData = new byte[bytesRead + bytesData.Length];
+                    bytesTemp.CopyTo(bytesData, 0);
+                }
+                else
+                {
+                    bytesData = new byte[bytesRead];
+                    bytesTemp = new byte[0];
+                }
+                //保存本次接收的数据
+                for (int i = 0; i < bytesRead; i++)
+                {
+                    bytesData[bytesTemp.Length + i] = Convert.ToByte(serialPort.ReadByte());//read all data
+                }
 
-                //1。正常
-                _resultData = new Random(Guid.NewGuid().GetHashCode()).Next(1, 100);
-                _resutlStatus = true;
+                for (int i = 0; i < bytesData.Length; i++)
+                {
+                    if ((bytesData[i] == 0xAA) && (bytesData[i + 2] == 0x0D))
+                    {
+                        result = bytesData[i + 1];
+                        if (result != 0x00)
+                        {
+                            _resultData = new Random(Guid.NewGuid().GetHashCode()).Next(1, 100);
+                            _resutlStatus = true;
 
-                //2.有异常
-                //throw new Exception();
-
+                        }
+                        //_resutlStatus = result
+                        i += 2;
+                    }
+                }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                _resutlStatus = false;
-                _resultData = -1;
 
-                //上抛异常或在此进行处理
-                throw;
             }
+
         }
 
         /// <summary>
@@ -126,7 +184,13 @@ namespace YZXDMS.Detections
         {            
             if (_detectStatus)
                 return;
-            _dectect.config.Port.Write("伪命令");
+
+            byte[] data = new byte[3];
+            data[0] = 0xAA;
+            data[1] = 0x01;
+            data[2] = 0x0D;
+
+            _dectect.config.Port.Write(data, 0, 3);
             _detectStatus = true;
         }
 
@@ -135,7 +199,12 @@ namespace YZXDMS.Detections
         /// </summary>
         public void PumpUp()
         {
-            _dectect.config.Port.Write("伪命令");
+            byte[] data = new byte[3];
+            data[0] = 0xAA;
+            data[1] = 0x02;
+            data[2] = 0x0D;
+
+            _dectect.config.Port.Write(data, 0, 3);
             _pumpStatus = true;     
                  
         }
@@ -145,7 +214,12 @@ namespace YZXDMS.Detections
         /// </summary>
         public void PumpDown()
         {
-            _dectect.config.Port.Write("伪命令");
+            byte[] data = new byte[3];
+            data[0] = 0xAA;
+            data[1] = 0x03;
+            data[2] = 0x0D;
+
+            _dectect.config.Port.Write(data, 0, 3);
             _pumpStatus = false;
         }
 

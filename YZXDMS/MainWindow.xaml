@@ -6,13 +6,23 @@
         xmlns:local="clr-namespace:YZXDMS"
         xmlns:view="clr-namespace:YZXDMS.Views"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="MainWindow" Height="650" Width="825">
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="3*"/>
-            <RowDefinition Height="2*"/>
+        <!--<Grid.RowDefinitions>
+            <RowDefinition Height="310"/>
+            <RowDefinition/>
         </Grid.RowDefinitions>
-        <view:SettingPortView/>
-        <view:SettingLinkPortView Grid.Row="1" Margin="0,10,0,0"/>
+
+        <view:MasterView />
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <view:SettingPortView />
+            <view:SettingLinkPortView Margin="0,10,0,0" Grid.Column="1"/>
+        </Grid>-->
+        <!--<view:SettingStationView />-->
+        <view:MainView />
     </Grid>
 </Window>

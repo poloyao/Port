@@ -60,6 +60,7 @@ namespace YZXDMS.Models
         public AssistDeviceType AssistType { get; set; }
 
         public PortConfigModel config { get; set; }
+        
 
     }
 
@@ -156,20 +157,5 @@ namespace YZXDMS.Models
 
         public int Index { get; set; }
     }
-
-    /// <summary>
-    /// 工位
-    /// </summary>
-    public class StationModel
-    {
-        public int Id { get; set; }
-        /// <summary>
-        /// 工位名称
-        /// </summary>
-        public string Name { get; set; }
-
-        public List<AssistDeviceOrder> AssistItems { get; set; }
-
-        public List<DetectionOrder> DetectionItems { get; set; }
-    }
+    
 }

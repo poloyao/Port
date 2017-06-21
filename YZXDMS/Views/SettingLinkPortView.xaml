@@ -1,8 +1,10 @@
-﻿<UserControl
+﻿<UserControl xmlns:dxlc="http://schemas.devexpress.com/winfx/2008/xaml/layoutcontrol" 
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+              xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+		     xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
              xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm" xmlns:ViewModels="clr-namespace:YZXDMS.ViewModels"
              xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid" x:Class="YZXDMS.Views.SettingLinkPortView"
              mc:Ignorable="d"
@@ -15,12 +17,46 @@
         </Grid.ColumnDefinitions>
 
         <Grid >
+            <!--<dxg:TreeListControl ItemsSource="{Binding Items}" AutoGenerateColumns="AddNew" EnableSmartColumnsGeneration="True" SelectionMode="Row">
+                <dxmvvm:Interaction.Behaviors>
+                    <dxg:TreeListDragDropManager Drop="TreeListDragDropManager_Drop"/>
+                </dxmvvm:Interaction.Behaviors>
+                <dxg:TreeListControl.View>
+                    <dxg:TreeListView KeyFieldName="ID" ParentFieldName="ParentId" AutoExpandAllNodes="True" ShowTotalSummary="True" ShowNodeImages="True" PrintNodeImages="True" AllowEditing="False" AutoWidth="True">
+                        
+                    </dxg:TreeListView>
+                </dxg:TreeListControl.View>
+            </dxg:TreeListControl>-->
 
-            <dxg:GridControl ItemsSource="{Binding DetectionItems}" AutoGenerateColumns="AddNew" EnableSmartColumnsGeneration="True">
-                <dxg:GridControl.View>
-                    <dxg:TreeListView AllowPerPixelScrolling="True" ShowTotalSummary="True"/>
-                </dxg:GridControl.View>
-            </dxg:GridControl>
+            <!--<dxg:TreeListControl ItemsSource="{Binding Items}" AutoGenerateColumns="AddNew" EnableSmartColumnsGeneration="True" SelectionMode="Row">
+                <dxmvvm:Interaction.Behaviors>
+                    <dxg:TreeListDragDropManager Drop="TreeListDragDropManager_Drop"/>
+                </dxmvvm:Interaction.Behaviors>
+                <dxg:TreeListControl.View>
+                    <dxg:TreeListView KeyFieldName="ID" ParentFieldName="ParentId" AutoExpandAllNodes="True" ShowTotalSummary="True" ShowNodeImages="True" PrintNodeImages="True" AllowEditing="False" AutoWidth="True">
+                        
+                    </dxg:TreeListView>
+                </dxg:TreeListControl.View>
+            </dxg:TreeListControl>-->
+
+
+            <dxlc:FlowLayoutControl ItemsSource="{Binding AssistDeviceOrderItems}" Orientation="Horizontal" >
+                <dxlc:FlowLayoutControl.ItemTemplate>
+                    <DataTemplate>
+                        <dxlc:GroupBox Content="{Binding AssistDevice}" 
+                                   Header="{Binding AssistDevice.Name}" >
+                            <dxlc:GroupBox.ContentTemplate>
+                                <DataTemplate>
+                                    <StackPanel DataContext="{Binding }">
+                                        <Label Content="{Binding Name}" />
+                                        <Label Content="{Binding AssistType}" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </dxlc:GroupBox.ContentTemplate>
+                        </dxlc:GroupBox>
+                    </DataTemplate>
+                </dxlc:FlowLayoutControl.ItemTemplate>
+            </dxlc:FlowLayoutControl>
 
         </Grid>
 

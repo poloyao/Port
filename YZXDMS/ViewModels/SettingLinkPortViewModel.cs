@@ -3,6 +3,7 @@ using DevExpress.Mvvm.DataAnnotations;
 using DevExpress.Mvvm;
 using YZXDMS.Models;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace YZXDMS.ViewModels
 {
@@ -12,10 +13,25 @@ namespace YZXDMS.ViewModels
 
         public List<DetectionModel> DetectionItems { get; set; } = new List<DetectionModel>();
 
+        public List<linkModel> Items { get; set; } = new List<linkModel>();
+
+        public ObservableCollection<AssistDeviceOrder> AssistDeviceOrderItems { get; set; } = new ObservableCollection<AssistDeviceOrder>();
 
         public SettingLinkPortViewModel()
         {
             InitPort();
+            AssistDeviceOrderItems = new ObservableCollection<AssistDeviceOrder>()
+            {
+                new AssistDeviceOrder()
+                {
+                    Index = 0,
+                    AssistDevice = new AssistDeviceModel()
+                    {
+                        Name = "光电1",
+                        AssistType = AssistDeviceType.Photoelectric,
+                    }
+                }
+            };
         }
 
         void InitPort()
@@ -54,6 +70,28 @@ namespace YZXDMS.ViewModels
                     }
                 }
             });
+
+
+            Items.Add(new linkModel() { ID = 1, Name = "1" });
+            Items.Add(new linkModel() { ID = 2, Name = "2",ParentId = 1 });
+            Items.Add(new linkModel() { ID = 3, Name = "3", ParentId = 1 });
+            Items.Add(new linkModel() { ID = 4, Name = "4", ParentId = 5 });
+            Items.Add(new linkModel() { ID = 5, Name = "5" });
+            Items.Add(new linkModel() { ID = 6, Name = "6" });
+
+
+
+
         }
+    }
+
+
+    public class linkModel
+    {
+        public int ID { get; set; }
+
+        public int ParentId { get; set; }
+
+        public string Name { get; set; }
     }
 }

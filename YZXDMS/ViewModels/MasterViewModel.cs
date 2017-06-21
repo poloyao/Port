@@ -18,15 +18,17 @@ namespace YZXDMS.ViewModels
 
         public virtual int PumpStatus { get; set; }
 
-
         public virtual int ResultData { get; set; }
-
         bool isPLMTemp;
         bool isSpeed;
 
         SpeedDetection speed;
 
         Stopwatch sw = new Stopwatch();
+
+        
+        
+
 
         public MasterViewModel()
         {
@@ -45,9 +47,9 @@ namespace YZXDMS.ViewModels
             PhotoelectricModel pm = GlobalPhotoelectric.GetPhotoelectricModel(plm);
             pm.PropertyChanged += Pm_PropertyChanged;
             speed = new SpeedDetection();
-
+            
         }
-
+        
         private void Pm_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             if (e.PropertyName == "IsTrigger")
@@ -92,6 +94,7 @@ namespace YZXDMS.ViewModels
                             System.Threading.Thread.Sleep(1000);
                             DGC = "Go Go Go!";
                             System.Threading.Thread.Sleep(3000);
+                            //此处应起线程监控变化
                             ResultData = speed.GetSpeedData();
                             DGC = "Complete!";
                             System.Threading.Thread.Sleep(3000);
@@ -104,7 +107,7 @@ namespace YZXDMS.ViewModels
                         }
                         catch (Exception ex)
                         {
-
+                            DGC = "Error!";
                             throw;
                         }
                     }
