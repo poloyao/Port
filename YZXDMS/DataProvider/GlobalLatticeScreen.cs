@@ -26,15 +26,15 @@ namespace YZXDMS.DataProvider
 
         }
 
-        /// <summary>
-        /// 设置指定灯屏的显示内容
-        /// </summary>
-        /// <param name="device"></param>
-        /// <param name="message"></param>
-        public static void SetMessageInfo(AssistDeviceModel device,  string message)
-        {
+        ///// <summary>
+        ///// 设置指定灯屏的显示内容
+        ///// </summary>
+        ///// <param name="device"></param>
+        ///// <param name="message"></param>
+        //public static void SetMessageInfo(AssistDeviceModel device,  string message)
+        //{
 
-        }
+        //}
 
     }
 

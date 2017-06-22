@@ -60,6 +60,11 @@ namespace YZXDMS.Models
         public AssistDeviceType AssistType { get; set; }
 
         public PortConfigModel config { get; set; }
+
+        /// <summary>
+        /// 开通路数
+        /// </summary>
+        public int WayNumber { get; set; }
         
 
     }

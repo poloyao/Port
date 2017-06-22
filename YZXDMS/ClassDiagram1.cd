@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="YZXDMS.Models.PortConfig">
+    <Position X="0.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IIAAAAAAAAAAAAAAAAAAAAxAAAAAAAAAAAAEAAAUAAA=</HashCode>
+      <FileName>Models\PortModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="YZXDMS.Models.AssistDevice">
+    <Position X="2.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAIAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\PortModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="YZXDMS.Models.AssistRoute">
+    <Position X="4.25" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAQIAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\PortModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="YZXDMS.Models.Detection">
+    <Position X="2.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAAAAAgAAAAAAAAAAAQAAAQAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\PortModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="YZXDMS.Models.DetectionOrder">
+    <Position X="5.25" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAA=</HashCode>
+      <FileName>Models\PortModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="YZXDMS.Models.PortIndex" Collapsed="true">
+    <Position X="6.75" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABIAIBGAlgAgAQAACQSAAAAAAAJAAAAAAAAAPwCGwk=</HashCode>
+      <FileName>Models\PortModel.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="YZXDMS.Models.StartMode">
+    <Position X="6.75" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAIAA=</HashCode>
+      <FileName>Models\PortModel.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="YZXDMS.Models.DeviceProperty">
+    <Position X="6.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAA=</HashCode>
+      <FileName>Models\PortModel.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="YZXDMS.Models.DeviceType">
+    <Position X="10.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAgAAAgAgAEECwAAAACAIQAQAAAAAAQAAAAEACAAQ=</HashCode>
+      <FileName>Models\PortModel.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="YZXDMS.Models.DetectionType">
+    <Position X="8.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAEEAwAAAACAIQAQAAAAAAQAAAAEACAAQ=</HashCode>
+      <FileName>Models\PortModel.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="YZXDMS.Models.AssistDeviceType">
+    <Position X="4.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAgAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAg=</HashCode>
+      <FileName>Models\PortModel.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="微软雅黑" Size="9" />
+</ClassDiagram>

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using YZXDMS.Models;
 using YZXDMS.Helper;
+using System.IO.Ports;
 
 namespace YZXDMS.Detections
 {
@@ -13,8 +14,11 @@ namespace YZXDMS.Detections
     /// </summary>
     public class SpeedDetection
     {
+        /// <summary>
+        /// 取值模式
+        /// </summary>
         SpeedValueMode _valueMode;
-        DetectionModel _dectect;
+
         /// <summary>
         /// 气泵升降状态，初始值true升，false降
         /// </summary>
@@ -32,61 +36,36 @@ namespace YZXDMS.Detections
         /// 结果状态
         /// </summary>
         bool _resutlStatus;
+        /// <summary>
+        /// 当前模块使用的串口
+        /// </summary>
+        private SerialPort port;
+        
 
-
-        public SpeedDetection()
+        /// <summary>
+        /// 带参构造。
+        /// 后期追加配置信息
+        /// </summary>
+        /// <param name="port"></param>
+        public SpeedDetection(SerialPort port) 
         {
-            Init();
-            //_dectect.config.Port.DataReceived += Port_DataReceived;
+            this.port = port;
+            //Init();
         }
 
-        void Init()
+        /// <summary>
+        /// 设备初始化
+        /// </summary>
+        public void Init()
         {
-            //获取此检测模块所有涉及的内容
-            _dectect = DeviceHelper.GetDetectionInfo(DetectionType.Speed);
-            _dectect.config.Port.DataReceived += Port_DataReceived;
+            if (port.IsOpen)
+                return;
+
+            port.DataReceived += Port_DataReceived;
+            //因为需要先进行设备复位，所以在此处打开串口
             OpenPort();
             Reset();
-        }
 
-        /// <summary>
-        /// 设置取值模式,或根据配置文件设置
-        /// </summary>
-        /// <param name="mode"></param>
-        public void SetSpeedValueMode(SpeedValueMode mode)
-        {
-            this._valueMode = mode;
-        }
-
-        /// <summary>
-        /// 获取速度结果
-        /// </summary>
-        /// <returns></returns>
-        public int GetSpeedData()
-        {
-            System.Threading.Thread.Sleep(1000);
-
-            if (_resutlStatus)
-                return _resultData;
-            else
-                return -1;
-        }
-
-        private void OpenPort()
-        {
-            if (_dectect.config.Port.IsOpen)
-                return;//throw new Exception();
-            else
-                _dectect.config.Port.Open();
-            
-        }
-
-        public void ClosePort()
-        {
-            if (_dectect.config.Port.IsOpen)
-                _dectect.config.Port.Close();
-            else
-                return;
         }
 
         private void Port_DataReceived(object sender, System.IO.Ports.SerialDataReceivedEventArgs e)
@@ -153,15 +132,17 @@ namespace YZXDMS.Detections
                 {
                     bytesData[bytesTemp.Length + i] = Convert.ToByte(serialPort.ReadByte());//read all data
                 }
-
+                //后加的代码，否则容易下标越界IndexOutOfRangeException
+                if (bytesData.Length < 3)
+                    return;
                 for (int i = 0; i < bytesData.Length; i++)
-                {
+                {                    
                     if ((bytesData[i] == 0xAA) && (bytesData[i + 2] == 0x0D))
                     {
                         result = bytesData[i + 1];
                         if (result != 0x00)
                         {
-                            _resultData = new Random(Guid.NewGuid().GetHashCode()).Next(1, 100);
+                            _resultData = new Random(Guid.NewGuid().GetHashCode()).Next(50, 100);
                             _resutlStatus = true;
 
                         }
@@ -177,6 +158,49 @@ namespace YZXDMS.Detections
 
         }
 
+
+        ///// <summary>
+        ///// 设置取值模式,或根据配置文件设置
+        ///// </summary>
+        ///// <param name="mode"></param>
+        //public void SetSpeedValueMode(SpeedValueMode mode)
+        //{
+        //    this._valueMode = mode;
+        //}
+
+        /// <summary>
+        /// 获取速度结果
+        /// </summary>
+        /// <returns></returns>
+        public int GetSpeedData()
+        {
+            //System.Threading.Thread.Sleep(1000);
+
+            return _resultData;
+            //if (_resutlStatus)
+            //    return _resultData;
+            //else
+            //    return -1;
+        }
+
+        public void OpenPort()
+        {
+            if (port.IsOpen)
+                return;//throw new Exception();
+            else
+                port.Open();
+            
+        }
+
+        public void ClosePort()
+        {
+            if (port.IsOpen)
+                port.Close();
+            else
+                return;
+        }
+
+       
         /// <summary>
         /// 开始检测
         /// </summary>
@@ -190,7 +214,7 @@ namespace YZXDMS.Detections
             data[1] = 0x01;
             data[2] = 0x0D;
 
-            _dectect.config.Port.Write(data, 0, 3);
+            port.Write(data, 0, 3);
             _detectStatus = true;
         }
 
@@ -204,7 +228,7 @@ namespace YZXDMS.Detections
             data[1] = 0x02;
             data[2] = 0x0D;
 
-            _dectect.config.Port.Write(data, 0, 3);
+            port.Write(data, 0, 3);
             _pumpStatus = true;     
                  
         }
@@ -219,7 +243,7 @@ namespace YZXDMS.Detections
             data[1] = 0x03;
             data[2] = 0x0D;
 
-            _dectect.config.Port.Write(data, 0, 3);
+            port.Write(data, 0, 3);
             _pumpStatus = false;
         }
 

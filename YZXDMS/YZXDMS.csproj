@@ -51,6 +51,10 @@
     <Reference Include="DevExpress.Xpf.Layout.v17.1.Core, Version=17.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.Xpf.LayoutControl.v17.1, Version=17.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.Xpf.NavBar.v17.1, Version=17.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
@@ -77,33 +81,34 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Core\Core.cs" />
+    <Compile Include="Models\PortModel.cs" />
     <Compile Include="Models\Station.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\MasterViewModel.cs" />
-    <Compile Include="ViewModels\PortViewModel.cs" />
-    <Compile Include="ViewModels\SettingDetectViewModel.cs" />
-    <Compile Include="ViewModels\SettingLinkPortViewModel.cs" />
-    <Compile Include="ViewModels\SettingPortViewModel.cs" />
-    <Compile Include="ViewModels\SettingStationViewModel.cs" />
+    <Compile Include="ViewModels\Settings\PortViewModel.cs" />
+    <Compile Include="ViewModels\Settings\SettingDetectViewModel.cs" />
+    <Compile Include="ViewModels\Settings\SettingLinkPortViewModel.cs" />
+    <Compile Include="ViewModels\Settings\SettingPortViewModel.cs" />
+    <Compile Include="ViewModels\Settings\SettingStationViewModel.cs" />
     <Compile Include="Views\MainView.xaml.cs">
       <DependentUpon>MainView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MasterView.xaml.cs">
       <DependentUpon>MasterView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\PortView.xaml.cs">
+    <Compile Include="Views\Setting\PortView.xaml.cs">
       <DependentUpon>PortView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\SettingDetectView.xaml.cs">
+    <Compile Include="Views\Setting\SettingDetectView.xaml.cs">
       <DependentUpon>SettingDetectView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\SettingLinkPortView.xaml.cs">
+    <Compile Include="Views\Setting\SettingLinkPortView.xaml.cs">
       <DependentUpon>SettingLinkPortView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\SettingPortView.xaml.cs">
+    <Compile Include="Views\Setting\SettingPortView.xaml.cs">
       <DependentUpon>SettingPortView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\SettingStationView.xaml.cs">
+    <Compile Include="Views\Setting\SettingStationView.xaml.cs">
       <DependentUpon>SettingStationView.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
@@ -132,31 +137,29 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\PortView.xaml">
+    <Page Include="Views\Setting\PortView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\SettingDetectView.xaml">
+    <Page Include="Views\Setting\SettingDetectView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\SettingLinkPortView.xaml">
+    <Page Include="Views\Setting\SettingLinkPortView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\SettingPortView.xaml">
+    <Page Include="Views\Setting\SettingPortView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\SettingStationView.xaml">
+    <Page Include="Views\Setting\SettingStationView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\Device.cs" />
     <Compile Include="Models\LightDetectionMode.cs" />
-    <Compile Include="Models\Port.cs" />
     <Compile Include="Models\Speed.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -176,6 +179,8 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="ClassDiagram1.cd" />
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -184,6 +189,16 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Img\car.png" />
+    <Resource Include="Img\car1.png" />
+    <Resource Include="Img\car2.png" />
+    <Resource Include="Img\car3.png" />
+    <Resource Include="Img\line.png" />
+    <Resource Include="Img\port.png" />
+    <Resource Include="Img\setting.png" />
+    <Resource Include="Img\time.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
