@@ -121,7 +121,7 @@ namespace YZXDMS.Models
     /// <summary>
     /// 串口信息
     /// </summary>
-    public class PortConfig
+    public class PortConfig:ICloneable
     {
         /// <summary>
         /// 串口名称
@@ -133,11 +133,11 @@ namespace YZXDMS.Models
         [Display(Name = "波特率")]
         public int BaudRate { get; set; }
         [Display(Name = "数据位")]
-        public int DataBits { get; set; }
+        public int DataBits { get; set; } = 8;
         [Display(Name = "奇偶校验")]
         public Parity Parity { get; set; }
         [Display(Name = "停止位")]
-        public StopBits StopBits { get; set; }
+        public StopBits StopBits { get; set; } = StopBits.One;
 
         /// <summary>
         /// 协议厂家
@@ -148,9 +148,23 @@ namespace YZXDMS.Models
         /// <summary>
         /// 设备类型
         /// </summary>
+        [Display(Name = "设备类型")]
         public DeviceType DeviceType { get; set; }
 
+        public object Clone()
+        {
+            var result = new PortConfig();
+            result.Name = this.Name;
+            result.PortName = this.PortName;
+            result.BaudRate = this.BaudRate;
+            result.DataBits = this.DataBits;
+            result.Parity = this.Parity;
+            result.StopBits = this.StopBits;
+            result.Protocol = this.Protocol;
+            result.DeviceType = this.DeviceType;
 
+            return result;
+        }
     }
 
     /// <summary>
@@ -218,7 +232,7 @@ namespace YZXDMS.Models
         /// <summary>
         /// 辅助设备
         /// </summary>
-        public List<AssistRoute> Assist { get; set; }
+        public List<AssistRoute> AssistList { get; set; }
 
     }
 

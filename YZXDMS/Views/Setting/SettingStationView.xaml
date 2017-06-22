@@ -64,13 +64,14 @@
             </dxlc:GroupBox>
         </DataTemplate>
         <DataTemplate x:Key="DetectFlowLayoutControlTemplate">
-            <dxlc:GroupBox Content="{Binding AssistDevice}" 
-                Header="{Binding AssistDevice.Name}" >
+            <dxlc:GroupBox Content="{Binding Assist}" 
+                Header="{Binding RouteNumber}" >
                 <dxlc:GroupBox.ContentTemplate>
                     <DataTemplate>
                         <StackPanel DataContext="{Binding ''}">
-                            <Label Content="{Binding Name}" />
-                            <Label Content="{Binding AssistType}" />
+                            <Label Content="{Binding DeviceType}" />
+                            <Label Content="{Binding PortConfig.Name}" />
+                            <Label Content="{Binding PortConfig.PortName}" />
                         </StackPanel>
                     </DataTemplate>
                 </dxlc:GroupBox.ContentTemplate>
@@ -85,7 +86,7 @@
 
         <dxlc:FlowLayoutControl x:Name="FLC"
                                 ItemsSource="{Binding StationItems}"  
-                                Orientation="Horizontal" StretchContent="True"
+                                Orientation="Horizontal" StretchContent="False"
                                 ItemTemplate="{DynamicResource FlowLayoutControlTemplate}"/>
 
         <dxlc:FlowLayoutControl ItemsSource="{Binding ElementName=FLC,Path=ItemsSource[0].DetectionItems[0].Detection.AssistList}" 

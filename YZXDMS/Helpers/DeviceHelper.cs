@@ -62,7 +62,7 @@ namespace YZXDMS.Helper
                     DeviceType = DeviceType.速度,
 
                 },
-                Assist = new List<AssistRoute>()
+                AssistList = new List<AssistRoute>()
                 {
                     new AssistRoute()
                     {
@@ -108,7 +108,7 @@ namespace YZXDMS.Helper
                     Port = sp
                 });
 
-                foreach (var assist in item.Assist)
+                foreach (var assist in item.AssistList)
                 {
                     var aConf = assist.Assist.PortConfig;
 

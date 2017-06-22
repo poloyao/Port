@@ -18,13 +18,13 @@
         <dxlc:DataLayoutControl CurrentItem="{Binding Item}" AutoGenerateItems="False">
             <dxlc:DataLayoutItem Binding="{Binding Name}" Label="名称"/>
 
-            <dxlc:DataLayoutItem Binding="{Binding Port.PortName}" Label="串口"/>
-            <dxlc:DataLayoutItem Binding="{Binding Port.BaudRate}" Label="波特率"/>
-            <dxlc:DataLayoutItem Binding="{Binding Port.DataBits}" Label="数据位"/>
-            <dxlc:DataLayoutItem Binding="{Binding Port.Parity}" Label="奇偶校验" />
-            <dxlc:DataLayoutItem Binding="{Binding Port.StopBits}" Label="停止位"/>
+            <dxlc:DataLayoutItem Binding="{Binding PortName}" Label="串口"/>
+            <dxlc:DataLayoutItem Binding="{Binding BaudRate}" Label="波特率"/>
+            <dxlc:DataLayoutItem Binding="{Binding DataBits}" Label="数据位"/>
+            <dxlc:DataLayoutItem Binding="{Binding Parity}" Label="奇偶校验" />
+            <dxlc:DataLayoutItem Binding="{Binding StopBits}" Label="停止位"/>
 
-            <dxlc:DataLayoutItem Binding="{Binding DeviceProperty}" Label="设备性质"/>
+            <dxlc:DataLayoutItem Binding="{Binding DeviceType}" Label="设备性质"/>
             <dxlc:DataLayoutItem Binding="{Binding Protocol}" Label="协议厂商"/>
 
             <dxlc:DataLayoutItem Binding="{Binding StartMode}" Label="启动模式"/>

@@ -69,7 +69,7 @@ namespace YZXDMS.ViewModels
 
             //获取速度模块使用的光电设备
             //speedInfo.Detection.Assist
-            var gd = speedDetect.Assist.Single(x => x.Assist.DeviceType == Models.AssistDeviceType.Photoelectric && x.RouteNumber == 1);
+            var gd = speedDetect.AssistList.Single(x => x.Assist.DeviceType == Models.AssistDeviceType.Photoelectric && x.RouteNumber == 1);
             //获取光电状态实例
             var pm = GlobalPhotoelectric.GetPhotoelectric(gd);
             //监听光电触发状态

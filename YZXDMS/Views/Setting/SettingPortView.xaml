@@ -29,7 +29,7 @@
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
         <Grid>
-            <dxg:GridControl x:Name="grid" ItemsSource="{Binding Items}" CustomColumnDisplayText="grid_CustomColumnDisplayText" AutoGenerateColumns="AddNew" EnableSmartColumnsGeneration="True" SelectionMode="Row">
+            <dxg:GridControl x:Name="grid" ItemsSource="{Binding Items}" CustomColumnDisplayText="grid_CustomColumnDisplayText" AutoGenerateColumns="KeepOld" EnableSmartColumnsGeneration="True" SelectionMode="Row">
                 <dxmvvm:Interaction.Behaviors>
                     <dxmvvm:EventToCommand EventName="MouseDoubleClick" Command="{Binding SelectedCommand}" CommandParameter="{Binding ElementName=grid,Path=SelectedItem}"/>
                 </dxmvvm:Interaction.Behaviors>
@@ -37,10 +37,19 @@
                     <dxg:TableView AllowPerPixelScrolling="True" ShowTotalSummary="True" AutoWidth="True" AllowEditing="False"/>
                 </dxg:GridControl.View>
                 <dxg:GridColumn FieldName="Name" IsSmart="True"/>
+                <dxg:GridColumn FieldName="PortName" IsSmart="True"/>
+                <dxg:GridColumn FieldName="BaudRate" IsSmart="True"/>
+                <dxg:GridColumn FieldName="DataBits" IsSmart="True"/>
+                <dxg:GridColumn FieldName="Parity" IsSmart="True"/>
+                <dxg:GridColumn FieldName="StopBits" IsSmart="True"/>
+                <dxg:GridColumn FieldName="Protocol" IsSmart="True"/>
+                <dxg:GridColumn FieldName="DeviceType" IsSmart="True"/>
+                
+                <!--<dxg:GridColumn FieldName="Name" IsSmart="True"/>
                 <dxg:GridColumn FieldName="Port" IsSmart="True"/>
                 <dxg:GridColumn FieldName="DeviceProperty" IsSmart="True"/>
                 <dxg:GridColumn FieldName="Protocol" IsSmart="True"/>
-                <dxg:GridColumn FieldName="StartMode"  IsSmart="True"/>
+                <dxg:GridColumn FieldName="StartMode"  IsSmart="True"/>-->
             </dxg:GridControl>
         </Grid>
         <StackPanel Grid.Column="1" Margin="10,0,0,0" >

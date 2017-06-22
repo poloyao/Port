@@ -9,32 +9,32 @@ namespace YZXDMS.ViewModels
     [POCOViewModel]
     public class PortViewModel: ViewModelBase, IDocumentContent
     {
-        //public virtual PortConfigModel Item { get; set; } = new PortConfigModel();
+        public virtual PortConfig Item { get; set; } = new PortConfig();
 
-        //public bool IsChange;
+        public bool IsChange;
 
-        //public PortViewModel()
-        //{
-        //    Item.Port = new System.IO.Ports.SerialPort();
-        //    //Item.Protocol = new ProtocolModel();
-        //}
+        public PortViewModel()
+        {
+            //Item.Port = new System.IO.Ports.SerialPort();
+            //Item.Protocol = new ProtocolModel();
+        }
 
-        //protected override void OnParameterChanged(object parameter)
-        //{
-        //    base.OnParameterChanged(parameter);
-        //    if (parameter != null)
-        //    {
-        //        Item = (PortConfigModel)parameter;
-        //    }
-        //}
+        protected override void OnParameterChanged(object parameter)
+        {
+            base.OnParameterChanged(parameter);
+            if (parameter != null)
+            {
+                Item = (PortConfig)parameter;
+            }
+        }
 
 
-        //public void Save()
-        //{
-        //    IsChange = true;
-        //    DevExpress.Xpf.Core.DXMessageBox.Show("添加成功！");
-        //    DocumentOwner.Close(this);
-        //}
+        public void Save()
+        {
+            IsChange = true;
+            DevExpress.Xpf.Core.DXMessageBox.Show("添加成功！");
+            DocumentOwner.Close(this);
+        }
 
         #region IDocumentContent
 
