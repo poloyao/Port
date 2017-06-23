@@ -10,32 +10,39 @@ namespace YZXDMS.Core
 {
     public class Core
     {
-        //public void Speed()
-        //{
-        //    PhotoelectricModel pm = GlobalPhotoelectric.GetPhotoelectricModel(new Models.AssistDeviceModel());
-        //    pm.PropertyChanged += Pm_PropertyChanged;
-        //    pm.IsTrigger = true;
-        //}
+        #region 属性
 
-        //private void Pm_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
-        //{
-        //    if (e.PropertyName == "IsTrigger")
-        //    {
-        //        SpeedDetection speed = new SpeedDetection();
-        //        GlobalLatticeScreen.SetMessageInfo(new Models.AssistDeviceModel(), "光电到位");
-        //        try
-        //        {
-        //            speed.PumpDown();
-        //            speed.DetectStart();
-        //            var result = speed.GetSpeedData();
-        //            speed.PumpUp();
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            throw;
-        //        }
-                
-        //    }
-        //}
+
+
+        #endregion
+
+
+        private static readonly Core instance = new Core();
+
+
+        /// <summary>
+        /// 获取Core单例
+        /// </summary>
+        /// <returns></returns>
+        public static Core GetInstance()
+        {
+            return instance;
+        }
+
+        private Core() { }
+
+
+        public static void GetDeviceConfig()
+        {
+
+        }
+
+
+        public static void SetDeviceConfig()
+        {
+
+        }
+
+
     }
 }

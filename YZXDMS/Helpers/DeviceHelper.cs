@@ -5,17 +5,20 @@ using System.Text;
 using System.Threading.Tasks;
 using YZXDMS.Models;
 using System.IO.Ports;
+using Newtonsoft.Json;
 
-namespace YZXDMS.Helper
+namespace YZXDMS.Helpers
 {
     /// <summary>
     /// 设备帮助类
     /// </summary>
     public class DeviceHelper
     {
-        private static List<Detection> DetectionItems { get; set; } = new List<Detection>();
-
-        //private static List<SerialPort> PortItems = new List<SerialPort>();
+        /// <summary>
+        /// 检测项目信息列表
+        /// </summary>
+        public static List<Detection> DetectionItems { get; private set; } = new List<Detection>();
+        
 
         /// <summary>
         /// 检测项目串口信息
@@ -26,6 +29,8 @@ namespace YZXDMS.Helper
         /// 辅助设备串口信息，多路同串口公用一个
         /// </summary>
         public static List<AssistPort> AssistPortItems { get; private set; } = new List<AssistPort>();
+
+
 
         private static readonly DeviceHelper instance = new DeviceHelper();
 
@@ -42,55 +47,62 @@ namespace YZXDMS.Helper
 
         void InitPort()
         {
-
+            DetectionItems = XmlHelper.DeserializerXml<List<Detection>>("Detection.xml");
 
             #region 模拟生成conf信息
 
-            DetectionItems.Add(new Detection()
-            {
-                Name = "速度",
-                DetectionType = DetectionType.速度,
-                PortConfig = new PortConfig()
-                {
-                    Name = "速度",
-                    Protocol = "速度协议",
-                    PortName = PortIndex.COM10,
-                    BaudRate = 9600,
-                    Parity = Parity.None,
-                    DataBits = 8,
-                    StopBits = StopBits.One,
-                    DeviceType = DeviceType.速度,
+            //DetectionItems.Add(new Detection()
+            //{
+            //    Name = "速度",
+            //    DetectionType = DetectionType.速度,
+            //    PortConfig = new PortConfig()
+            //    {
+            //        Name = "速度",
+            //        Protocol = "速度协议",
+            //        PortName = PortIndex.COM10,
+            //        BaudRate = 9600,
+            //        Parity = Parity.None,
+            //        DataBits = 8,
+            //        StopBits = StopBits.One,
+            //        DeviceType = DeviceType.速度,
 
-                },
-                AssistList = new List<AssistRoute>()
-                {
-                    new AssistRoute()
-                    {
-                        RouteNumber = 1,
-                        Assist = new AssistDevice()
-                        {
-                            DeviceType = AssistDeviceType.Photoelectric,
-                            PortConfig = new PortConfig()
-                            {
-                                    Name = "光电",
-                                Protocol = "光电协议",
-                                PortName = PortIndex.COM1,
-                                BaudRate  = 9600,
-                                Parity = Parity.None,
-                                DataBits = 8,
-                                StopBits = StopBits.One,
-                                DeviceType = DeviceType.光电设备,
-                            },
-                            RouteTotal = 8
-                        }
-                    }
-                }
-            });
+            //    },
+            //    AssistList = new List<AssistRoute>()
+            //    {
+            //        new AssistRoute()
+            //        {
+            //            RouteNumber = 1,
+            //            Assist = new AssistDevice()
+            //            {
+            //                DeviceType = AssistDeviceType.Photoelectric,
+            //                PortConfig = new PortConfig()
+            //                {
+            //                        Name = "光电",
+            //                    Protocol = "光电协议",
+            //                    PortName = PortIndex.COM1,
+            //                    BaudRate  = 9600,
+            //                    Parity = Parity.None,
+            //                    DataBits = 8,
+            //                    StopBits = StopBits.One,
+            //                    DeviceType = DeviceType.光电设备,
+
+            //                    RouteTotal = 8
+            //                },
+            //                //RouteTotal = 8
+            //            }
+            //        }
+            //    }
+            //});
+
+            //XmlHelper.serializeToXml(DetectionItems, "Detection.xml");
+
 
             #endregion
 
             #region 生成port列表
 
+            if (DetectionItems == null)
+                throw new Exception("没有配置工位信息");
 
             foreach (var item in DetectionItems)
             {
@@ -133,10 +145,6 @@ namespace YZXDMS.Helper
                     });
                 }
             }
-
-
-
-
             #endregion
 
             #region Delete

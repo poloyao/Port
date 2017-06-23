@@ -15,7 +15,6 @@ namespace YZXDMS.Models
     /// </summary>
     public class StationModel : ViewModelBase
     {
-        public int Id { get; set; }
         /// <summary>
         /// 工位名称
         /// </summary>
@@ -34,7 +33,7 @@ namespace YZXDMS.Models
         //public List<AssistDeviceOrder> AssistItems { get; set; }
 
 
-        public List<DetectionOrder> DetectionItems { get; set; }
+        public ObservableCollection<DetectionOrder> DetectionItems { get; set; }
 
         [Command(true)]
         public void Save(Detection item)
@@ -42,9 +41,10 @@ namespace YZXDMS.Models
             //需要处理项目顺序
             if (DetectionItems == null)
             {
-                DetectionItems = new List<DetectionOrder>();
+                DetectionItems = new ObservableCollection<DetectionOrder>();
             }
             DetectionItems.Add(new DetectionOrder() { Detection = item });
+            //Helpers.XmlHelper.
         }
     }
 }

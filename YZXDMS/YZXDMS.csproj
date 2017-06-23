@@ -81,6 +81,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Core\Core.cs" />
+    <Compile Include="Helpers\DataHelper.cs" />
+    <Compile Include="Helpers\XmlHelper.cs" />
     <Compile Include="Models\PortModel.cs" />
     <Compile Include="Models\Station.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
@@ -90,6 +92,7 @@
     <Compile Include="ViewModels\Settings\SettingLinkPortViewModel.cs" />
     <Compile Include="ViewModels\Settings\SettingPortViewModel.cs" />
     <Compile Include="ViewModels\Settings\SettingStationViewModel.cs" />
+    <Compile Include="ViewModels\TestyViewModel.cs" />
     <Compile Include="Views\MainView.xaml.cs">
       <DependentUpon>MainView.xaml</DependentUpon>
     </Compile>
@@ -110,6 +113,9 @@
     </Compile>
     <Compile Include="Views\Setting\SettingStationView.xaml.cs">
       <DependentUpon>SettingStationView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TestyView.xaml.cs">
+      <DependentUpon>TestyView.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -154,6 +160,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Setting\SettingStationView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\TestyView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

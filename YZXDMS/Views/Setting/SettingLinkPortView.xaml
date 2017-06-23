@@ -3,13 +3,178 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-              xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+             xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
 		     xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+             xmlns:view="clr-namespace:YZXDMS.Views"
              xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm" xmlns:ViewModels="clr-namespace:YZXDMS.ViewModels"
              xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid" x:Class="YZXDMS.Views.SettingLinkPortView"
              mc:Ignorable="d"
              DataContext="{dxmvvm:ViewModelSource Type={x:Type ViewModels:SettingLinkPortViewModel}}"
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="500" d:DesignWidth="800">
+    <UserControl.Resources>
+        <DataTemplate x:Key="FlowLayoutControlTemplate444444">
+            <dxlc:GroupBox  Content="{Binding}" 
+                Header="{Binding Name}"  
+                Height="200" Width="200"
+                MaximizeElementVisibility="Visible">
+                <dxlc:GroupBox.ContentTemplate>
+                    <DataTemplate>
+                        <StackPanel>
+                            <!--<Label Content="{Binding Name}" />-->
+                            <Label Content="{Binding DetectionType}" />
+                            <!--<dxlc:DataLayoutControl CurrentItem="{Binding PortConfig}" IsReadOnly="True" >
+                                <dxlc:DataLayoutItem Binding="{Binding Name}" Label="名称"/>
+                                <dxlc:DataLayoutItem Binding="{Binding PortName}" Label="串口"/>
+                                --><!--<dxlc:DataLayoutItem Binding="{Binding BaudRate}" Label="波特率"/>
+                                <dxlc:DataLayoutItem Binding="{Binding DataBits}" Label="数据位"/>
+                                <dxlc:DataLayoutItem Binding="{Binding Parity}" Label="奇偶校验" />
+                                <dxlc:DataLayoutItem Binding="{Binding StopBits}" Label="停止位"/>--><!--
+                                <dxlc:DataLayoutItem Binding="{Binding DeviceType}" Label="设备类型"/>
+                                <dxlc:DataLayoutItem Binding="{Binding Protocol}" Label="协议厂商"/>
+                            </dxlc:DataLayoutControl>-->
+                        </StackPanel>
+                    </DataTemplate>
+                </dxlc:GroupBox.ContentTemplate>
+                <dxlc:GroupBox.MaximizedContentTemplate>
+                    <DataTemplate>
+                        <dxlc:LayoutControl DataContext="{Binding}">
+                            <dxlc:LayoutGroup Orientation="Vertical">
+                                <dxlc:LayoutItem>
+                                    <Label Content="{Binding Name}" Height="Auto"/>
+                                </dxlc:LayoutItem>
+                                <dxlc:LayoutGroup>
+                                    <dxlc:DataLayoutControl CurrentItem="{Binding PortConfig}" >
+                                        <dxlc:DataLayoutItem Binding="{Binding Name}" Label="名称"/>
+                                        <dxlc:DataLayoutItem Binding="{Binding PortName}" Label="串口"/>
+                                        <dxlc:DataLayoutItem Binding="{Binding BaudRate}" Label="波特率"/>
+                                        <dxlc:DataLayoutItem Binding="{Binding DataBits}" Label="数据位"/>
+                                        <dxlc:DataLayoutItem Binding="{Binding Parity}" Label="奇偶校验" />
+                                        <dxlc:DataLayoutItem Binding="{Binding StopBits}" Label="停止位"/>
+                                        <dxlc:DataLayoutItem Binding="{Binding DeviceType}" Label="设备类型"/>
+                                        <dxlc:DataLayoutItem Binding="{Binding Protocol}" Label="协议厂商"/>
+                                    </dxlc:DataLayoutControl>
+                                </dxlc:LayoutGroup>
+                                <!--<Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="150" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <dxg:GridControl ItemsSource="{Binding AssistList}" AutoGenerateColumns="KeepOld"  SelectionMode="Row">
+                                        <dxg:GridColumn FieldName="RouteNumber" IsSmart="True" />
+                                        <dxg:GridColumn FieldName="Assist.DeviceType" IsSmart="True" />
+                                        <dxg:GridColumn FieldName="Assist.PortConfig" IsSmart="True" />
+                                        <dxg:GridColumn FieldName="Assist" IsSmart="True" />
+                                        <dxg:GridColumn FieldName="Assist" IsSmart="True" />
+                                        <dxg:GridControl.View>
+                                            <dxg:TableView  AutoWidth="True" AllowEditing="False"/>
+                                        </dxg:GridControl.View>
+                                    </dxg:GridControl>
+
+                                    <StackPanel Grid.Column="1" Margin="20,0,0,0" Orientation="Vertical">
+                                        <Button>添加</Button>
+                                    </StackPanel>
+                                </Grid>-->
+                                
+                                
+                            </dxlc:LayoutGroup>
+                        </dxlc:LayoutControl>
+                    </DataTemplate>
+                </dxlc:GroupBox.MaximizedContentTemplate>
+            </dxlc:GroupBox>
+        </DataTemplate>
+        <DataTemplate x:Key="DetectFlowLayoutControlTemplate">
+            <dxlc:GroupBox Content="{Binding Assist}" 
+                Header="{Binding RouteNumber}" >
+                <dxlc:GroupBox.ContentTemplate>
+                    <DataTemplate>
+                        <StackPanel DataContext="{Binding ''}">
+                            <Label Content="{Binding DeviceType}" />
+                            <Label Content="{Binding PortConfig.Name}" />
+                            <Label Content="{Binding PortConfig.PortName}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </dxlc:GroupBox.ContentTemplate>
+            </dxlc:GroupBox>
+        </DataTemplate>
+
+
+        <DataTemplate x:Key="FlowLayoutControlTemplate">
+            <dxlc:GroupBox x:Name="select" Content="{Binding}" 
+                Header="{Binding Name}"  
+                Height="200" Width="200"
+                MaximizeElementVisibility="Visible">
+                <dxlc:GroupBox.ContentTemplate>
+                    <DataTemplate>
+                        <StackPanel>
+                            <Label Content="{Binding Name}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </dxlc:GroupBox.ContentTemplate>
+                <dxlc:GroupBox.MaximizedContentTemplate>
+                    <DataTemplate>
+                        <!--<Label Content="{Binding  PortConfig.BaudRate}" />-->
+                        <view:SettingDetectView  Mylala="{Binding PortConfig.BaudRate}" view:SettingDetectView.MyDetection="{Binding}"  view:SettingDetectView.MyInt2="{Binding PortConfig.BaudRate}"/>
+                        <!--<dxlc:LayoutControl DataContext="{Binding}">
+                            <dxlc:LayoutGroup Orientation="Vertical">
+                                <dxlc:LayoutGroup Orientation="Vertical" View="GroupBox" Header="{Binding Name}" DataContext="{Binding PortConfig}">
+                                    <dxlc:LayoutGroup>
+                                        <dxlc:LayoutItem Label="名称">
+                                            <dxe:TextEdit EditValue="{Binding Name}"/>
+                                        </dxlc:LayoutItem>
+                                        <dxlc:LayoutItem Label="串口">
+                                            <dxe:TextEdit EditValue="{Binding PortName}"/>
+                                        </dxlc:LayoutItem>
+                                        <dxlc:LayoutItem Label="波特率">
+                                            <dxe:TextEdit EditValue="{Binding BaudRate}"/>
+                                        </dxlc:LayoutItem>
+                                        <dxlc:LayoutItem Label="数据位">
+                                            <dxe:TextEdit EditValue="{Binding DataBits}"/>
+                                        </dxlc:LayoutItem>
+                                    </dxlc:LayoutGroup>
+                                    <dxlc:LayoutGroup>
+                                        <dxlc:LayoutItem Label="奇偶校验">
+                                            <dxe:TextEdit EditValue="{Binding Parity}"/>
+                                        </dxlc:LayoutItem>
+                                        <dxlc:LayoutItem Label="停止位">
+                                            <dxe:TextEdit EditValue="{Binding StopBits}"/>
+                                        </dxlc:LayoutItem>
+                                        <dxlc:LayoutItem Label="设备类型">
+                                            <dxe:TextEdit EditValue="{Binding DeviceType}"/>
+                                        </dxlc:LayoutItem>
+                                        <dxlc:LayoutItem Label="协议厂商">
+                                            <dxe:TextEdit EditValue="{Binding Protocol}"/>
+                                        </dxlc:LayoutItem>
+                                    </dxlc:LayoutGroup>                                   
+                                </dxlc:LayoutGroup>
+
+                                <dxlc:LayoutGroup Orientation="Vertical">
+                                    <dxg:GridControl ItemsSource="{Binding AssistList}" AutoGenerateColumns="KeepOld"  SelectionMode="Row">
+                                        <dxg:GridColumn FieldName="RouteNumber" IsSmart="True" />
+                                        <dxg:GridColumn FieldName="Assist.DeviceType" IsSmart="True" />
+                                        <dxg:GridColumn FieldName="Assist.PortConfig.Name" IsSmart="True" />
+                                        <dxg:GridColumn FieldName="Assist.PortConfig.PortName" IsSmart="True" />
+                                        <dxg:GridColumn FieldName="Assist.PortConfig.BaudRate" IsSmart="True" />
+                                        <dxg:GridColumn FieldName="Assist.PortConfig.DeviceType" IsSmart="True" />
+                                        <dxg:GridColumn FieldName="Assist.PortConfig.Protocol" IsSmart="True" />
+                                        <dxg:GridControl.View>
+                                            <dxg:TableView  AutoWidth="True" AllowEditing="False"/>
+                                        </dxg:GridControl.View>
+                                    </dxg:GridControl>
+                                    <dxlc:LayoutItem>
+                                        <Button Content="提交" Command="{Binding AddDeviceItemCommand}">
+                                        </Button>
+                                    </dxlc:LayoutItem>
+                                </dxlc:LayoutGroup>
+
+                            </dxlc:LayoutGroup>
+                        </dxlc:LayoutControl>-->
+                    </DataTemplate>
+                </dxlc:GroupBox.MaximizedContentTemplate>
+            </dxlc:GroupBox>
+        </DataTemplate>
+
+    </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -40,29 +205,45 @@
             </dxg:TreeListControl>-->
 
 
-            <dxlc:FlowLayoutControl ItemsSource="{Binding AssistDeviceOrderItems}" Orientation="Horizontal" >
+            <!--<dxlc:FlowLayoutControl ItemsSource="{Binding DetectionItems}" Orientation="Horizontal" >
                 <dxlc:FlowLayoutControl.ItemTemplate>
                     <DataTemplate>
-                        <dxlc:GroupBox Content="{Binding AssistDevice}" 
-                                   Header="{Binding AssistDevice.Name}" >
+                        <dxlc:GroupBox Content="{Binding}" 
+                                   Header="{Binding Name}" >
                             <dxlc:GroupBox.ContentTemplate>
                                 <DataTemplate>
                                     <StackPanel DataContext="{Binding }">
                                         <Label Content="{Binding Name}" />
-                                        <Label Content="{Binding AssistType}" />
+                                        <Label Content="{Binding DetectionType}" />
                                     </StackPanel>
                                 </DataTemplate>
                             </dxlc:GroupBox.ContentTemplate>
                         </dxlc:GroupBox>
                     </DataTemplate>
                 </dxlc:FlowLayoutControl.ItemTemplate>
-            </dxlc:FlowLayoutControl>
+            </dxlc:FlowLayoutControl>-->
+
+
+            <dxlc:FlowLayoutControl 
+                                ItemsSource="{Binding DetectionItems}"  
+                                Orientation="Horizontal" StretchContent="False"
+                                ItemTemplate="{DynamicResource FlowLayoutControlTemplate}"/>
+
+
+            <!--<dxg:GridControl ItemsSource="{Binding DetectionItems}" SelectionMode="Row">
+                <dxg:GridControl.View>
+                    <dxg:CardView ShowGroupPanel="False" CardHeaderBinding="{Binding Date.Name, RelativeSource={RelativeSource Self}}" CardLayout="Columns" />
+                </dxg:GridControl.View>
+                <dxg:GridColumn FieldName="Name" IsSmart="True"/>
+                <dxg:GridColumn FieldName="DetectionType" IsSmart="True"/>
+                <dxg:GridColumn FieldName="PortConfig" IsSmart="True"/>
+            </dxg:GridControl>-->
 
         </Grid>
 
-        <StackPanel Grid.Column="1" Margin="10,0,0,0" >
+        <!--<StackPanel Grid.Column="1" Margin="10,0,0,0" >
             <Button Content="添加" Command="{Binding AddItemCommand}"/>
             <Button Content="删除"/>
-        </StackPanel>
+        </StackPanel>-->
     </Grid>
 </UserControl>

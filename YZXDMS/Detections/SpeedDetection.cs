@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using YZXDMS.Models;
-using YZXDMS.Helper;
+using YZXDMS.Helpers;
 using System.IO.Ports;
 
 namespace YZXDMS.Detections
@@ -40,17 +40,28 @@ namespace YZXDMS.Detections
         /// 当前模块使用的串口
         /// </summary>
         private SerialPort port;
-        
+        private PortConfig portConfig;
+
 
         /// <summary>
         /// 带参构造。
-        /// 后期追加配置信息
+        /// 无配置信息
         /// </summary>
         /// <param name="port"></param>
         public SpeedDetection(SerialPort port) 
         {
             this.port = port;
             //Init();
+        }
+        /// <summary>
+        /// 带参构造。
+        /// 带有配置信息
+        /// </summary>
+        /// <param name="port"></param>
+        /// <param name="portConfig"></param>
+        public SpeedDetection(SerialPort port, PortConfig portConfig) : this(port)
+        {
+            this.portConfig = portConfig;
         }
 
         /// <summary>

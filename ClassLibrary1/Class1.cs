@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 namespace ClassLibrary1
 {
 
+    
+
     /// <summary>
     /// 串口端口
     /// </summary>

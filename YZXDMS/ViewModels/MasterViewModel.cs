@@ -59,12 +59,12 @@ namespace YZXDMS.ViewModels
         {
             DGC = "Wait...";
             //获取速度模块
-            var speedDetect = Helper.DeviceHelper.GetDetection(Models.DetectionType.速度);
+            var speedDetect = Helpers.DeviceHelper.GetDetection(Models.DetectionType.速度);
             //获取速度串口
-            var speedInfo = Helper.DeviceHelper.GetDetectionInfo(speedDetect);
+            var speedInfo = Helpers.DeviceHelper.GetDetectionInfo(speedDetect);
 
             //创建速度模块实例
-            speed = new SpeedDetection(speedInfo.Port);
+            speed = new SpeedDetection(speedInfo.Port,speedInfo.Detection.PortConfig);
             speed.Init();
 
             //获取速度模块使用的光电设备

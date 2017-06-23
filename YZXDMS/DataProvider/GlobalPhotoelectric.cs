@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using YZXDMS.Models;
-using YZXDMS.Helper;
+using YZXDMS.Helpers;
 
 namespace YZXDMS.DataProvider
 {
@@ -32,14 +32,14 @@ namespace YZXDMS.DataProvider
         void Init()
         {
 
-            var portItems = Helper.DeviceHelper.AssistPortItems;
+            var portItems = Helpers.DeviceHelper.AssistPortItems;
             var photoelecticeItems = portItems.Where(x => x.Assist.DeviceType == AssistDeviceType.Photoelectric).ToList();
             
 
             foreach (var phots in photoelecticeItems)
             {
                 //获取总路数
-                int total = phots.Assist.RouteTotal;
+                int total = phots.Assist.PortConfig.RouteTotal;
 
                 for (int i = 0; i < total; i++)
                 {

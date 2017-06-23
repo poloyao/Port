@@ -7,13 +7,14 @@ using System.Collections.Generic;
 namespace YZXDMS.ViewModels
 {
     [POCOViewModel]
-    public class SettingDetectViewModel
+    public class TestyViewModel
     {
-        public Detection DetectionItem = new Detection();
+        public List<Detection> DetectionItems { get; set; } = new List<Detection>();
 
-        public void sa()
+
+        public TestyViewModel()
         {
-            DetectionItem = new Detection()
+            DetectionItems.Add(new Detection()
             {
                 Name = "侧滑",
                 DetectionType = DetectionType.侧滑,
@@ -30,7 +31,7 @@ namespace YZXDMS.ViewModels
                         }
                     }
                 }
-            };
+            });
         }
 
     }

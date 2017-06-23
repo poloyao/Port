@@ -140,6 +140,11 @@ namespace YZXDMS.Models
         public StopBits StopBits { get; set; } = StopBits.One;
 
         /// <summary>
+        /// 支持路数
+        /// </summary>
+        [Display(Name = "支持路数")]
+        public int RouteTotal { get; set; }
+        /// <summary>
         /// 协议厂家
         /// </summary>
         [Display(Name = "协议厂家")]
@@ -162,6 +167,24 @@ namespace YZXDMS.Models
             result.StopBits = this.StopBits;
             result.Protocol = this.Protocol;
             result.DeviceType = this.DeviceType;
+            result.RouteTotal = this.RouteTotal;
+
+            return result;
+        }
+
+        public static PortConfig Create()
+        {
+            var result = new PortConfig();
+            result.Name = "默认";
+            result.PortName = PortIndex.COM1;
+            result.BaudRate = 9600;
+            result.DataBits = 8;
+            result.Parity = Parity.None;
+            result.StopBits = StopBits.One;
+            result.Protocol = "无";
+            result.DeviceType = DeviceType.光电设备;
+
+            result.RouteTotal = 1;
 
             return result;
         }
@@ -196,11 +219,19 @@ namespace YZXDMS.Models
     /// </summary>
     public class AssistDevice
     {
+        /// <summary>
+        /// 串口配置
+        /// </summary>
         public PortConfig PortConfig { get; set; }
-
+        /// <summary>
+        /// 辅助类型
+        /// </summary>
         public AssistDeviceType DeviceType { get; set; }
 
-        public int RouteTotal { get; set; }
+        ///// <summary>
+        ///// 支持路数
+        ///// </summary>
+        //public int RouteTotal { get; set; }
 
         //public int UseOrder { get; set; }
 
@@ -209,9 +240,17 @@ namespace YZXDMS.Models
 
     public class AssistRoute
     {
+        /// <summary>
+        /// 辅助设备
+        /// </summary>
         public AssistDevice Assist { get; set; }
 
+        /// <summary>
+        /// 调用路数
+        /// </summary>
+        [Display(Name = "调用路数")]
         public int RouteNumber { get; set; }
+        
 
     }
 
@@ -233,7 +272,6 @@ namespace YZXDMS.Models
         /// 辅助设备
         /// </summary>
         public List<AssistRoute> AssistList { get; set; }
-
     }
 
 
