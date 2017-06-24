@@ -87,6 +87,7 @@
     <Compile Include="Models\Station.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\MasterViewModel.cs" />
+    <Compile Include="ViewModels\SelectAssistViewModel.cs" />
     <Compile Include="ViewModels\Settings\PortViewModel.cs" />
     <Compile Include="ViewModels\Settings\SettingDetectViewModel.cs" />
     <Compile Include="ViewModels\Settings\SettingLinkPortViewModel.cs" />
@@ -98,6 +99,9 @@
     </Compile>
     <Compile Include="Views\MasterView.xaml.cs">
       <DependentUpon>MasterView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SelectAssistView.xaml.cs">
+      <DependentUpon>SelectAssistView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Setting\PortView.xaml.cs">
       <DependentUpon>PortView.xaml</DependentUpon>
@@ -127,7 +131,6 @@
     </Compile>
     <Compile Include="DataProvider\GlobalLatticeScreen.cs" />
     <Compile Include="DataProvider\GlobalPhotoelectric.cs" />
-    <Compile Include="DataProvider\IPortDataProvider.cs" />
     <Compile Include="Detections\LightDetection.cs" />
     <Compile Include="Detections\SpeedDetection.cs" />
     <Compile Include="Helpers\DeviceHelper.cs" />
@@ -140,6 +143,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\MasterView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SelectAssistView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -209,6 +216,12 @@
     <Resource Include="Img\port.png" />
     <Resource Include="Img\setting.png" />
     <Resource Include="Img\time.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Img\machine.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Img\machine1.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

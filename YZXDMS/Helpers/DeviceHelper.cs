@@ -26,6 +26,13 @@ namespace YZXDMS.Helpers
         private static List<DetectionPort> detectPortItems = new List<DetectionPort>();
 
         /// <summary>
+        /// 配置文件的串口列表
+        /// </summary>
+        private static List<PortConfig> portConfigItems;
+
+        //private static List<VMDetection> 
+
+        /// <summary>
         /// 辅助设备串口信息，多路同串口公用一个
         /// </summary>
         public static List<AssistPort> AssistPortItems { get; private set; } = new List<AssistPort>();
@@ -48,6 +55,8 @@ namespace YZXDMS.Helpers
         void InitPort()
         {
             DetectionItems = XmlHelper.DeserializerXml<List<Detection>>("Detection.xml");
+
+            CreatPortList();
 
             #region 模拟生成conf信息
 
@@ -101,50 +110,54 @@ namespace YZXDMS.Helpers
 
             #region 生成port列表
 
-            if (DetectionItems == null)
-                throw new Exception("没有配置工位信息");
+            //if (DetectionItems == null)
+            //{
 
-            foreach (var item in DetectionItems)
-            {
-                var conf = item.PortConfig;
-                SerialPort sp = new SerialPort();
-                sp.PortName = conf.PortName.ToString();
-                sp.BaudRate = conf.BaudRate;
-                sp.Parity = conf.Parity;
-                sp.DataBits = conf.DataBits;
-                sp.StopBits = conf.StopBits;
+            //    return;
+            //    //throw new Exception("没有配置工位信息");
+            //}
 
-                detectPortItems.Add(new DetectionPort()
-                {
-                    Detection = item,
-                    Port = sp
-                });
+            //foreach (var item in DetectionItems)
+            //{
+            //    var conf = item.PortConfig;
+            //    SerialPort sp = new SerialPort();
+            //    sp.PortName = conf.PortName.ToString();
+            //    sp.BaudRate = conf.BaudRate;
+            //    sp.Parity = conf.Parity;
+            //    sp.DataBits = conf.DataBits;
+            //    sp.StopBits = conf.StopBits;
 
-                foreach (var assist in item.AssistList)
-                {
-                    var aConf = assist.Assist.PortConfig;
+            //    detectPortItems.Add(new DetectionPort()
+            //    {
+            //        Detection = item,
+            //        Port = sp
+            //    });
 
-                    //保证辅助设备多路公用一个port
-                    var quaryAssist = AssistPortItems.SingleOrDefault(x => x.Assist == assist.Assist);
-                    if (quaryAssist != null)
-                    {
-                        continue;
-                     }
+            //    foreach (var assist in item.AssistList)
+            //    {
+            //        var aConf = assist.Assist.PortConfig;
 
-                    SerialPort assistsp = new SerialPort();
-                    assistsp.PortName = aConf.PortName.ToString();
-                    assistsp.BaudRate = aConf.BaudRate;
-                    assistsp.Parity = aConf.Parity;
-                    assistsp.DataBits = aConf.DataBits;
-                    assistsp.StopBits = aConf.StopBits;
-                    
-                    AssistPortItems.Add(new AssistPort()
-                    {
-                        Port = assistsp,
-                        Assist = assist.Assist
-                    });
-                }
-            }
+            //        //保证辅助设备多路公用一个port
+            //        var quaryAssist = AssistPortItems.SingleOrDefault(x => x.Assist == assist.Assist);
+            //        if (quaryAssist != null)
+            //        {
+            //            continue;
+            //         }
+
+            //        SerialPort assistsp = new SerialPort();
+            //        assistsp.PortName = aConf.PortName.ToString();
+            //        assistsp.BaudRate = aConf.BaudRate;
+            //        assistsp.Parity = aConf.Parity;
+            //        assistsp.DataBits = aConf.DataBits;
+            //        assistsp.StopBits = aConf.StopBits;
+
+            //        AssistPortItems.Add(new AssistPort()
+            //        {
+            //            Port = assistsp,
+            //            Assist = assist.Assist
+            //        });
+            //    }
+            //}
             #endregion
 
             #region Delete
@@ -189,6 +202,112 @@ namespace YZXDMS.Helpers
             #endregion
 
         }
+
+        /// <summary>
+        /// 生成串口实例列表
+        /// </summary>
+        void CreatPortList()
+        {
+            if (DetectionItems == null)
+            {
+                return;
+                //throw new Exception("没有配置工位信息");
+            }
+
+            foreach (var item in DetectionItems)
+            {
+                var conf = item.PortConfig;
+                SerialPort sp = new SerialPort();
+                sp.PortName = conf.PortName.ToString();
+                sp.BaudRate = conf.BaudRate;
+                sp.Parity = conf.Parity;
+                sp.DataBits = conf.DataBits;
+                sp.StopBits = conf.StopBits;
+
+                detectPortItems.Add(new DetectionPort()
+                {
+                    Detection = item,
+                    Port = sp
+                });
+
+                foreach (var assist in item.AssistList)
+                {
+                    var aConf = assist.Assist.PortConfig;
+
+                    //保证辅助设备多路公用一个port
+                    var quaryAssist = AssistPortItems.SingleOrDefault(x => x.Assist == assist.Assist);
+                    if (quaryAssist != null)
+                    {
+                        continue;
+                    }
+
+                    SerialPort assistsp = new SerialPort();
+                    assistsp.PortName = aConf.PortName.ToString();
+                    assistsp.BaudRate = aConf.BaudRate;
+                    assistsp.Parity = aConf.Parity;
+                    assistsp.DataBits = aConf.DataBits;
+                    assistsp.StopBits = aConf.StopBits;
+
+                    AssistPortItems.Add(new AssistPort()
+                    {
+                        Port = assistsp,
+                        Assist = assist.Assist
+                    });
+                }
+            }
+        }
+
+        /// <summary>
+        /// 获取配置文件的串口列表
+        /// </summary>
+        /// <returns></returns>
+        public static List<PortConfig> GetPortConfigItems()
+        {
+            if (portConfigItems != null)
+                return portConfigItems;
+
+            //如果没有Port.xml文件，则搜索Detection.xml文件，根据此文件结构创建port.xml文件
+            List<PortConfig> Results = new List<PortConfig>();
+            Results = Helpers.XmlHelper.DeserializerXml<List<PortConfig>>("Port.xml");
+            if (Results == null)
+            {
+                List<Detection> det = Helpers.XmlHelper.DeserializerXml<List<Detection>>("Detection.xml");
+                if (det != null)
+                {
+                    Results = new List<PortConfig>();
+
+                    foreach (var detItem in det)
+                    {
+                        if (detItem.PortConfig == null)
+                            continue;
+                        Results.Add(detItem.PortConfig);
+
+                        if (detItem.AssistList == null)
+                            continue;
+                        foreach (var assistItem in detItem.AssistList)
+                        {
+                            if (assistItem.Assist.PortConfig == null)
+                                continue;
+
+                            //此处可以忽略，在循环完毕后，删除同类项。但需要创建比较器
+                            List<PortConfig> tempds = new List<PortConfig>();
+                            foreach (var ds in Results)
+                            {
+                                var comp = Helpers.DataHelper.EntityComparison(ds, assistItem.Assist.PortConfig);
+                                if (!comp)
+                                    tempds.Add(assistItem.Assist.PortConfig);
+                            }
+                            tempds.ForEach(x => { Results.Insert(Results.Count(), x); });
+                        }
+                    }
+
+                    //var kkkk = Items.Distinct(System.Collections.Generic.Comparer.Default);
+                }
+            }
+            portConfigItems = Results;
+            return Results;
+        }
+
 
         /// <summary>
         /// 获取指定检测项目串口信息

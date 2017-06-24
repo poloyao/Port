@@ -23,11 +23,10 @@
             <dxlc:DataLayoutItem Binding="{Binding DataBits}" Label="数据位"/>
             <dxlc:DataLayoutItem Binding="{Binding Parity}" Label="奇偶校验" />
             <dxlc:DataLayoutItem Binding="{Binding StopBits}" Label="停止位"/>
-
             <dxlc:DataLayoutItem Binding="{Binding DeviceType}" Label="设备类型"/>
             <dxlc:DataLayoutItem Binding="{Binding Protocol}" Label="协议厂商"/>
-
-            <dxlc:DataLayoutItem Binding="{Binding RouteTotal}" Label="支持路数"/>
+            <dxlc:DataLayoutItem Binding="{Binding RouteTotal}" Label="支持路数">
+            </dxlc:DataLayoutItem>
 
         </dxlc:DataLayoutControl>
 

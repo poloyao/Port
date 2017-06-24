@@ -12,61 +12,93 @@
              
              d:DesignHeight="500" d:DesignWidth="600">
     <!--DataContext="{dxmvvm:ViewModelSource Type=ViewModels:SettingDetectViewModel}"-->
+    <dxmvvm:Interaction.Behaviors>
+        <dx:WindowedDocumentUIService  DocumentShowMode="Dialog">
+            <dx:WindowedDocumentUIService.WindowStyle>
+                <Style TargetType="dx:DXWindow">
+                    <Setter Property="Width" Value="500"/>
+                    <Setter Property="Height" Value="400"/>
+                    <!--<Setter Property="ResizeMode" Value="NoResize" />
+                    <Setter Property="ShowIcon" Value="False"/>-->
+                </Style>
+            </dx:WindowedDocumentUIService.WindowStyle>
+        </dx:WindowedDocumentUIService>
+    </dxmvvm:Interaction.Behaviors>
+
+
     <Grid>
         <dxlc:LayoutControl DataContext="{Binding}">
-                            <dxlc:LayoutGroup Orientation="Vertical">
-                                <dxlc:LayoutGroup Orientation="Vertical" View="GroupBox" Header="{Binding Name}" DataContext="{Binding PortConfig}">
-                                    <dxlc:LayoutGroup>
-                                        <dxlc:LayoutItem Label="名称">
-                                            <dxe:TextEdit EditValue="{Binding Name}"/>
-                                        </dxlc:LayoutItem>
-                                        <dxlc:LayoutItem Label="串口">
-                                            <dxe:TextEdit EditValue="{Binding PortName}"/>
-                                        </dxlc:LayoutItem>
-                                        <dxlc:LayoutItem Label="波特率">
-                                            <dxe:TextEdit EditValue="{Binding BaudRate}"/>
-                                        </dxlc:LayoutItem>
-                                        <dxlc:LayoutItem Label="数据位">
-                                            <dxe:TextEdit EditValue="{Binding DataBits}"/>
-                                        </dxlc:LayoutItem>
-                                    </dxlc:LayoutGroup>
-                                    <dxlc:LayoutGroup>
-                                        <dxlc:LayoutItem Label="奇偶校验">
-                                            <dxe:TextEdit EditValue="{Binding Parity}"/>
-                                        </dxlc:LayoutItem>
-                                        <dxlc:LayoutItem Label="停止位">
-                                            <dxe:TextEdit EditValue="{Binding StopBits}"/>
-                                        </dxlc:LayoutItem>
-                                        <dxlc:LayoutItem Label="设备类型">
-                                            <dxe:TextEdit EditValue="{Binding DeviceType}"/>
-                                        </dxlc:LayoutItem>
-                                        <dxlc:LayoutItem Label="协议厂商">
-                                            <dxe:TextEdit EditValue="{Binding Protocol}"/>
-                                        </dxlc:LayoutItem>
-                                    </dxlc:LayoutGroup>                                   
-                                </dxlc:LayoutGroup>
+            <dxlc:LayoutGroup Orientation="Vertical">
+                <dxlc:LayoutGroup Orientation="Vertical" View="GroupBox" Header="{Binding Name}" DataContext="{Binding Detection.PortConfig}">
+                    <dxlc:LayoutGroup>
+                        <dxlc:LayoutItem Label="名称">
+                            <dxe:TextEdit EditValue="{Binding Name}"/>
+                        </dxlc:LayoutItem>
+                        <dxlc:LayoutItem Label="串口">
+                            <dxe:TextEdit EditValue="{Binding PortName}"/>
+                        </dxlc:LayoutItem>
+                        <dxlc:LayoutItem Label="波特率">
+                            <dxe:TextEdit EditValue="{Binding BaudRate}"/>
+                        </dxlc:LayoutItem>
+                        <dxlc:LayoutItem Label="数据位">
+                            <dxe:TextEdit EditValue="{Binding DataBits}"/>
+                        </dxlc:LayoutItem>
+                    </dxlc:LayoutGroup>
+                    <dxlc:LayoutGroup>
+                        <dxlc:LayoutItem Label="奇偶校验">
+                            <dxe:TextEdit EditValue="{Binding Parity}"/>
+                        </dxlc:LayoutItem>
+                        <dxlc:LayoutItem Label="停止位">
+                            <dxe:TextEdit EditValue="{Binding StopBits}"/>
+                        </dxlc:LayoutItem>
+                        <dxlc:LayoutItem Label="设备类型">
+                            <dxe:TextEdit EditValue="{Binding DeviceType}"/>
+                        </dxlc:LayoutItem>
+                        <dxlc:LayoutItem Label="协议厂商">
+                            <dxe:TextEdit EditValue="{Binding Protocol}"/>
+                        </dxlc:LayoutItem>
+                    </dxlc:LayoutGroup>
+                </dxlc:LayoutGroup>
+                
+                <dxlc:LayoutGroup Orientation="Vertical" Width="250" HorizontalAlignment="Right">
+                    <dxlc:LayoutGroup>
+                        <dxlc:LayoutItem >
+                        </dxlc:LayoutItem>
+                        <dxlc:LayoutItem >
+                            <dx:SimpleButton Content="更改检测项目配置" />
+                        </dxlc:LayoutItem>
+                    </dxlc:LayoutGroup>
+                    <dxlc:LayoutGroup>
+                        <dxlc:LayoutItem >
+                            <dx:SimpleButton Content="删除辅助设备" />
+                        </dxlc:LayoutItem>
+                        <dxlc:LayoutItem >
+                            <dx:SimpleButton Content="添加辅助设备" Command="{Binding AddCommand}"/>
+                        </dxlc:LayoutItem>
+                    </dxlc:LayoutGroup>
+                </dxlc:LayoutGroup>
 
-                                <dxlc:LayoutGroup Orientation="Vertical">
-                                    <dxg:GridControl ItemsSource="{Binding AssistList}" AutoGenerateColumns="KeepOld"  SelectionMode="Row">
-                                        <dxg:GridColumn FieldName="RouteNumber" IsSmart="True" />
-                                        <dxg:GridColumn FieldName="Assist.DeviceType" IsSmart="True" />
-                                        <dxg:GridColumn FieldName="Assist.PortConfig.Name" IsSmart="True" />
-                                        <dxg:GridColumn FieldName="Assist.PortConfig.PortName" IsSmart="True" />
-                                        <dxg:GridColumn FieldName="Assist.PortConfig.BaudRate" IsSmart="True" />
-                                        <dxg:GridColumn FieldName="Assist.PortConfig.DeviceType" IsSmart="True" />
-                                        <dxg:GridColumn FieldName="Assist.PortConfig.Protocol" IsSmart="True" />
-                                        <dxg:GridControl.View>
-                                            <dxg:TableView  AutoWidth="True" AllowEditing="False"/>
-                                        </dxg:GridControl.View>
-                                    </dxg:GridControl>
-                                    <dxlc:LayoutItem>
-                                        <Button Content="提交" Click="Button_Click" Command="{Binding AddDerrviceItemCommand}">
-                                        </Button>
-                                    </dxlc:LayoutItem>
-                                </dxlc:LayoutGroup>
+                <dxlc:LayoutGroup Orientation="Vertical">
+                    <dxg:GridControl x:Name="gird" ItemsSource="{Binding Detection.AssistList}" AutoGenerateColumns="KeepOld"  SelectionMode="Row">
+                        <dxmvvm:Interaction.Behaviors>
+                            <dxmvvm:EventToCommand EventName="MouseDoubleClick" Command="{Binding ShowItemCommand}" CommandParameter="{Binding ElementName=gird,Path=SelectedItem}"/>
+                        </dxmvvm:Interaction.Behaviors>
+                        <dxg:GridColumn FieldName="RouteNumber" IsSmart="True" />
+                        <dxg:GridColumn FieldName="Assist.DeviceType" IsSmart="True" />
+                        <dxg:GridColumn FieldName="Assist.PortConfig.Name" IsSmart="True" />
+                        <dxg:GridColumn FieldName="Assist.PortConfig.PortName" IsSmart="True" />
+                        <dxg:GridColumn FieldName="Assist.PortConfig.BaudRate" IsSmart="True" />
+                        <dxg:GridColumn FieldName="Assist.PortConfig.DeviceType" IsSmart="True" />
+                        <dxg:GridColumn FieldName="Assist.PortConfig.Protocol" IsSmart="True" />
+                        <dxg:GridControl.View>
+                            <dxg:TableView  AutoWidth="True" AllowEditing="False"/>
+                        </dxg:GridControl.View>
+                    </dxg:GridControl>
+                  
+                </dxlc:LayoutGroup>
 
-                            </dxlc:LayoutGroup>
-                        </dxlc:LayoutControl>
+            </dxlc:LayoutGroup>
+        </dxlc:LayoutControl>
 
     </Grid>
 </UserControl>

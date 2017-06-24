@@ -33,7 +33,7 @@ namespace YZXDMS.DataProvider
         {
 
             var portItems = Helpers.DeviceHelper.AssistPortItems;
-            var photoelecticeItems = portItems.Where(x => x.Assist.DeviceType == AssistDeviceType.Photoelectric).ToList();
+            var photoelecticeItems = portItems.Where(x => x.Assist.DeviceType == AssistDeviceType.光电设备).ToList();
             
 
             foreach (var phots in photoelecticeItems)

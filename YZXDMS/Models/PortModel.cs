@@ -143,7 +143,8 @@ namespace YZXDMS.Models
         /// 支持路数
         /// </summary>
         [Display(Name = "支持路数")]
-        public int RouteTotal { get; set; }
+
+        public int RouteTotal { get; set; } = 1;
         /// <summary>
         /// 协议厂家
         /// </summary>
@@ -190,34 +191,41 @@ namespace YZXDMS.Models
         }
     }
 
+
+
+
     /// <summary>
     /// 辅助设备类型
     /// </summary>
     public enum AssistDeviceType
     {
-        /// <summary>
-        /// 灯屏设备
-        /// </summary>
-        LatticeScreen,
-        /// <summary>
-        /// 光电设备
-        /// </summary>
-        Photoelectric,
-        /// <summary>
-        /// 录像设备
-        /// </summary>
-        Video,
-        /// <summary>
-        /// 拍照设备
-        /// </summary>
-        Camera
+        灯屏设备,
+        光电设备,
+        录像设备,
+        拍照设备
+        ///// <summary>
+        ///// 灯屏设备
+        ///// </summary>
+        //LatticeScreen,
+        ///// <summary>
+        ///// 光电设备
+        ///// </summary>
+        //Photoelectric,
+        ///// <summary>
+        ///// 录像设备
+        ///// </summary>
+        //Video,
+        ///// <summary>
+        ///// 拍照设备
+        ///// </summary>
+        //Camera
     }
 
 
     /// <summary>
     /// 辅助设备
     /// </summary>
-    public class AssistDevice
+    public class AssistDevice:ICloneable
     {
         /// <summary>
         /// 串口配置
@@ -226,6 +234,7 @@ namespace YZXDMS.Models
         /// <summary>
         /// 辅助类型
         /// </summary>
+        [Display(Name = "辅助设备类型")]
         public AssistDeviceType DeviceType { get; set; }
 
         ///// <summary>
@@ -236,9 +245,18 @@ namespace YZXDMS.Models
         //public int UseOrder { get; set; }
 
 
-    }
+        public object Clone()
+        {
+            AssistDevice result = new AssistDevice();
+            result.DeviceType = this.DeviceType;
+            result.PortConfig = (PortConfig)this.PortConfig.Clone();
+            return result;
+        }
 
-    public class AssistRoute
+    }
+    
+
+    public class AssistRoute:ICloneable
     {
         /// <summary>
         /// 辅助设备
@@ -250,8 +268,15 @@ namespace YZXDMS.Models
         /// </summary>
         [Display(Name = "调用路数")]
         public int RouteNumber { get; set; }
-        
 
+        public object Clone()
+        {
+            AssistRoute result = new AssistRoute();
+            //需要关联，直接引用
+            result.Assist = this.Assist;//(AssistDevice)this.Assist.Clone();
+            result.RouteNumber = this.RouteNumber;
+            return result;
+        }
     }
 
     /// <summary>
@@ -272,6 +297,9 @@ namespace YZXDMS.Models
         /// 辅助设备
         /// </summary>
         public List<AssistRoute> AssistList { get; set; }
+
+      
+
     }
 
 

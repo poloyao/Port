@@ -9,93 +9,76 @@ using System.Linq;
 
 namespace YZXDMS.ViewModels
 {
+    /// <summary>
+    /// 设置检测项目关联设备
+    /// </summary>
     [POCOViewModel]
     public class SettingLinkPortViewModel
     {
         protected IDocumentManagerService documentManagerService { get { return this.GetService<IDocumentManagerService>(); } }
-        public List<Detection> DetectionItems { get; set; } = new List<Detection>();
+        public List<VMDetection> DetectionItems { get; set; } = new List<VMDetection>();
 
 
         public SettingLinkPortViewModel()
         {
-            DetectionItems.Add(new Detection()
+            var protConfig = Helpers.DeviceHelper.GetPortConfigItems();
+
+            //根据枚举创建检测项目列表
+            foreach (var dt in Enum.GetValues(typeof(DetectionType)))
             {
-                Name = "侧滑",
-                DetectionType = DetectionType.侧滑,
-                PortConfig = PortConfig.Create(),
-                AssistList = new List<AssistRoute>()
+                var vmd = new VMDetection()
                 {
-                    new AssistRoute()
+                    Detection = new Detection()
                     {
-                        RouteNumber = 1,
-                        Assist = new AssistDevice()
+                        Name = dt.ToString(),
+                        DetectionType = (DetectionType)Enum.Parse(typeof(DetectionType), dt.ToString()),
+                        PortConfig = PortConfig.Create(),
+                        AssistList = new List<AssistRoute>()
                         {
-                            DeviceType = AssistDeviceType.Photoelectric,
-                            PortConfig = new PortConfig()
+                            new AssistRoute()
+                            {
+                                RouteNumber = 2,
+                                Assist = new AssistDevice()
+                                {
+                                    DeviceType = AssistDeviceType.光电设备,
+                                    PortConfig = protConfig.Last()
+                                }
+                            }
                         }
                     }
-                }
-            });
-            DetectionItems.Add(new Detection()
-            {
-                Name = "制动",
-                DetectionType = DetectionType.制动
-            });
-            DetectionItems.Add(new Detection()
-            {
-                Name = "功率",
-                DetectionType = DetectionType.功率
-            });
-            DetectionItems.Add(new Detection()
-            {
-                Name = "声级计",
-                DetectionType = DetectionType.声级计
-            });
-            DetectionItems.Add(new Detection()
-            {
-                Name = "外检",
-                DetectionType = DetectionType.外检
-            });
-            DetectionItems.Add(new Detection()
-            {
-                Name = "尾气",
-                DetectionType = DetectionType.尾气
-            });
-            DetectionItems.Add(new Detection()
-            {
-                Name = "底盘",
-                DetectionType = DetectionType.底盘
-            });
-            DetectionItems.Add(new Detection()
-            {
-                Name = "底盘间隙",
-                DetectionType = DetectionType.底盘间隙
-            });
-            DetectionItems.Add(new Detection()
-            {
-                Name = "探平衡仪",
-                DetectionType = DetectionType.探平衡仪
-            });
-            DetectionItems.Add(new Detection()
-            {
-                Name = "油耗",
-                DetectionType = DetectionType.油耗
-            });
-            DetectionItems.Add(new Detection()
-            {
-                Name = "灯光",
-                DetectionType = DetectionType.灯光
-            });
-            DetectionItems.Add(new Detection()
-            {
-                Name = "称重",
-                DetectionType = DetectionType.称重
-            });
-            DetectionItems.Add(new Detection()
-            {
-                Name = "速度",
-                DetectionType = DetectionType.速度
-            });
+                };
+                DetectionItems.Add(vmd);
+            }
+
+            // Helpers.XmlHelper.serializeToXml(DetectionItems, "DetectionItems.xml");
+
+            //var oooii = Helpers.XmlHelper.DeserializerXml<List<VMDetection>>("DetectionItems.xml");
+
+            // DetectionItems = oooii;
+
+
+            //DetectionItems.Add(new VMDetection()
+            //{
+            //    Detection = new Detection()
+            //    {
+            //        Name = "侧滑",
+            //        DetectionType = DetectionType.侧滑,
+            //        PortConfig = PortConfig.Create(),
+            //        AssistList = new List<AssistRoute>()
+            //    {
+            //        new AssistRoute()
+            //        {
+            //            RouteNumber = 2,
+            //            Assist = new AssistDevice()
+            //            {
+            //                DeviceType = AssistDeviceType.光电设备,
+            //                PortConfig = new PortConfig()
+            //            }
+            //        }
+            //    }
+            //    }
+
+            //});
 
         }
 
@@ -152,80 +135,63 @@ namespace YZXDMS.ViewModels
 
 
 
-        // public ObservableCollection<AssistDeviceOrder> AssistDeviceOrderItems { get; set; } = new ObservableCollection<AssistDeviceOrder>();
-
-        //public SettingLinkPortViewModel()
-        //{
-        //    InitPort();
-        //    AssistDeviceOrderItems = new ObservableCollection<AssistDeviceOrder>()
-        //    {
-        //        new AssistDeviceOrder()
-        //        {
-        //            Index = 0,
-        //            AssistDevice = new AssistDeviceModel()
-        //            {
-        //                Name = "光电1",
-        //                AssistType = AssistDeviceType.Photoelectric,
-        //            }
-        //        }
-        //    };
-        //}
-
-        //void InitPort()
-        //{
-
-        //    var port = new System.IO.Ports.SerialPort("COM1", 9600, System.IO.Ports.Parity.None, 8, System.IO.Ports.StopBits.One);
-
-
-        //    DetectionItems.Add(new DetectionModel()
-        //    {
-        //        Name = "速度",
-        //        DType = DetectionType.Speed,
-        //        config = new PortConfigModel()
-        //        {
-        //            DeviceProperty = DeviceProperty.检测设备,
-        //            StartMode = StartMode.即用即关,
-        //            Protocol = "XX协议",//new ProtocolModel() { Name = "XX协议" },
-        //            Port = new System.IO.Ports.SerialPort("COM3", 9600, System.IO.Ports.Parity.None, 8, System.IO.Ports.StopBits.One)
-        //        },
-        //        AssistList = new List<AssistDeviceOrder>()
-        //        {
-        //            new AssistDeviceOrder()
-        //            {
-        //                AssistDevice = new AssistDeviceModel()
-        //                {
-        //                    AssistType = AssistDeviceType.Photoelectric,
-        //                    Name = "速度光电",
-        //                    config = new PortConfigModel()
-        //                    {
-        //                        DeviceProperty = DeviceProperty.辅助设备,
-        //                        StartMode = StartMode.保持开启,
-        //                        Protocol = "XX协议",//new ProtocolModel() {Name = "xx光电协议" },
-        //                        Port = port//new System.IO.Ports.SerialPort("COM1", 9600, System.IO.Ports.Parity.None, 8, System.IO.Ports.StopBits.One)
-        //                    }
-        //                }
-        //            }
-        //        }
-        //    });
-
-
-        //    Items.Add(new linkModel() { ID = 1, Name = "1" });
-        //    Items.Add(new linkModel() { ID = 2, Name = "2",ParentId = 1 });
-        //    Items.Add(new linkModel() { ID = 3, Name = "3", ParentId = 1 });
-        //    Items.Add(new linkModel() { ID = 4, Name = "4", ParentId = 5 });
-        //    Items.Add(new linkModel() { ID = 5, Name = "5" });
-        //    Items.Add(new linkModel() { ID = 6, Name = "6" });
-
-        //}
+      
     }
 
-
-    public class linkModel
+    
+    public class VMDetection : ViewModelBase
     {
-        public int ID { get; set; }
 
-        public int ParentId { get; set; }
+        protected IDocumentManagerService documentManagerService { get { return this.GetService<IDocumentManagerService>(); } }
+        public Detection Detection { get; set; }
+        [DevExpress.Mvvm.DataAnnotations.Command(true)]
+        public void Add()
+        {
+            IDocument doc = documentManagerService.CreateDocument("SelectAssistView", null, this);
+            doc.Id = documentManagerService.Documents.Count();
+            doc.Title = "追加辅助设备";
+            var VM = (SelectAssistViewModel)doc.Content;
+            doc.Show();
 
-        public string Name { get; set; }
+            if (VM.IsChanged)
+            {
+                Detection.AssistList.Add(new AssistRoute()
+                {
+                    RouteNumber = VM.Route,
+                    Assist = new AssistDevice()
+                    {
+                        DeviceType = VM.ADT,
+                        PortConfig = VM.PConfig
+                    }
+                });
+            }
+
+        }
+        [Command(CanExecuteMethodName = "CanShowItem")]
+        public void ShowItem(AssistRoute item)
+        {
+            IDocument doc = documentManagerService.CreateDocument("SelectAssistView", item.Clone(), this);
+            doc.Id = documentManagerService.Documents.Count();
+            doc.Title = "辅助设备";
+            var VM = (SelectAssistViewModel)doc.Content;
+            doc.Show();
+
+            if (VM.IsChanged)
+            {
+                item.RouteNumber = VM.Route;
+                item.Assist.DeviceType = VM.ADT;
+                item.Assist.PortConfig = VM.PConfig;
+            }
+        }
+
+        public bool CanShowItem(AssistRoute item)
+        {
+            if (item == null)
+                return false;
+            return true;
+        }
+
     }
+
+
 }

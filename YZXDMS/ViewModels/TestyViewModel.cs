@@ -26,7 +26,7 @@ namespace YZXDMS.ViewModels
                         RouteNumber = 1,
                         Assist = new AssistDevice()
                         {
-                            DeviceType = AssistDeviceType.Photoelectric,
+                            DeviceType = AssistDeviceType.光电设备,
                             PortConfig = new PortConfig()
                         }
                     }
