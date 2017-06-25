@@ -232,14 +232,14 @@ namespace YZXDMS.Helpers
 
                 foreach (var assist in item.AssistList)
                 {
-                    var aConf = assist.Assist.PortConfig;
+                    var aConf = assist.PortConfig;
 
                     //保证辅助设备多路公用一个port
-                    var quaryAssist = AssistPortItems.SingleOrDefault(x => x.Assist == assist.Assist);
-                    if (quaryAssist != null)
-                    {
-                        continue;
-                    }
+                    //var quaryAssist = AssistPortItems.SingleOrDefault(x => x.Assist == assist);
+                    //if (quaryAssist != null)
+                    //{
+                    //    continue;
+                    //}
 
                     SerialPort assistsp = new SerialPort();
                     assistsp.PortName = aConf.PortName.ToString();
@@ -247,11 +247,33 @@ namespace YZXDMS.Helpers
                     assistsp.Parity = aConf.Parity;
                     assistsp.DataBits = aConf.DataBits;
                     assistsp.StopBits = aConf.StopBits;
+                    
+
+                    var ad = new AssistDevice();
+                    ad.PortConfig = assist.PortConfig;
+                    switch (assist.PortConfig.DeviceType.ToString())
+                    {
+                        case "灯屏设备":
+                            ad.DeviceType = AssistDeviceType.灯屏设备;
+                            break;
+                        case "光电设备":
+                            ad.DeviceType = AssistDeviceType.光电设备;
+                            break;
+                        case "录像设备":
+                            ad.DeviceType = AssistDeviceType.录像设备;
+                            break;
+                        case "拍照设备":
+                            ad.DeviceType = AssistDeviceType.拍照设备;
+                            break;
+                        default:
+                            break;
+                    }
+                    
 
                     AssistPortItems.Add(new AssistPort()
                     {
                         Port = assistsp,
-                        Assist = assist.Assist
+                        Assist = ad
                     });
                 }
             }
@@ -263,49 +285,52 @@ namespace YZXDMS.Helpers
         /// <returns></returns>
         public static List<PortConfig> GetPortConfigItems()
         {
-            if (portConfigItems != null)
-                return portConfigItems;
+            //if (portConfigItems != null)
+            //    return portConfigItems;
 
             //如果没有Port.xml文件，则搜索Detection.xml文件，根据此文件结构创建port.xml文件
             List<PortConfig> Results = new List<PortConfig>();
             Results = Helpers.XmlHelper.DeserializerXml<List<PortConfig>>("Port.xml");
-            if (Results == null)
-            {
-                List<Detection> det = Helpers.XmlHelper.DeserializerXml<List<Detection>>("Detection.xml");
-                if (det != null)
-                {
-                    Results = new List<PortConfig>();
-
-                    foreach (var detItem in det)
-                    {
-                        if (detItem.PortConfig == null)
-                            continue;
-                        Results.Add(detItem.PortConfig);
-
-                        if (detItem.AssistList == null)
-                            continue;
-                        foreach (var assistItem in detItem.AssistList)
-                        {
-                            if (assistItem.Assist.PortConfig == null)
-                                continue;
-
-                            //此处可以忽略，在循环完毕后，删除同类项。但需要创建比较器
-                            List<PortConfig> tempds = new List<PortConfig>();
-                            foreach (var ds in Results)
-                            {
-                                var comp = Helpers.DataHelper.EntityComparison(ds, assistItem.Assist.PortConfig);
-                                if (!comp)
-                                    tempds.Add(assistItem.Assist.PortConfig);
-                            }
-                            tempds.ForEach(x => { Results.Insert(Results.Count(), x); });
-                        }
-                    }
-
-                    //var kkkk = Items.Distinct(System.Collections.Generic.Comparer.Default);
-                }
-            }
             portConfigItems = Results;
             return Results;
+
+
+            //if (Results == null)
+            //{
+            //    List<Detection> det = Helpers.XmlHelper.DeserializerXml<List<Detection>>("Detection.xml");
+            //    if (det != null)
+            //    {
+            //        Results = new List<PortConfig>();
+
+            //        foreach (var detItem in det)
+            //        {
+            //            if (detItem.PortConfig == null)
+            //                continue;
+            //            Results.Add(detItem.PortConfig);
+
+            //            if (detItem.AssistList == null)
+            //                continue;
+            //            foreach (var assistItem in detItem.AssistList)
+            //            {
+            //                if (assistItem.Assist.PortConfig == null)
+            //                    continue;
+
+            //                //此处可以忽略，在循环完毕后，删除同类项。但需要创建比较器
+            //                List<PortConfig> tempds = new List<PortConfig>();
+            //                foreach (var ds in Results)
+            //                {
+            //                    var comp = Helpers.DataHelper.EntityComparison(ds, assistItem.Assist.PortConfig);
+            //                    if (!comp)
+            //                        tempds.Add(assistItem.Assist.PortConfig);
+            //                }
+            //                tempds.ForEach(x => { Results.Insert(Results.Count(), x); });
+            //            }
+            //        }
+
+            //        //var kkkk = Items.Distinct(System.Collections.Generic.Comparer.Default);
+            //    }
+            //}
+
         }
 
 

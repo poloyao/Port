@@ -152,24 +152,9 @@ namespace YZXDMS.DataProvider
         /// <returns></returns>
         public static PhotoelectricModel GetPhotoelectric(AssistRoute assistRoute)
         {
-            return items.Single(x => x.device == assistRoute.Assist && x.Route == assistRoute.RouteNumber);
+            return items.Single(x => x.device.PortConfig == assistRoute.PortConfig && x.Route == assistRoute.RouteNumber);
         }
-
-        ///// <summary>
-        ///// 获取指定灯光的当前结果
-        ///// </summary>
-        ///// <param name="device"></param>
-        ///// <returns></returns>
-        //public static bool GetIsTrigger(AssistDevice device)
-        //{
-        //    return items.Single(x => x.device == device).IsTrigger;
-        //}
-
-        //public static PhotoelectricModel GetPhotoelectricModel(AssistDevice device)
-        //{
-        //    return items.Single(x => x.device == device && x.Route == 1);
-        //    //return new PhotoelectricModel();
-        //}
+        
     }
 
 

@@ -32,7 +32,7 @@
                 <dxlc:LayoutGroup Orientation="Vertical" View="GroupBox" Header="{Binding Name}" DataContext="{Binding Detection.PortConfig}">
                     <dxlc:LayoutGroup>
                         <dxlc:LayoutItem Label="名称">
-                            <dxe:TextEdit EditValue="{Binding Name}"/>
+                            <dxe:TextEdit EditValue="{Binding Name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
                         </dxlc:LayoutItem>
                         <dxlc:LayoutItem Label="串口">
                             <dxe:TextEdit EditValue="{Binding PortName}"/>
@@ -63,14 +63,15 @@
                 <dxlc:LayoutGroup Orientation="Vertical" Width="250" HorizontalAlignment="Right">
                     <dxlc:LayoutGroup>
                         <dxlc:LayoutItem >
+                            <dx:SimpleButton Content="生成配置清单" Command="{Binding UpdateXmlConfigCommand}" />
                         </dxlc:LayoutItem>
                         <dxlc:LayoutItem >
-                            <dx:SimpleButton Content="更改检测项目配置" />
+                            <dx:SimpleButton Content="更改主检测设备" Command="{Binding UpdateMainDeviceCommand}"/>
                         </dxlc:LayoutItem>
                     </dxlc:LayoutGroup>
                     <dxlc:LayoutGroup>
                         <dxlc:LayoutItem >
-                            <dx:SimpleButton Content="删除辅助设备" />
+                            <dx:SimpleButton Content="删除辅助设备" Command="{Binding DeleteItemCommand}" CommandParameter="{Binding ElementName=gird,Path=SelectedItem}"/>
                         </dxlc:LayoutItem>
                         <dxlc:LayoutItem >
                             <dx:SimpleButton Content="添加辅助设备" Command="{Binding AddCommand}"/>
@@ -79,17 +80,18 @@
                 </dxlc:LayoutGroup>
 
                 <dxlc:LayoutGroup Orientation="Vertical">
-                    <dxg:GridControl x:Name="gird" ItemsSource="{Binding Detection.AssistList}" AutoGenerateColumns="KeepOld"  SelectionMode="Row">
+                    <dxg:GridControl x:Name="gird" ItemsSource="{Binding Detection.AssistList}"
+                                     AutoGenerateColumns="KeepOld"  SelectionMode="Row">
                         <dxmvvm:Interaction.Behaviors>
                             <dxmvvm:EventToCommand EventName="MouseDoubleClick" Command="{Binding ShowItemCommand}" CommandParameter="{Binding ElementName=gird,Path=SelectedItem}"/>
                         </dxmvvm:Interaction.Behaviors>
+                        <dxg:GridColumn FieldName="PortConfig.Name" IsSmart="True" />
+                        <dxg:GridColumn FieldName="PortConfig.DeviceType" IsSmart="True" />
                         <dxg:GridColumn FieldName="RouteNumber" IsSmart="True" />
-                        <dxg:GridColumn FieldName="Assist.DeviceType" IsSmart="True" />
-                        <dxg:GridColumn FieldName="Assist.PortConfig.Name" IsSmart="True" />
-                        <dxg:GridColumn FieldName="Assist.PortConfig.PortName" IsSmart="True" />
-                        <dxg:GridColumn FieldName="Assist.PortConfig.BaudRate" IsSmart="True" />
-                        <dxg:GridColumn FieldName="Assist.PortConfig.DeviceType" IsSmart="True" />
-                        <dxg:GridColumn FieldName="Assist.PortConfig.Protocol" IsSmart="True" />
+                        
+                        <dxg:GridColumn FieldName="PortConfig.PortName" IsSmart="True" />
+                        <dxg:GridColumn FieldName="PortConfig.BaudRate" IsSmart="True" />
+                        <dxg:GridColumn FieldName="PortConfig.Protocol" IsSmart="True" />
                         <dxg:GridControl.View>
                             <dxg:TableView  AutoWidth="True" AllowEditing="False"/>
                         </dxg:GridControl.View>

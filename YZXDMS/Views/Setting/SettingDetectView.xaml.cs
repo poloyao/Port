@@ -28,6 +28,7 @@ namespace YZXDMS.Views
             InitializeComponent();
             //DataContext = this;
         }
+        
 
         //public object MyDetection
         //{
@@ -41,7 +42,7 @@ namespace YZXDMS.Views
 
         //private static void OnMyDetectionChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         //{
-                
+
         //}
 
         //private void Button_Click(object sender, RoutedEventArgs e)

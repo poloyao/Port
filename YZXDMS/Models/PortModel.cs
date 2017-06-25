@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO.Ports;
+using System.Collections.ObjectModel;
 
 namespace YZXDMS.Models
 {
@@ -73,7 +74,8 @@ namespace YZXDMS.Models
     }
 
     /// <summary>
-    /// 设备类型
+    /// 设备类型,
+    /// 100之前为主设备，100之后未辅助设备
     /// </summary>
     public enum DeviceType
     {
@@ -127,7 +129,7 @@ namespace YZXDMS.Models
         /// 串口名称
         /// </summary>
         [Display(Name = "串口名称")]
-        public string Name { get; set; }
+        public virtual string Name { get; set; }
         [Display(Name = "端口")]
         public PortIndex PortName { get; set; }
         [Display(Name = "波特率")]
@@ -144,7 +146,7 @@ namespace YZXDMS.Models
         /// </summary>
         [Display(Name = "支持路数")]
 
-        public int RouteTotal { get; set; } = 1;
+        public  int RouteTotal { get; set; } = 1;
         /// <summary>
         /// 协议厂家
         /// </summary>
@@ -258,22 +260,28 @@ namespace YZXDMS.Models
 
     public class AssistRoute:ICloneable
     {
+        ///// <summary>
+        ///// 辅助设备,待移除
+        ///// </summary>
+        //public AssistDevice Assist { get; set; }
+
         /// <summary>
-        /// 辅助设备
+        /// 串口配置
         /// </summary>
-        public AssistDevice Assist { get; set; }
+        public PortConfig PortConfig { get; set; }
 
         /// <summary>
         /// 调用路数
         /// </summary>
         [Display(Name = "调用路数")]
-        public int RouteNumber { get; set; }
+        public  int RouteNumber { get; set; }
 
         public object Clone()
         {
             AssistRoute result = new AssistRoute();
             //需要关联，直接引用
-            result.Assist = this.Assist;//(AssistDevice)this.Assist.Clone();
+            //result.Assist = this.Assist;//(AssistDevice)this.Assist.Clone();
+            result.PortConfig = this.PortConfig;
             result.RouteNumber = this.RouteNumber;
             return result;
         }
@@ -296,7 +304,7 @@ namespace YZXDMS.Models
         /// <summary>
         /// 辅助设备
         /// </summary>
-        public List<AssistRoute> AssistList { get; set; }
+        public ObservableCollection<AssistRoute> AssistList { get; set; } = new ObservableCollection<AssistRoute>();
 
       
 

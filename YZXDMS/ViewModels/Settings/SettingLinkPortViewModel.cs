@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using DevExpress.Mvvm.POCO;
 using System.Linq;
+using DevExpress.Xpf.Core;
 
 namespace YZXDMS.ViewModels
 {
@@ -22,31 +23,24 @@ namespace YZXDMS.ViewModels
         public SettingLinkPortViewModel()
         {
             var protConfig = Helpers.DeviceHelper.GetPortConfigItems();
+            //if (protConfig == null)
+            //    return;
+
 
             //根据枚举创建检测项目列表
             foreach (var dt in Enum.GetValues(typeof(DetectionType)))
             {
-                var vmd = new VMDetection()
+                //待修改未获取配置并生成相应实例
+                //也可以在VMDetection中自己获取相关配置
+                //Helpers.XmlHelper.serializeToXml(DetectionItems, "DetectionXXX.xml");
+                var detItem = new Detection()
                 {
-                    Detection = new Detection()
-                    {
-                        Name = dt.ToString(),
-                        DetectionType = (DetectionType)Enum.Parse(typeof(DetectionType), dt.ToString()),
-                        PortConfig = PortConfig.Create(),
-                        AssistList = new List<AssistRoute>()
-                        {
-                            new AssistRoute()
-                            {
-                                RouteNumber = 2,
-                                Assist = new AssistDevice()
-                                {
-                                    DeviceType = AssistDeviceType.光电设备,
-                                    PortConfig = protConfig.Last()
-                                }
-                            }
-                        }
-                    }
+                    Name = dt.ToString(),
+                    DetectionType = (DetectionType)Enum.Parse(typeof(DetectionType), dt.ToString()),
+                    //PortConfig = PortConfig.Create(),
                 };
+                //var vmd = new VMDetection(detItem);
+                var vmd = new VMDetection((DetectionType)Enum.Parse(typeof(DetectionType),dt.ToString()));
                 DetectionItems.Add(vmd);
             }
 
@@ -144,6 +138,76 @@ namespace YZXDMS.ViewModels
 
         protected IDocumentManagerService documentManagerService { get { return this.GetService<IDocumentManagerService>(); } }
         public Detection Detection { get; set; }
+
+        
+
+
+        public VMDetection(Detection detection)
+        {
+            this.Detection = detection;
+
+            var config = Helpers.XmlHelper.DeserializerXml<Detection>($"Detection{Detection.DetectionType}.xml");
+            this.Detection = config;
+
+
+            //if (this.Detection != null)
+            //{
+            //    if (this.Detection.AssistList != null)
+            //    {
+            //        this.AssistList = new ObservableCollection<AssistRoute>(this.Detection.AssistList);
+            //    }
+            //}
+
+
+            //this.Detection = new Detection();
+
+        }
+
+        public VMDetection(DetectionType dt)
+        {
+            var config = Helpers.XmlHelper.DeserializerXml<Detection>($"Detection{dt}.xml");
+            if (config == null)
+                this.Detection = new Detection();
+            else
+                this.Detection = config;
+
+            if (this.Detection.PortConfig == null)
+                this.Detection.PortConfig = new PortConfig();
+
+        }
+
+        /// <summary>
+        /// 更新配置文件
+        /// </summary>
+        [Command(true)]
+        public void UpdateXmlConfig()
+        {
+            var detType = this.Detection.DetectionType;
+            Helpers.XmlHelper.serializeToXml(Detection, $"Detection{detType}.xml");
+        }
+
+        /// <summary>
+        /// 更改主检测设备
+        /// </summary>
+        [Command(true)]
+        public void UpdateMainDevice()
+        {
+            IDocument doc = documentManagerService.CreateDocument("SelectAssistView", null, this);
+            doc.Id = documentManagerService.Documents.Count();
+            doc.Title = "主检测设备";
+            var VM = (SelectAssistViewModel)doc.Content;
+            VM.IsMain = true;
+            doc.Show();
+
+            if (VM.IsChanged)
+            {
+                this.Detection.PortConfig.Name = VM.PConfig.Name;
+            }
+
+        }
+
+
+
         [DevExpress.Mvvm.DataAnnotations.Command(true)]
         public void Add()
         {
@@ -158,11 +222,7 @@ namespace YZXDMS.ViewModels
                 Detection.AssistList.Add(new AssistRoute()
                 {
                     RouteNumber = VM.Route,
-                    Assist = new AssistDevice()
-                    {
-                        DeviceType = VM.ADT,
-                        PortConfig = VM.PConfig
-                    }
+                    PortConfig = VM.PConfig
                 });
             }
 
@@ -178,9 +238,12 @@ namespace YZXDMS.ViewModels
 
             if (VM.IsChanged)
             {
-                item.RouteNumber = VM.Route;
-                item.Assist.DeviceType = VM.ADT;
-                item.Assist.PortConfig = VM.PConfig;
+                Detection.AssistList.Remove(item);
+                Detection.AssistList.Add(new AssistRoute()
+                {
+                    PortConfig = VM.PConfig,
+                    RouteNumber = VM.Route
+                });
             }
         }
 
@@ -189,6 +252,17 @@ namespace YZXDMS.ViewModels
             if (item == null)
                 return false;
             return true;
+        }
+
+        [Command(CanExecuteMethodName = "CanDeleteItem")]
+        public void DeleteItem(AssistRoute item)
+        {
+            DevExpress.Xpf.Core.DXMessageBox.Show($"是否删除{item.PortConfig.Name}?");
+        }
+
+        public bool CanDeleteItem(AssistRoute item)
+        {
+            return item == null ? false : true;
         }
 
     }

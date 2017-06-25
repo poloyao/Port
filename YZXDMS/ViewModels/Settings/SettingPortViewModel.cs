@@ -22,6 +22,9 @@ namespace YZXDMS.ViewModels
         {
 
             var configs = Helpers.DeviceHelper.GetPortConfigItems();
+            //如果回传的值未null 则从新创建xml文件
+            if (configs == null)
+                return;
             Items = new ObservableCollection<PortConfig>(configs);
 
             //如果没有Port.xml文件，则搜索Detection.xml文件，根据此文件结构创建port.xml文件

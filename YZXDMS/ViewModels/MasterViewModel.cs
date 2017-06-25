@@ -67,13 +67,12 @@ namespace YZXDMS.ViewModels
             speed = new SpeedDetection(speedInfo.Port,speedInfo.Detection.PortConfig);
             speed.Init();
 
-            //获取速度模块使用的光电设备
-            //speedInfo.Detection.Assist
-            var gd = speedDetect.AssistList.Single(x => x.Assist.DeviceType == Models.AssistDeviceType.光电设备 && x.RouteNumber == 1);
-            //获取光电状态实例
-            var pm = GlobalPhotoelectric.GetPhotoelectric(gd);
-            //监听光电触发状态
-            pm.PropertyChanged += Pm_PropertyChanged;
+            ////获取速度模块使用的光电设备
+            //var gd = speedDetect.AssistList.Single(x => x.Assist.DeviceType == Models.AssistDeviceType.光电设备 && x.RouteNumber == 1);
+            ////获取光电状态实例
+            //var pm = GlobalPhotoelectric.GetPhotoelectric(gd);
+            ////监听光电触发状态
+            //pm.PropertyChanged += Pm_PropertyChanged;
 
         }
 

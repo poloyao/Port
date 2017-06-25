@@ -17,6 +17,7 @@ namespace YZXDMS.ViewModels
 
         public virtual int Route { get; set; } = 1;
 
+
         public virtual AssistDeviceType ADT { get; set; }
 
 
@@ -27,8 +28,10 @@ namespace YZXDMS.ViewModels
 
 
         public AssistRoute Data { get; set; }
-
-
+        /// <summary>
+        /// 是否是主检测设备
+        /// </summary>
+        public bool IsMain { get; internal set; }
 
         public SelectAssistViewModel()
         {
@@ -41,9 +44,11 @@ namespace YZXDMS.ViewModels
             if (parameter != null)
             {
                 var param = (parameter as AssistRoute);
-                this.ADT = param.Assist.DeviceType;
+                //this.ADT = param.Assist.DeviceType;
                 this.Route = param.RouteNumber;
-                this.PConfig = param.Assist.PortConfig;
+                //this.PConfig = param.Assist.PortConfig;
+
+                this.PConfig = param.PortConfig;
             }
         }
 
@@ -59,11 +64,12 @@ namespace YZXDMS.ViewModels
             Data = new AssistRoute()
             {
                 RouteNumber = Route,
-                Assist = new AssistDevice()
-                {
-                    PortConfig = PConfig,
-                    DeviceType = ADT                    
-                }
+                //Assist = new AssistDevice()
+                //{
+                //    PortConfig = PConfig,
+                //    DeviceType = ADT
+                //},
+                PortConfig = PConfig
             };
             this.IsChanged = true;
         }
