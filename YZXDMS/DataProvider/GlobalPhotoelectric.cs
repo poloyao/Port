@@ -104,19 +104,19 @@ namespace YZXDMS.DataProvider
                         var triggerList = items.Where(x => x.device == phots.Assist).ToList();
                         if (result > 0x00)
                         {            
-                            switch (result)
-                            {
-                                case 0x01:
-                                    triggerList.Single(x => x.Route == 1).IsTrigger = true;
-                                    break;
-                                case 0x02:
-                                    triggerList.Single(x => x.Route == 2).IsTrigger = true;
-                                    break;
-                                case 0x03:
-                                    triggerList.Single(x => x.Route == 1).IsTrigger = true;
-                                    triggerList.Single(x => x.Route == 2).IsTrigger = true;
-                                    break;
-                            }
+                        //    switch (result)
+                        //    {
+                        //        case 0x01:
+                        //            triggerList.Single(x => x.Route == 1).IsTrigger = true;
+                        //            break;
+                        //        case 0x02:
+                        //            triggerList.Single(x => x.Route == 2).IsTrigger = true;
+                        //            break;
+                        //        case 0x03:
+                        //            triggerList.Single(x => x.Route == 1).IsTrigger = true;
+                        //            triggerList.Single(x => x.Route == 2).IsTrigger = true;
+                        //            break;
+                        //    }
                         }
                         else
                         {
@@ -133,6 +133,21 @@ namespace YZXDMS.DataProvider
 
             }
         }
+
+
+        [Flags]
+        public enum PortRoute
+        {
+            通道一 = 0x01,
+            通道二 = 0x02,
+            通道三 = 0x04,
+            通道四 = 0x08,
+            通道五 = 0x10,
+            通道六 = 0x20,
+            通道七 = 0x40,
+            通道八 = 0x80,
+        }
+
 
         /// <summary>
         /// 获取指定光电线路的实例

@@ -3,14 +3,17 @@ using DevExpress.Mvvm.DataAnnotations;
 using DevExpress.Mvvm;
 using System.Collections.Generic;
 using YZXDMS.Models;
+using System.ComponentModel;
+using System.Linq;
+using System.Collections.ObjectModel;
 
 namespace YZXDMS.ViewModels
 {
     [POCOViewModel]
-    public class SelectAssistViewModel:ViewModelBase
+    public class SelectAssistViewModel:ViewModelBase, IDocumentContent
     {
 
-        public List<PortConfig> PortConfigItems { get; set; }
+        public virtual List<PortConfig> PortConfigItems { get; set; }
 
 
         public virtual PortConfig PConfig { get; set; }
@@ -31,11 +34,16 @@ namespace YZXDMS.ViewModels
         /// <summary>
         /// 是否是主检测设备
         /// </summary>
-        public bool IsMain { get; internal set; }
+        public  bool IsMain { get;  set; }
+
+        /// <summary>
+        /// 是否显示设备类型，通道等，与IsMain关联
+        /// </summary>
+        public virtual bool IsVisibility { get; set; }
 
         public SelectAssistViewModel()
         {
-            PortConfigItems = Helpers.DeviceHelper.GetPortConfigItems(); 
+           // PortConfigItems = Helpers.DeviceHelper.GetPortConfigItems(); 
         }
 
         protected override void OnParameterChanged(object parameter)
@@ -43,12 +51,27 @@ namespace YZXDMS.ViewModels
             base.OnParameterChanged(parameter);
             if (parameter != null)
             {
-                var param = (parameter as AssistRoute);
-                //this.ADT = param.Assist.DeviceType;
-                this.Route = param.RouteNumber;
-                //this.PConfig = param.Assist.PortConfig;
+                var param = (parameter as SelectAssistParam);
+                this.IsMain = param.IsMain;
+                if (param.AR != null)
+                {
+                    this.Route = param.AR.RouteNumber;
+                    this.PConfig = param.AR.PortConfig;
+                }
 
-                this.PConfig = param.PortConfig;
+                var pci = Helpers.DeviceHelper.GetPortConfigItems();
+                //PortConfigItems = new ObservableCollection<PortConfig>(pci);//pci.Where(x => (int)x.DeviceType < 100).ToList();
+                if (this.IsMain)
+                {
+                    PortConfigItems = pci.Where(x => (int)x.DeviceType < 100).ToList();
+                }
+                else
+                {
+                    PortConfigItems = pci.Where(x => (int)x.DeviceType > 100).ToList();
+                }
+
+                this.IsVisibility = !this.IsMain;
+
             }
         }
 
@@ -56,7 +79,8 @@ namespace YZXDMS.ViewModels
 
         public void Cancel()
         {
-
+            this.IsChanged = false;
+            DocumentOwner.Close(this, true);
         }
 
         public void Save()
@@ -72,11 +96,38 @@ namespace YZXDMS.ViewModels
                 PortConfig = PConfig
             };
             this.IsChanged = true;
+            DevExpress.Xpf.Core.DXMessageBox.Show("保存成功!");
+            this.DocumentOwner.Close(this);
         }
 
 
 
         //public void Selected()
 
+
+        #region IDocumentContent
+
+        public IDocumentOwner DocumentOwner { get; set; }
+
+        public object Title { get; }
+
+        public void OnClose(CancelEventArgs e)
+        {
+            e.Cancel = false;
+        }
+
+        public void OnDestroy() { }
+
+        #endregion
+
     }
+
+
+    public class SelectAssistParam
+    {
+        public AssistRoute AR { get; set; }
+
+        public bool IsMain { get; set; }
+    }
+
 }

@@ -28,7 +28,12 @@ namespace YZXDMS.Views
             InitializeComponent();
             //DataContext = this;
         }
-        
+
+        private void SimpleButton_Click(object sender, RoutedEventArgs e)
+        {
+            lg.UpdateLayout();
+        }
+
 
         //public object MyDetection
         //{

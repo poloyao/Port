@@ -77,6 +77,7 @@ namespace YZXDMS.Models
     /// 设备类型,
     /// 100之前为主设备，100之后未辅助设备
     /// </summary>
+    [Flags]
     public enum DeviceType
     {
         外检 = 0,
@@ -142,9 +143,9 @@ namespace YZXDMS.Models
         public StopBits StopBits { get; set; } = StopBits.One;
 
         /// <summary>
-        /// 支持路数
+        /// 通道数量
         /// </summary>
-        [Display(Name = "支持路数")]
+        [Display(Name = "通道数量")]
 
         public  int RouteTotal { get; set; } = 1;
         /// <summary>
@@ -271,9 +272,9 @@ namespace YZXDMS.Models
         public PortConfig PortConfig { get; set; }
 
         /// <summary>
-        /// 调用路数
+        /// 调用通道
         /// </summary>
-        [Display(Name = "调用路数")]
+        [Display(Name = "调用通道")]
         public  int RouteNumber { get; set; }
 
         public object Clone()

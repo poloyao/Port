@@ -54,7 +54,7 @@ namespace YZXDMS.Helpers
 
         void InitPort()
         {
-            DetectionItems = XmlHelper.DeserializerXml<List<Detection>>("Detection.xml");
+            //DetectionItems = XmlHelper.DeserializerXml<List<Detection>>("Detection.xml");
 
             CreatPortList();
 

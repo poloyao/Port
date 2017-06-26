@@ -49,7 +49,7 @@ namespace YZXDMS.ViewModels
             //var oooii = Helpers.XmlHelper.DeserializerXml<List<VMDetection>>("DetectionItems.xml");
 
             // DetectionItems = oooii;
-
+             
 
             //DetectionItems.Add(new VMDetection()
             //{
@@ -139,7 +139,7 @@ namespace YZXDMS.ViewModels
         protected IDocumentManagerService documentManagerService { get { return this.GetService<IDocumentManagerService>(); } }
         public Detection Detection { get; set; }
 
-        
+
 
 
         public VMDetection(Detection detection)
@@ -167,7 +167,11 @@ namespace YZXDMS.ViewModels
         {
             var config = Helpers.XmlHelper.DeserializerXml<Detection>($"Detection{dt}.xml");
             if (config == null)
+            {
                 this.Detection = new Detection();
+                this.Detection.Name = dt.ToString();
+                this.Detection.DetectionType = dt;
+            }
             else
                 this.Detection = config;
 
@@ -192,7 +196,9 @@ namespace YZXDMS.ViewModels
         [Command(true)]
         public void UpdateMainDevice()
         {
-            IDocument doc = documentManagerService.CreateDocument("SelectAssistView", null, this);
+            SelectAssistParam sap = new SelectAssistParam();
+            sap.IsMain = true;
+            IDocument doc = documentManagerService.CreateDocument("SelectAssistView", sap, this);
             doc.Id = documentManagerService.Documents.Count();
             doc.Title = "主检测设备";
             var VM = (SelectAssistViewModel)doc.Content;
@@ -201,7 +207,7 @@ namespace YZXDMS.ViewModels
 
             if (VM.IsChanged)
             {
-                this.Detection.PortConfig.Name = VM.PConfig.Name;
+                this.Detection.PortConfig = VM.PConfig;
             }
 
         }
@@ -211,7 +217,9 @@ namespace YZXDMS.ViewModels
         [DevExpress.Mvvm.DataAnnotations.Command(true)]
         public void Add()
         {
-            IDocument doc = documentManagerService.CreateDocument("SelectAssistView", null, this);
+            SelectAssistParam sap = new SelectAssistParam();
+            sap.IsMain = false;
+            IDocument doc = documentManagerService.CreateDocument("SelectAssistView", sap, this);
             doc.Id = documentManagerService.Documents.Count();
             doc.Title = "追加辅助设备";
             var VM = (SelectAssistViewModel)doc.Content;
@@ -230,7 +238,10 @@ namespace YZXDMS.ViewModels
         [Command(CanExecuteMethodName = "CanShowItem")]
         public void ShowItem(AssistRoute item)
         {
-            IDocument doc = documentManagerService.CreateDocument("SelectAssistView", item.Clone(), this);
+            SelectAssistParam sap = new SelectAssistParam();
+            sap.IsMain = false;
+            sap.AR = (AssistRoute)item.Clone();
+            IDocument doc = documentManagerService.CreateDocument("SelectAssistView", sap, this);
             doc.Id = documentManagerService.Documents.Count();
             doc.Title = "辅助设备";
             var VM = (SelectAssistViewModel)doc.Content;

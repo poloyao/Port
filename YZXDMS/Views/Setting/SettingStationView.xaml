@@ -85,13 +85,15 @@
         </Grid.RowDefinitions>
 
         <dxlc:FlowLayoutControl x:Name="FLC"
+                                AllowItemMoving="True"
                                 ItemsSource="{Binding StationItems}"  
                                 Orientation="Horizontal" StretchContent="False"
-                                ItemTemplate="{DynamicResource FlowLayoutControlTemplate}"/>
+                                
+                                ItemTemplate="{DynamicResource FlowLayoutControlTemplate}" />
 
-        <dxlc:FlowLayoutControl ItemsSource="{Binding ElementName=FLC,Path=ItemsSource[0].DetectionItems[0].Detection.AssistList}" 
+        <!--<dxlc:FlowLayoutControl ItemsSource="{Binding ElementName=FLC,Path=ItemsSource[0].DetectionItems[0].Detection.AssistList}" 
                                 Orientation="Horizontal"
                                 Grid.Row="1" 
-                                ItemTemplate="{DynamicResource DetectFlowLayoutControlTemplate}"/>
+                                ItemTemplate="{DynamicResource DetectFlowLayoutControlTemplate}"/>-->
     </Grid>
 </UserControl>

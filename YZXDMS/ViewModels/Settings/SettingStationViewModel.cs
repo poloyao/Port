@@ -17,60 +17,66 @@ namespace YZXDMS.ViewModels
         public SettingStationViewModel()
         {
             StationItems = new List<StationModel>();
-            StationItems.Add(new StationModel()
-            {
-                Name = "1 工位",
-                Description = "描述信息",
-                Index = 1,
-                //DetectionItems = new List<DetectionOrder>()
-                //{
-                //    new DetectionOrder()
-                //    {
-                //        Index = 1,
-                //        Detection = new Detection()
-                //        {
-                //           Name = "速度",
-                //            DetectionType = DetectionType.速度,
-                //            PortConfig = new PortConfig()
-                //            {
-                //                Name = "速度",
-                //                Protocol = "速度协议",
-                //                PortName = PortIndex.COM10,
-                //                BaudRate = 9600,
-                //                Parity = Parity.None,
-                //                DataBits = 8,
-                //                StopBits = StopBits.One,
-                //                DeviceType = DeviceType.速度,
 
-                //            },
-                //            AssistList = new List<AssistRoute>()
-                //            {
-                //                new AssistRoute()
-                //                {
-                //                    RouteNumber = 1,
-                //                    Assist = new AssistDevice()
-                //                    {
-                //                        DeviceType = AssistDeviceType.Photoelectric,
-                //                        PortConfig = new PortConfig()
-                //                        {
-                //                                Name = "光电",
-                //                            Protocol = "光电协议",
-                //                            PortName = PortIndex.COM1,
-                //                            BaudRate  = 9600,
-                //                            Parity = Parity.None,
-                //                            DataBits = 8,
-                //                            StopBits = StopBits.One,
-                //                            DeviceType = DeviceType.光电设备,
-                //                        },
-                //                        RouteTotal = 8
-                //                    }
-                //                }
-                //            }
-                //        }
-                //    }
-                //}
+            StationItems.Add(new StationModel() { Name = "1 工位", });
+            StationItems.Add(new StationModel() { Name = "2 工位", });
+            StationItems.Add(new StationModel() { Name = "3 工位", });
+            StationItems.Add(new StationModel() { Name = "4 工位", });
 
-            });
+            //StationItems.Add(new StationModel()
+            //{
+            //    Name = "1 工位",
+            //    Description = "描述信息",
+            //    Index = 1,
+            //    //DetectionItems = new List<DetectionOrder>()
+            //    //{
+            //    //    new DetectionOrder()
+            //    //    {
+            //    //        Index = 1,
+            //    //        Detection = new Detection()
+            //    //        {
+            //    //           Name = "速度",
+            //    //            DetectionType = DetectionType.速度,
+            //    //            PortConfig = new PortConfig()
+            //    //            {
+            //    //                Name = "速度",
+            //    //                Protocol = "速度协议",
+            //    //                PortName = PortIndex.COM10,
+            //    //                BaudRate = 9600,
+            //    //                Parity = Parity.None,
+            //    //                DataBits = 8,
+            //    //                StopBits = StopBits.One,
+            //    //                DeviceType = DeviceType.速度,
+
+            //    //            },
+            //    //            AssistList = new List<AssistRoute>()
+            //    //            {
+            //    //                new AssistRoute()
+            //    //                {
+            //    //                    RouteNumber = 1,
+            //    //                    Assist = new AssistDevice()
+            //    //                    {
+            //    //                        DeviceType = AssistDeviceType.Photoelectric,
+            //    //                        PortConfig = new PortConfig()
+            //    //                        {
+            //    //                                Name = "光电",
+            //    //                            Protocol = "光电协议",
+            //    //                            PortName = PortIndex.COM1,
+            //    //                            BaudRate  = 9600,
+            //    //                            Parity = Parity.None,
+            //    //                            DataBits = 8,
+            //    //                            StopBits = StopBits.One,
+            //    //                            DeviceType = DeviceType.光电设备,
+            //    //                        },
+            //    //                        RouteTotal = 8
+            //    //                    }
+            //    //                }
+            //    //            }
+            //    //        }
+            //    //    }
+            //    //}
+
+            //});
 
             //StationItems.Add(new StationModel()
             //{

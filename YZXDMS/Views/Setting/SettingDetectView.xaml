@@ -29,7 +29,7 @@
     <Grid>
         <dxlc:LayoutControl DataContext="{Binding}">
             <dxlc:LayoutGroup Orientation="Vertical">
-                <dxlc:LayoutGroup Orientation="Vertical" View="GroupBox" Header="{Binding Name}" DataContext="{Binding Detection.PortConfig}">
+                <dxlc:LayoutGroup x:Name="lg" Orientation="Vertical" View="GroupBox" Header="{Binding Name}" DataContext="{Binding Detection.PortConfig}">
                     <dxlc:LayoutGroup>
                         <dxlc:LayoutItem Label="名称">
                             <dxe:TextEdit EditValue="{Binding Name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
@@ -75,6 +75,13 @@
                         </dxlc:LayoutItem>
                         <dxlc:LayoutItem >
                             <dx:SimpleButton Content="添加辅助设备" Command="{Binding AddCommand}"/>
+                        </dxlc:LayoutItem>
+                    </dxlc:LayoutGroup>
+                    <dxlc:LayoutGroup>
+                        <dxlc:LayoutItem >
+                       </dxlc:LayoutItem>
+                        <dxlc:LayoutItem >
+                            <dx:SimpleButton Content="刷新" Click="SimpleButton_Click" Command="{Binding RefreshCommand}"/>
                         </dxlc:LayoutItem>
                     </dxlc:LayoutGroup>
                 </dxlc:LayoutGroup>

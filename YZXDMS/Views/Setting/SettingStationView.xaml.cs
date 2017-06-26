@@ -23,5 +23,6 @@ namespace YZXDMS.Views
         {
             InitializeComponent();
         }
+        
     }
 }
