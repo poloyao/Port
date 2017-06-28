@@ -29,12 +29,12 @@ namespace ConsoleApplication1
             //foreach (XElement e in childList)
             //    Console.WriteLine(e);
 
-            
+
+
+            SetLatticeScreenMessage("asdasd");
 
 
 
-
-           
 
             Person ps = new Person() { name = "李四", age = 20 };
 
@@ -59,6 +59,35 @@ namespace ConsoleApplication1
 
             Console.Read();
 
+        }
+
+
+        public static void SetLatticeScreenMessage(string message)
+        {
+
+            int angle = 0;
+
+            var messChar = message.ToCharArray();
+            byte[] data = new byte[messChar.Length + 4];
+
+            data[0] = 0x00;
+            data[1] = 0x32;
+            for (int i = 0; i < messChar.Length; i++)
+            {
+                angle += messChar[i];
+                data[i + 2] = (byte)messChar[i];
+            }
+
+            angle = angle ^ 0x5A5A;
+            var angle_1 = (byte)(angle << 24) >> 24;
+            var angle_2 = (byte)angle >> 8;
+
+            data[messChar.Length + 2] = (byte)angle_1;
+            data[messChar.Length + 3] = (byte)angle_2;
+
+            data[messChar.Length + 4] = 0x0D;
+
+            port.Write(data, 0, data.Length);
         }
 
 

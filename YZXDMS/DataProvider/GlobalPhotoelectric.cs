@@ -103,7 +103,10 @@ namespace YZXDMS.DataProvider
 
                         var triggerList = items.Where(x => x.device == phots.Assist).ToList();
                         if (result > 0x00)
-                        {            
+                        {
+
+                            var aaa = result & (byte)Enum.Parse(typeof(PortRoute), PortRoute.通道一.ToString());
+                            //if(result & PortRoute.通道一 > 0x00)
                         //    switch (result)
                         //    {
                         //        case 0x01:

@@ -156,7 +156,23 @@ namespace YZXDMS.ViewModels
             }
         }
 
+        public void GetLatticeScreen()
+        {
+            System.IO.Ports.SerialPort sp = new System.IO.Ports.SerialPort();
+            sp.BaudRate = 9600;
+            sp.DataBits = 8;
+            sp.Parity = System.IO.Ports.Parity.None;
+            sp.PortName = "COM1";
+            sp.StopBits = System.IO.Ports.StopBits.One;
 
+            LatticeScreen ls = new LatticeScreen(sp);
+
+
+            ls.SetLatticeScreenMessage("sdasdasd");
+
+
+
+        }
 
     }
 }
