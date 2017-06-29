@@ -87,7 +87,7 @@ namespace ConsoleApplication1
 
             data[messChar.Length + 4] = 0x0D;
 
-            port.Write(data, 0, data.Length);
+            //port.Write(data, 0, data.Length);
         }
 
 

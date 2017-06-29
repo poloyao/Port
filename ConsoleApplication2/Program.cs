@@ -10,40 +10,10 @@ namespace ConsoleApplication2
     {
         static void Main(string[] args)
         {
-            SetLatticeScreenMessage("ad");
-            xy();
-           // Weigh();
+            //SetLatticeScreenMessage("ad");
         }
 
-
-        public static void CRC16Class()
-        {
-            byte crcHi = 0xff;
-            byte crcrLo = 0xff;
-            for (int i = 0; i < length; i++)
-            {
-
-            }
-
-        }
-
-        public static void xy()
-        {
-            byte[] temp = new byte[] { 0x02, 0x67, 0x45, 0x01, 0x00, 0x02 };
-
-            int angle = 0;
-
-            for (int i = 0; i < temp.Length; i++)
-            {
-                angle += (byte)temp[i];
-            }
-
-            
-            var angleTemp = angle ^ 0x5a5a;
-            var temp1 = (byte)((angleTemp << 24) >> 24);
-            var temp2 = (byte)(angleTemp << 8);
-
-        }
+        
 
 
         public static void SetLatticeScreenMessage(string message)
@@ -60,7 +30,7 @@ namespace ConsoleApplication2
 
 
            // char[] strBuf = new char[256];
-            int angle = 0;
+            uint angle = 0;
 
             var messChar = Encoding.Default.GetBytes(message.ToCharArray());
             
@@ -154,7 +124,7 @@ namespace ConsoleApplication2
             m_strbuff[m_nlenght + 1] = angle_2;
             m_strbuff[m_nlenght + 2] = 0x0d;
 
-
+            
 
 
         }

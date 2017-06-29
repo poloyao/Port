@@ -90,11 +90,13 @@
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\MasterViewModel.cs" />
     <Compile Include="ViewModels\SelectAssistViewModel.cs" />
+    <Compile Include="ViewModels\SettingBaseViewModel.cs" />
     <Compile Include="ViewModels\Settings\PortViewModel.cs" />
     <Compile Include="ViewModels\Settings\SettingDetectViewModel.cs" />
     <Compile Include="ViewModels\Settings\SettingLinkPortViewModel.cs" />
     <Compile Include="ViewModels\Settings\SettingPortViewModel.cs" />
     <Compile Include="ViewModels\Settings\SettingStationViewModel.cs" />
+    <Compile Include="ViewModels\SettingTimeViewModel.cs" />
     <Compile Include="ViewModels\TestyViewModel.cs" />
     <Compile Include="ViewModels\WeighTestViewModel.cs" />
     <Compile Include="Views\MainView.xaml.cs">
@@ -105,6 +107,12 @@
     </Compile>
     <Compile Include="Views\SelectAssistView.xaml.cs">
       <DependentUpon>SelectAssistView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SettingBaseView.xaml.cs">
+      <DependentUpon>SettingBaseView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SettingTimeView.xaml.cs">
+      <DependentUpon>SettingTimeView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Setting\PortView.xaml.cs">
       <DependentUpon>PortView.xaml</DependentUpon>
@@ -153,6 +161,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\SelectAssistView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SettingBaseView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SettingTimeView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -1,0 +1,191 @@
+﻿<UserControl
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm" xmlns:ViewModels="clr-namespace:YZXDMS.ViewModels"
+             xmlns:dxlc="http://schemas.devexpress.com/winfx/2008/xaml/layoutcontrol" xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors" x:Class="YZXDMS.Views.SettingBaseView"
+             mc:Ignorable="d"
+             DataContext="{dxmvvm:ViewModelSource Type={x:Type ViewModels:SettingBaseViewModel}}"
+             d:DesignHeight="500" d:DesignWidth="500">
+    <Grid>
+
+        <dxlc:LayoutControl>
+            <dxlc:LayoutGroup Orientation="Vertical" Margin="10,0,10,0">
+                <dxlc:LayoutItem Label="最大工位数" >
+                    <dxe:TextEdit />
+                </dxlc:LayoutItem>
+                <dxlc:LayoutItem Label="大灯检测" >
+                    <dxe:TextEdit />
+                </dxlc:LayoutItem>
+                <dxlc:LayoutItem Label="工位控制板数" >
+                    <dxe:TextEdit />
+                </dxlc:LayoutItem>
+                <dxlc:LayoutItem Label="控制板最大通道数" >
+                    <dxe:TextEdit />
+                </dxlc:LayoutItem>
+                <dxlc:LayoutItem Label="汽车轴重下限值" >
+                    <dxe:TextEdit />
+                </dxlc:LayoutItem>
+                <dxlc:LayoutItem Label="摩托车轴重下限值" >
+                    <dxe:TextEdit />
+                </dxlc:LayoutItem>
+                <dxlc:LayoutItem Label="检测站编号" >
+                    <dxe:TextEdit />
+                </dxlc:LayoutItem>
+                <dxlc:LayoutItem Label="检测线代号" >
+                    <dxe:TextEdit />
+                </dxlc:LayoutItem>
+                <dxlc:LayoutItem Label="12">
+                    <dxe:CheckEdit />
+                </dxlc:LayoutItem>
+                <dxlc:LayoutItem Label="12">
+                    <dxe:CheckEdit />
+                </dxlc:LayoutItem>
+                <dxlc:LayoutItem Label="12">
+                    <dxe:CheckEdit />
+                </dxlc:LayoutItem>
+                <dxlc:LayoutItem Label="12">
+                    <dxe:CheckEdit />
+                </dxlc:LayoutItem>
+                <dxlc:LayoutItem Label="12">
+                    <dxe:CheckEdit />
+                </dxlc:LayoutItem>
+                <dxlc:LayoutItem Label="12">
+                    <dxe:CheckEdit />
+                </dxlc:LayoutItem>
+                <dxlc:LayoutItem Label="制动数据最小字节数">
+                    <dxe:CheckEdit />
+                </dxlc:LayoutItem>
+                <dxlc:LayoutItem Label="华燕轴重仪表返回个数">
+                    <dxe:CheckEdit />
+                </dxlc:LayoutItem>
+                <dxlc:LayoutItem Label="大型车灯高">
+                    <dxe:CheckEdit />
+                </dxlc:LayoutItem>
+                <dxlc:LayoutItem Label="小型车灯高">
+                    <dxe:CheckEdit />
+                </dxlc:LayoutItem>
+
+            </dxlc:LayoutGroup>
+            <dxlc:LayoutGroup Orientation="Vertical"  Margin="10,0,10,0">
+                <dxlc:LayoutItem Label="工位照片上传方式" >
+                    <dxe:TextEdit />
+                </dxlc:LayoutItem>
+                <dxlc:LayoutItem Label="照片重传次数" >
+                    <dxe:TextEdit />
+                </dxlc:LayoutItem>
+                <dxlc:LayoutItem Label="复检车重新称重" >
+                    <dxe:CheckEdit />
+                </dxlc:LayoutItem>
+                <dxlc:LayoutItem Label="滚筒制动/轴重复合仪表" >
+                    <dxe:CheckEdit />
+                </dxlc:LayoutItem>
+                <dxlc:LayoutItem Label="滚筒制动/轴重复合仪台" >
+                    <dxe:CheckEdit />
+                </dxlc:LayoutItem>
+                <dxlc:LayoutItem Label="轴重台存在中间小板" >
+                    <dxe:CheckEdit />
+                </dxlc:LayoutItem>
+                <dxlc:LayoutItem Label="存在平板制动" >
+                    <dxe:CheckEdit />
+                </dxlc:LayoutItem>
+                <dxlc:LayoutItem Label="华燕制动台电机保护值" >
+                    <dxe:CheckEdit />
+                </dxlc:LayoutItem>
+                <dxlc:LayoutItem Label="制动检测失败允许重检">
+                    <dxe:CheckEdit />
+                </dxlc:LayoutItem>
+                <dxlc:LayoutItem Label="低速三轮车前轮手刹检测取轮重">
+                    <dxe:CheckEdit />
+                </dxlc:LayoutItem>
+                <dxlc:LayoutItem Label="制动检测复位使用遥控器">
+                    <dxe:CheckEdit />
+                </dxlc:LayoutItem>
+                <dxlc:LayoutItem Label="多轴车有光电信号直接称重">
+                    <dxe:CheckEdit />
+                </dxlc:LayoutItem>
+                <dxlc:LayoutItem Label="华燕平板按曲线重新计算结果">
+                    <dxe:CheckEdit />
+                </dxlc:LayoutItem>
+                <dxlc:LayoutItem Label="明泉大灯使用灯高调节">
+                    <dxe:CheckEdit />
+                </dxlc:LayoutItem>
+                <dxlc:LayoutItem Label="灯光检测允许在线调整">
+                    <dxe:CheckEdit />
+                </dxlc:LayoutItem>
+                <dxlc:LayoutItem Label="大灯复检左右全部检测">
+                    <dxe:CheckEdit />
+                </dxlc:LayoutItem>
+                <dxlc:LayoutItem Label="摩托车左灯检测">
+                    <dxe:CheckEdit />
+                </dxlc:LayoutItem>
+                <dxlc:LayoutItem Label="正三轮摩托车后轮用摩托车设备检测">
+                    <dxe:CheckEdit />
+                </dxlc:LayoutItem>
+                <dxlc:LayoutItem Label="加载制动不合格允许再检一次">
+                    <dxe:CheckEdit />
+                </dxlc:LayoutItem>
+
+            </dxlc:LayoutGroup>
+            <dxlc:LayoutGroup Orientation="Vertical"  Margin="10,0,10,0">
+                <dxlc:LayoutItem Label="正三轮摩托车后轮用汽车后板" >
+                    <dxe:CheckEdit />
+                </dxlc:LayoutItem>
+                <dxlc:LayoutItem Label="地盘检测结束码" >
+                    <dxe:TextEdit />
+                </dxlc:LayoutItem>
+                <dxlc:LayoutItem Label="大灯检测使用遥控" >
+                    <dxe:CheckEdit />
+                </dxlc:LayoutItem>
+                <dxlc:LayoutItem Label="双灯检测不合格允许单灯检测" >
+                    <dxe:CheckEdit />
+                </dxlc:LayoutItem>
+                <dxlc:LayoutItem Label="检验报告单套打" >
+                    <dxe:CheckEdit />
+                </dxlc:LayoutItem>
+                <dxlc:LayoutItem Label="检验报告单打印" >
+                    <dxe:CheckEdit />
+                </dxlc:LayoutItem>
+                <dxlc:LayoutItem Label="打印后印两份" >
+                    <dxe:CheckEdit />
+                </dxlc:LayoutItem>
+                <dxlc:LayoutItem Label="仪器设备检验表套打" >
+                    <dxe:CheckEdit />
+                </dxlc:LayoutItem>
+                <dxlc:LayoutItem Label="12">
+                    <dxe:CheckEdit />
+                </dxlc:LayoutItem>
+                <dxlc:LayoutItem Label="12">
+                    <dxe:CheckEdit />
+                </dxlc:LayoutItem>
+                <dxlc:LayoutItem Label="12">
+                    <dxe:CheckEdit />
+                </dxlc:LayoutItem>
+                <dxlc:LayoutItem Label="12">
+                    <dxe:CheckEdit />
+                </dxlc:LayoutItem>
+                <dxlc:LayoutItem Label="12">
+                    <dxe:CheckEdit />
+                </dxlc:LayoutItem>
+                <dxlc:LayoutItem Label="12">
+                    <dxe:CheckEdit />
+                </dxlc:LayoutItem>
+                <dxlc:LayoutItem Label="12">
+                    <dxe:CheckEdit />
+                </dxlc:LayoutItem>
+                <dxlc:LayoutItem Label="12">
+                    <dxe:CheckEdit />
+                </dxlc:LayoutItem>
+                <dxlc:LayoutItem Label="12">
+                    <dxe:CheckEdit />
+                </dxlc:LayoutItem>
+                <dxlc:LayoutItem Label="12">
+                    <dxe:CheckEdit />
+                </dxlc:LayoutItem>
+
+            </dxlc:LayoutGroup>
+        </dxlc:LayoutControl>
+
+    </Grid>
+</UserControl>

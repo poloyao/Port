@@ -32,8 +32,8 @@ namespace YZXDMS.ViewModels
                  ViewModelSource.Create(()=>new ModuleInfo("PrintView",this,"导出/打印")).SetIcon("car"),
                  ViewModelSource.Create(()=>new ModuleInfo("TestyView",this,"实验1")).SetIcon("car"),
                  ViewModelSource.Create(()=>new ModuleInfo("TestView",this,"实验")).SetIcon("car"),
-                 //ViewModelSource.Create(()=>new ModuleInfo("SettingBasicView",this,"基本信息")).SetIcon("setting"),
-                 //ViewModelSource.Create(()=>new ModuleInfo("SettingTimeView",this,"时间参数")).SetIcon("time"),
+                 ViewModelSource.Create(()=>new ModuleInfo("SettingBaseView",this,"基本信息")).SetIcon("setting"),
+                 ViewModelSource.Create(()=>new ModuleInfo("SettingTimeView",this,"时间参数")).SetIcon("time"),
                  //ViewModelSource.Create(()=>new ModuleInfo("SettingPortView",this,"串口设置")).SetIcon("port"),
                  //ViewModelSource.Create(()=>new ModuleInfo("SettingLineView",this,"通道管理")).SetIcon("line"),
             };
