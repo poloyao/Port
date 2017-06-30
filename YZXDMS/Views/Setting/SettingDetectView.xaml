@@ -7,6 +7,7 @@
              xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
 		     xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
              xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid" 
+             xmlns:local="clr-namespace:YZXDMS.Views"
              xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm" xmlns:ViewModels="clr-namespace:YZXDMS.ViewModels"
              mc:Ignorable="d"
              
@@ -59,6 +60,10 @@
                         </dxlc:LayoutItem>
                     </dxlc:LayoutGroup>
                 </dxlc:LayoutGroup>
+
+                <!--<dxlc:LayoutGroup>
+                    <local:PortView />
+                </dxlc:LayoutGroup>-->
                 
                 <dxlc:LayoutGroup Orientation="Vertical" Width="250" HorizontalAlignment="Right">
                     <dxlc:LayoutGroup>

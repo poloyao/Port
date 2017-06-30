@@ -10,24 +10,18 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes; 
+using System.Windows.Shapes;
 
 namespace YZXDMS.Views
 {
     /// <summary>
-    /// Interaction logic for MasterView.xaml
+    /// Interaction logic for QueryTestLineView.xaml
     /// </summary>
-    public partial class MasterView : UserControl
+    public partial class QueryTestLineView : UserControl
     {
-        public MasterView()
+        public QueryTestLineView()
         {
             InitializeComponent();
-            List<int> items = new List<int>();
-            for (int i = 0; i < 5; i++)
-            {
-                items.Add(i);
-            }
-            this.grid.ItemsSource = items;
         }
     }
 }

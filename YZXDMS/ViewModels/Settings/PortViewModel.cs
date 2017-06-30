@@ -33,7 +33,9 @@ namespace YZXDMS.ViewModels
         {
             IsChange = true;
             DevExpress.Xpf.Core.DXMessageBox.Show("添加成功！");
-            DocumentOwner.Close(this);
+            //DocumentOwner.Close(this);
+            if (DocumentOwner != null)
+                DocumentOwner.Close(this);
         }
 
         #region IDocumentContent

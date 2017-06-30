@@ -89,14 +89,15 @@
     <Compile Include="Models\Station.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\MasterViewModel.cs" />
-    <Compile Include="ViewModels\SelectAssistViewModel.cs" />
-    <Compile Include="ViewModels\SettingBaseViewModel.cs" />
+    <Compile Include="ViewModels\Query\QueryTestLineViewModel.cs" />
+    <Compile Include="ViewModels\Settings\SelectAssistViewModel.cs" />
+    <Compile Include="ViewModels\Settings\SettingBaseViewModel.cs" />
     <Compile Include="ViewModels\Settings\PortViewModel.cs" />
     <Compile Include="ViewModels\Settings\SettingDetectViewModel.cs" />
     <Compile Include="ViewModels\Settings\SettingLinkPortViewModel.cs" />
     <Compile Include="ViewModels\Settings\SettingPortViewModel.cs" />
     <Compile Include="ViewModels\Settings\SettingStationViewModel.cs" />
-    <Compile Include="ViewModels\SettingTimeViewModel.cs" />
+    <Compile Include="ViewModels\Settings\SettingTimeViewModel.cs" />
     <Compile Include="ViewModels\TestyViewModel.cs" />
     <Compile Include="ViewModels\WeighTestViewModel.cs" />
     <Compile Include="Views\MainView.xaml.cs">
@@ -105,13 +106,16 @@
     <Compile Include="Views\MasterView.xaml.cs">
       <DependentUpon>MasterView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\SelectAssistView.xaml.cs">
+    <Compile Include="Views\Query\QueryTestLineView.xaml.cs">
+      <DependentUpon>QueryTestLineView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Setting\SelectAssistView.xaml.cs">
       <DependentUpon>SelectAssistView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\SettingBaseView.xaml.cs">
+    <Compile Include="Views\Setting\SettingBaseView.xaml.cs">
       <DependentUpon>SettingBaseView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\SettingTimeView.xaml.cs">
+    <Compile Include="Views\Setting\SettingTimeView.xaml.cs">
       <DependentUpon>SettingTimeView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Setting\PortView.xaml.cs">
@@ -135,6 +139,10 @@
     <Compile Include="Views\WeighTestView.xaml.cs">
       <DependentUpon>WeighTestView.xaml</DependentUpon>
     </Compile>
+    <Page Include="Resources\MyCheck.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -160,15 +168,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\SelectAssistView.xaml">
+    <Page Include="Views\Query\QueryTestLineView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\SettingBaseView.xaml">
+    <Page Include="Views\Setting\SelectAssistView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\SettingTimeView.xaml">
+    <Page Include="Views\Setting\SettingBaseView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Setting\SettingTimeView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -248,6 +260,13 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Img\machine1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ViewModels\Master\" />
+    <Folder Include="Views\Master\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Img\cf-reset.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,30 +1,221 @@
-﻿<UserControl
+﻿<UserControl xmlns:dxlc="http://schemas.devexpress.com/winfx/2008/xaml/layoutcontrol"  xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid" 
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm" xmlns:ViewModels="clr-namespace:YZXDMS.ViewModels"
-             xmlns:dxga="http://schemas.devexpress.com/winfx/2008/xaml/gauges" xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors" x:Class="YZXDMS.Views.MasterView"
+             xmlns:dxga="http://schemas.devexpress.com/winfx/2008/xaml/gauges" xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors" xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core" x:Class="YZXDMS.Views.MasterView"
              mc:Ignorable="d"
              DataContext="{dxmvvm:ViewModelSource Type={x:Type ViewModels:MasterViewModel}}"
-             d:DesignHeight="300" d:DesignWidth="500">
+             d:DesignHeight="500" d:DesignWidth="800">
+    <UserControl.Resources>
+        <Style x:Key="columStyle" TargetType="{x:Type dxg:GridColumnHeader}">
+            <Setter Property="Background" Value="#74CC7E" />
+            <Setter Property="FontWeight" Value="Bold" />
+        </Style>
+    </UserControl.Resources>
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="89*"/>
-            <RowDefinition Height="122*"/>
-            <RowDefinition Height="59*"/>
-            <RowDefinition Height="30*"/>
+            <RowDefinition Height="150"/>
+            <RowDefinition Height="175*"/>
+            <RowDefinition Height="88*"/>
+            <RowDefinition Height="100"/>
         </Grid.RowDefinitions>
 
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="22*"/>
-                <ColumnDefinition Width="103*"/>
+                <ColumnDefinition Width="57*"/>
+                <ColumnDefinition Width="193*"/>
             </Grid.ColumnDefinitions>
-            
+
+            <Grid>
+                <dxga:StateIndicatorControl Margin="139,10,10,109" StateIndex="1">
+                    <dxga:StateIndicatorControl.Model>
+                        <dxga:LampStateIndicatorModel/>
+                    </dxga:StateIndicatorControl.Model>
+                </dxga:StateIndicatorControl>
+                <dxga:StateIndicatorControl Margin="139,46,10,73"  StateIndex="2">
+                    <dxga:StateIndicatorControl.Model>
+                        <dxga:LampStateIndicatorModel/>
+                    </dxga:StateIndicatorControl.Model>
+                </dxga:StateIndicatorControl>
+                <dxga:StateIndicatorControl Margin="139,82,10,37"  StateIndex="3">
+                    <dxga:StateIndicatorControl.Model>
+                        <dxga:LampStateIndicatorModel/>
+                    </dxga:StateIndicatorControl.Model>
+                </dxga:StateIndicatorControl>
+                <TextBlock  HorizontalAlignment="Left" Margin="10,41,0,0" TextWrapping="Wrap" Text="设备连接状态" VerticalAlignment="Top" Foreground="#FFF90808"/>
+            </Grid>
+
+            <Grid Grid.Column="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid>
+                    <Border CornerRadius="5" Background="#FFD3BBBB" BorderThickness="2" MinWidth="130" >
+                        <Grid  Margin="5" >
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Text="一工位" HorizontalAlignment="Center" TextWrapping="Wrap"  VerticalAlignment="Center"  FontSize="24"/>
+                            <TextBlock Text="速度检测"  HorizontalAlignment="Center" TextWrapping="Wrap"  VerticalAlignment="Center" FontSize="24" Grid.Row="1"/>
+                            <Border Grid.Row="2" Background="#FF3333DA" Margin="5,1,5,1" CornerRadius="2">
+                                <TextBlock Text="辽A4392F"  HorizontalAlignment="Center" TextWrapping="NoWrap"  VerticalAlignment="Center"  FontSize="24" Background="#FF3333DA" Foreground="White"  />
+                            </Border>
+                            <Grid Grid.Row="3">
+                                <Image Grid.Row="1" Source="/YZXDMS;component/Img/car2.png"   />
+                            </Grid>
+                        </Grid>
+                    </Border>
+                </Grid>
+                <Grid Grid.Column="1">
+                    <Border CornerRadius="5" Background="#FFD3BBBB" BorderThickness="2"  MinWidth="130">
+                        <Grid  Margin="5" >
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Text="二工位" HorizontalAlignment="Center" TextWrapping="Wrap"  VerticalAlignment="Center"  FontSize="24"/>
+                            <TextBlock Text="速度检测"  HorizontalAlignment="Center" TextWrapping="Wrap"  VerticalAlignment="Center" FontSize="24" Grid.Row="1"/>
+                            <Border Grid.Row="2" Background="#FF3333DA" Margin="5,1,5,1" CornerRadius="2">
+                                <TextBlock Text="辽A4392F"  HorizontalAlignment="Center" TextWrapping="NoWrap"  VerticalAlignment="Center"  FontSize="24" Background="#FF3333DA" Foreground="White"  />
+                            </Border>
+                            <Grid Grid.Row="3">
+                                <Image Grid.Row="1" Source="/YZXDMS;component/Img/car2.png"   />
+                            </Grid>
+                        </Grid>
+                    </Border>
+                </Grid>
+                <Grid Grid.Column="2">
+                    <Border CornerRadius="5" Background="#FFD3BBBB" BorderThickness="2"  MinWidth="130">
+                        <Grid  Margin="5" >
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Text="三工位" HorizontalAlignment="Center" TextWrapping="Wrap"  VerticalAlignment="Center"  FontSize="24"/>
+                            <TextBlock Text="速度检测"  HorizontalAlignment="Center" TextWrapping="Wrap"  VerticalAlignment="Center" FontSize="24" Grid.Row="1"/>
+
+                            <!--<TextBlock Text="辽A4392F" Grid.Row="2"  HorizontalAlignment="Center" TextWrapping="Wrap"  VerticalAlignment="Center"  FontSize="24" Background="#FF3333DA" Foreground="White" Margin="10,0" Width="120.4"/>-->
+
+                            <Border Grid.Row="2" Background="#FF3333DA" Margin="5,1,5,1" CornerRadius="2">
+                                <TextBlock Text="辽A4392F"  HorizontalAlignment="Center" TextWrapping="NoWrap"  VerticalAlignment="Center"  FontSize="24" Background="#FF3333DA" Foreground="White"  />
+                            </Border>
+                            
+                            <Grid Grid.Row="3">
+                                <Image Grid.Row="1" Source="/YZXDMS;component/Img/car2.png"   />
+                            </Grid>
+                        </Grid>
+                    </Border>
+                </Grid>
+                <Grid Grid.Column="3">
+                    <Border CornerRadius="5" Background="#FFD3BBBB" BorderThickness="2"  MinWidth="130">
+                        <Grid  Margin="5" >
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Text="四工位" HorizontalAlignment="Center" TextWrapping="Wrap"  VerticalAlignment="Center"  FontSize="24"/>
+                            <TextBlock Text="速度检测"  HorizontalAlignment="Center" TextWrapping="Wrap"  VerticalAlignment="Center" FontSize="24" Grid.Row="1" FontWeight="Bold"/>
+                            <Border Grid.Row="2" Background="#FF3333DA" Margin="5,1,5,1" CornerRadius="2">
+                                <TextBlock Text="辽A4392F"  HorizontalAlignment="Center" TextWrapping="NoWrap"  VerticalAlignment="Center"  FontSize="24" Background="#FF3333DA" Foreground="White"  />
+                            </Border>
+                            <Grid Grid.Row="3">
+                                <Image Grid.Row="1" Source="/YZXDMS;component/Img/car2.png"   />
+                            </Grid>
+                        </Grid>
+                    </Border>
+                </Grid>
+
+
+            </Grid>
+
         </Grid>
-        
+
+
+        <Grid Grid.Row="1">
+            <dxg:GridControl x:Name="grid" EnableSmartColumnsGeneration="True" SelectionMode="Row" FontWeight="Bold">
+                <dxg:GridControl.Bands>
+                    <dxg:GridControlBand Fixed="Left" OverlayHeaderByChildren="True" >
+                        <dxg:GridColumn FieldName="Column1CAR" Header="车牌号码" Width="200" Fixed="Left" HorizontalHeaderContentAlignment="Center" HeaderStyle="{DynamicResource columStyle}"/>
+                    </dxg:GridControlBand>
+                    <dxg:GridControlBand Fixed="Left" OverlayHeaderByChildren="True">
+                        <dxg:GridColumn FieldName="Column1CAR" Header="速度" Fixed="Left" HorizontalHeaderContentAlignment="Center"  HeaderStyle="{DynamicResource columStyle}"/>
+                    </dxg:GridControlBand>
+                    <dxg:GridControlBand Header="制动" Fixed="Left" HorizontalHeaderContentAlignment="Center" >
+                        <dxg:GridColumn FieldName="前轴" Header="前轴"/>
+                        <dxg:GridColumn FieldName="中轴" Header="中轴"/>
+                        <dxg:GridColumn FieldName="三轴" Header="三轴"/>
+                        <dxg:GridColumn FieldName="四轴" Header="四轴"/>
+                        <dxg:GridColumn FieldName="后轴" Header="后轴"/>
+                        <dxg:GridColumn FieldName="手刹" Header="手刹"/>
+                    </dxg:GridControlBand>
+                    <dxg:GridControlBand Fixed="Left" OverlayHeaderByChildren="True">
+                        <dxg:GridColumn FieldName="Column1CAR" Header="侧滑"  HorizontalHeaderContentAlignment="Center"/>
+                    </dxg:GridControlBand>
+                    <dxg:GridControlBand Header="前照灯"  Fixed="Left" HorizontalHeaderContentAlignment="Center">
+                        <dxg:GridColumn FieldName="左灯" Header="左灯"/>
+                        <dxg:GridColumn FieldName="右灯" Header="右灯"/>
+                    </dxg:GridControlBand>
+                    <dxg:GridControlBand Fixed="Left" OverlayHeaderByChildren="True">
+                        <dxg:GridColumn FieldName="Column1CAR" Header="底盘"  HorizontalHeaderContentAlignment="Center"/>
+                    </dxg:GridControlBand>
+                    <dxg:GridControlBand Fixed="Left" OverlayHeaderByChildren="True">
+                        <dxg:GridColumn FieldName="Column1CAR" Header="动态"  HorizontalHeaderContentAlignment="Center"/>
+                    </dxg:GridControlBand>
+                    <dxg:GridControlBand Fixed="Right" OverlayHeaderByChildren="True">
+                        <dxg:GridColumn FieldName="Column1CAR" Header="总评"  HorizontalHeaderContentAlignment="Center"/>
+                    </dxg:GridControlBand>
+                </dxg:GridControl.Bands>
+                <dxg:GridControl.View>
+                    <dxg:TableView AllowEditing="False" AllowGrouping="False" ShowGroupPanel="False" NavigationStyle="Row" AnimateConditionalFormattingTransition="True"
+                               AllowConditionalFormattingMenu="True" AllowDataUpdateFormatConditionMenu="True" AutoWidth="True">
+                        <dxg:TableView.RowStyle>
+                            <Style TargetType="{x:Type dxg:RowControl}">
+                                <Setter Property="Height" Value="32"/>
+                            </Style>
+                        </dxg:TableView.RowStyle>
+                    </dxg:TableView>
+                </dxg:GridControl.View>
+
+            </dxg:GridControl>
+        </Grid>
+
+
+        <Grid Grid.Row="2" >
+            <Label HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Red" Content="此处可添加实时显示检测数据" />
+        </Grid>
+
+        <Grid Grid.Row="3" >
+
+            <dx:SimpleButton Content="一工位复位" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Glyph="{dx:DXImage Image=Reset2_32x32.png}"/>
+            <dx:SimpleButton Content="二工位复位" HorizontalAlignment="Left" Margin="152,10,0,0" VerticalAlignment="Top" Glyph="{dx:DXImage Image=Reset2_32x32.png}"/>
+            <dx:SimpleButton Content="三工位复位" HorizontalAlignment="Left" Margin="297,10,384,0" VerticalAlignment="Top" Glyph="{dx:DXImage Image=Reset2_32x32.png}"/>
+            <dx:SimpleButton Content="四工位复位" HorizontalAlignment="Left" Margin="431,10,0,0" VerticalAlignment="Top" Glyph="{dx:DXImage Image=Reset2_32x32.png}"/>
+
+
+            <dx:SimpleButton Content="一工位放弃" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Bottom" Glyph="{dx:DXImage Image=Delete_32x32.png}" />
+            <dx:SimpleButton Content="二工位放弃" HorizontalAlignment="Left" Margin="152,0,0,10" VerticalAlignment="Bottom" Glyph="{dx:DXImage Image=Delete_32x32.png}"/>
+            <dx:SimpleButton Content="三工位放弃" HorizontalAlignment="Left" Margin="297,0,384,10" VerticalAlignment="Bottom" Glyph="{dx:DXImage Image=Delete_32x32.png}"/>
+            <dx:SimpleButton Content="四工位放弃" HorizontalAlignment="Left" Margin="431,0,0,10" VerticalAlignment="Bottom" Glyph="{dx:DXImage Image=Delete_32x32.png}"/>
+
+
+        </Grid>
+
 
     </Grid>
 

@@ -9,6 +9,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApplication1", "Cons
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApplication2", "ConsoleApplication2\ConsoleApplication2.csproj", "{A906F07D-1034-4940-8969-E067515CB33C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YZXDMS.Report", "YZXDMS.Report\YZXDMS.Report.csproj", "{A4BF8B4C-53B3-470E-AE7C-B9AC13EDEC2F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YZXDMS.Setting", "YZXDMS.Setting\YZXDMS.Setting.csproj", "{2D5512A5-0EC4-4AEE-BA69-8D3F21D4A0D4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +31,14 @@ Global
 		{A906F07D-1034-4940-8969-E067515CB33C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A906F07D-1034-4940-8969-E067515CB33C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A906F07D-1034-4940-8969-E067515CB33C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A4BF8B4C-53B3-470E-AE7C-B9AC13EDEC2F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A4BF8B4C-53B3-470E-AE7C-B9AC13EDEC2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A4BF8B4C-53B3-470E-AE7C-B9AC13EDEC2F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A4BF8B4C-53B3-470E-AE7C-B9AC13EDEC2F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2D5512A5-0EC4-4AEE-BA69-8D3F21D4A0D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2D5512A5-0EC4-4AEE-BA69-8D3F21D4A0D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2D5512A5-0EC4-4AEE-BA69-8D3F21D4A0D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2D5512A5-0EC4-4AEE-BA69-8D3F21D4A0D4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

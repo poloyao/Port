@@ -242,7 +242,7 @@
         </Style>
     </UserControl.Resources>
     <Grid>
-        <dxe:CheckEdit x:Name="slider" Height="40" Style="{StaticResource slider}" Width="120" Margin="10,10,170,250" />
+        <dxe:CheckEdit x:Name="slider" Style="{StaticResource slider}" Margin="10,10,175,256" />
         <TextBlock x:Name="textBlock" Text="{Binding ElementName=slider,Path=EditValue}" HorizontalAlignment="Left" Margin="130,22,0,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
         <!--<dxlc:LayoutControl Orientation="Vertical" DataContext="{Binding DetectionItems[0]}">
             <dxlc:LayoutGroup Orientation="Vertical">

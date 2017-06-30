@@ -34,14 +34,12 @@ namespace YZXDMS.ViewModels
                  ViewModelSource.Create(()=>new ModuleInfo("TestView",this,"实验")).SetIcon("car"),
                  ViewModelSource.Create(()=>new ModuleInfo("SettingBaseView",this,"基本信息")).SetIcon("setting"),
                  ViewModelSource.Create(()=>new ModuleInfo("SettingTimeView",this,"时间参数")).SetIcon("time"),
-                 //ViewModelSource.Create(()=>new ModuleInfo("SettingPortView",this,"串口设置")).SetIcon("port"),
+                 ViewModelSource.Create(()=>new ModuleInfo("QueryTestLineView",this,"查询")).SetIcon("port"),
                  //ViewModelSource.Create(()=>new ModuleInfo("SettingLineView",this,"通道管理")).SetIcon("line"),
             };
             ModuleGroups = new ModuleGroup[] {
                 new ModuleGroup("功能",modules)
             };
-
-
         }
 
 
@@ -57,6 +55,8 @@ namespace YZXDMS.ViewModels
         }
 
     }
+
+
 
     /// <summary>
     /// 模块
