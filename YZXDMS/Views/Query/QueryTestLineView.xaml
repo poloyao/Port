@@ -11,12 +11,12 @@
              d:DesignHeight="300" d:DesignWidth="800">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="100"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
         <Grid>
-            <Grid.ColumnDefinitions>
+            <!--<Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
@@ -26,21 +26,149 @@
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
+            </Grid.RowDefinitions>-->
 
-            <dxe:CheckEdit  HorizontalAlignment="Left" Margin="98.607,0,-4,0" Grid.Row="1" VerticalAlignment="Top" Width="105.393" Height="29" Style="{DynamicResource checkSlider}"/>
-            <dxe:ToggleSwitch x:Name="toggleSwitch" Content="ToggleSwitch" HorizontalAlignment="Left" Margin="20,1,0,0" Grid.Row="2" VerticalAlignment="Top" Grid.Column="1" Width="131"/>
+            <!--<dxe:ToggleSwitch x:Name="toggleSwitch" CheckedStateContent="开" UncheckedStateContent="关" ContentPlacement="Inside" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="141"/>-->
+
+            <dxlc:LayoutControl  Orientation="Vertical">
+                <dxlc:LayoutGroup Orientation="Horizontal"  >
+                    <dxlc:LayoutGroup>
+                        <dxlc:LayoutItem MaxWidth="60">
+                            <dxe:ToggleSwitch />
+                        </dxlc:LayoutItem>                        
+                        <dxlc:LayoutItem Label="号牌种类">
+                            <dxe:ComboBoxEdit />
+                        </dxlc:LayoutItem>
+                    </dxlc:LayoutGroup>
+                    <dxlc:LayoutGroup>
+                        <dxlc:LayoutItem MaxWidth="60">
+                            <dxe:ToggleSwitch />
+                        </dxlc:LayoutItem>
+                        <dxlc:LayoutItem Label="牌照号码">
+                            <dxe:TextEdit />
+                        </dxlc:LayoutItem>
+                    </dxlc:LayoutGroup>
+                    <dxlc:LayoutGroup>
+                        <dxlc:LayoutItem MaxWidth="60">
+                            <dxe:ToggleSwitch />
+                        </dxlc:LayoutItem>
+                        <dxlc:LayoutItem Label="车主单位">
+                            <dxe:TextEdit />
+                        </dxlc:LayoutItem>
+                    </dxlc:LayoutGroup>
+                    <dxlc:LayoutGroup>
+                        <dxlc:LayoutItem MaxWidth="60">
+                            <dxe:ToggleSwitch />
+                        </dxlc:LayoutItem>
+                        <dxlc:LayoutItem Label="检测结果">
+                            <dxe:ComboBoxEdit />
+                        </dxlc:LayoutItem>
+                    </dxlc:LayoutGroup>
+
+                </dxlc:LayoutGroup>
+                <dxlc:LayoutGroup Orientation="Horizontal"  >
+                    <dxlc:LayoutGroup>
+                        <dxlc:LayoutItem MaxWidth="60">
+                            <dxe:ToggleSwitch />
+                        </dxlc:LayoutItem>
+                        <dxlc:LayoutItem Label="起始日期">
+                            <dxe:DateEdit/>
+                        </dxlc:LayoutItem>
+                    </dxlc:LayoutGroup>
+                    <dxlc:LayoutGroup>
+                        <dxlc:LayoutItem MaxWidth="60">
+                            <dxe:ToggleSwitch />
+                        </dxlc:LayoutItem>
+                        <dxlc:LayoutItem Label="起始时间">
+                            <dxe:TextEdit Mask="T" MaskType="DateTime"/>
+                        </dxlc:LayoutItem>
+                    </dxlc:LayoutGroup>
+                    <dxlc:LayoutGroup>
+                        <dxlc:LayoutItem MaxWidth="60">
+                            <dxe:ToggleSwitch />
+                        </dxlc:LayoutItem>
+                        <dxlc:LayoutItem Label="检测线号">
+                            <dxe:ComboBoxEdit />
+                        </dxlc:LayoutItem>
+                    </dxlc:LayoutGroup>
+                    <dxlc:LayoutGroup>
+                        <dxlc:LayoutItem MaxWidth="60">
+                            <dxe:ToggleSwitch />
+                        </dxlc:LayoutItem>
+                        <dxlc:LayoutItem Label="检测次数">
+                            <dxe:ComboBoxEdit />
+                        </dxlc:LayoutItem>
+                    </dxlc:LayoutGroup>
+
+                </dxlc:LayoutGroup>
+                <dxlc:LayoutGroup Orientation="Horizontal"  >
+                    <dxlc:LayoutGroup>
+                        <dxlc:LayoutItem MaxWidth="60">
+                            <dxe:ToggleSwitch />
+                        </dxlc:LayoutItem>
+                        <dxlc:LayoutItem Label="截至日期">
+                            <dxe:ComboBoxEdit />
+                        </dxlc:LayoutItem>
+                    </dxlc:LayoutGroup>
+                    <dxlc:LayoutGroup>
+                        <dxlc:LayoutItem MaxWidth="60">
+                            <dxe:ToggleSwitch />
+                        </dxlc:LayoutItem>
+                        <dxlc:LayoutItem Label="截至时间">
+                            <dxe:TextEdit  Mask="T" MaskType="DateTime" />
+                        </dxlc:LayoutItem>
+                    </dxlc:LayoutGroup>
+                    <dxlc:LayoutGroup>
+                        <dxlc:LayoutItem MaxWidth="60">
+                            <dxe:ToggleSwitch />
+                        </dxlc:LayoutItem>
+                        <dxlc:LayoutItem Label="流水号">
+                            <dxe:TextEdit />
+                        </dxlc:LayoutItem>
+                    </dxlc:LayoutGroup>
+                    <dxlc:LayoutGroup>
+                        <dxlc:LayoutItem MaxWidth="60">
+                            <dxe:ToggleSwitch />
+                        </dxlc:LayoutItem>
+                        <dxlc:LayoutItem Label="检验类别">
+                            <dxe:ComboBoxEdit />
+                        </dxlc:LayoutItem>
+                    </dxlc:LayoutGroup>
+
+                </dxlc:LayoutGroup>
+                <dxlc:LayoutGroup HorizontalAlignment="Right">
+                    <dxlc:LayoutItem>
+                        <Button Click="Button_Click">打印</Button>
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem>
+                        <Button>查询</Button>
+                    </dxlc:LayoutItem>
+                </dxlc:LayoutGroup>
+            </dxlc:LayoutControl>
 
 
 
         </Grid>
 
         <Grid Grid.Row="1">
-
-            <dxg:GridControl AutoGenerateColumns="AddNew" EnableSmartColumnsGeneration="True">
+            <dxg:GridControl x:Name="gird" ItemsSource="{Binding Items}" AutoGenerateColumns="AddNew" EnableSmartColumnsGeneration="True">
                 <dxg:GridControl.View>
-                    <dxg:TableView AllowEditing="False" AllowGrouping="False" ShowGroupPanel="False" NavigationStyle="Row" AnimateConditionalFormattingTransition="True"
-                               AllowConditionalFormattingMenu="True" AllowDataUpdateFormatConditionMenu="True" AutoWidth="True">
+                    <dxg:TableView AllowPerPixelScrolling="True" ShowTotalSummary="True"/>
+                </dxg:GridControl.View>
+                <dxg:GridColumn FieldName="LineNo" IsSmart="True"/>
+                <dxg:GridColumn FieldName="CarNo" IsSmart="True"/>
+                <dxg:GridColumn FieldName="CardType" IsSmart="True"/>
+                <dxg:GridColumn FieldName="CarType" IsSmart="True"/>
+                <dxg:GridColumn FieldName="TestNo" IsSmart="True"/>
+                <dxg:GridColumn FieldName="CarOwner" IsSmart="True"/>
+                <dxg:GridColumn FieldName="TestDate" IsSmart="True"/>
+                <dxg:GridColumn FieldName="SerialNo" IsSmart="True"/>
+                <dxg:GridColumn FieldName="IsPass" IsSmart="True"/>
+            </dxg:GridControl>
+
+            <!--<dxg:GridControl ItemsSource="{Binding Items}" SelectionMode="Row" AutoGenerateColumns="AddNew" >
+                <dxg:GridControl.View>
+                    <dxg:TableView  AutoWidth="True">
                         <dxg:TableView.RowStyle>
                             <Style TargetType="{x:Type dxg:RowControl}">
                                 <Setter Property="Height" Value="32"/>
@@ -48,7 +176,8 @@
                         </dxg:TableView.RowStyle>
                     </dxg:TableView>
                 </dxg:GridControl.View>
-            </dxg:GridControl>
+            </dxg:GridControl>-->
+            
 
         </Grid>
 

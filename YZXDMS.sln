@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YZXDMS.Report", "YZXDMS.Rep
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YZXDMS.Setting", "YZXDMS.Setting\YZXDMS.Setting.csproj", "{2D5512A5-0EC4-4AEE-BA69-8D3F21D4A0D4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YZXDMS.Model", "YZXDMS.Model\YZXDMS.Model.csproj", "{A2523499-4DD2-46EB-8925-F5C8A0F4BE33}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{2D5512A5-0EC4-4AEE-BA69-8D3F21D4A0D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2D5512A5-0EC4-4AEE-BA69-8D3F21D4A0D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2D5512A5-0EC4-4AEE-BA69-8D3F21D4A0D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A2523499-4DD2-46EB-8925-F5C8A0F4BE33}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A2523499-4DD2-46EB-8925-F5C8A0F4BE33}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A2523499-4DD2-46EB-8925-F5C8A0F4BE33}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A2523499-4DD2-46EB-8925-F5C8A0F4BE33}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

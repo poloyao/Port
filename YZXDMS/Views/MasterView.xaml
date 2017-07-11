@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm" xmlns:ViewModels="clr-namespace:YZXDMS.ViewModels"
-             xmlns:dxga="http://schemas.devexpress.com/winfx/2008/xaml/gauges" xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors" xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core" x:Class="YZXDMS.Views.MasterView"
+             xmlns:dxga="http://schemas.devexpress.com/winfx/2008/xaml/gauges" xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors" xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core" xmlns:dxc="http://schemas.devexpress.com/winfx/2008/xaml/charts" x:Class="YZXDMS.Views.MasterView"
              mc:Ignorable="d"
              DataContext="{dxmvvm:ViewModelSource Type={x:Type ViewModels:MasterViewModel}}"
              d:DesignHeight="500" d:DesignWidth="800">
@@ -113,7 +113,7 @@
                             <Border Grid.Row="2" Background="#FF3333DA" Margin="5,1,5,1" CornerRadius="2">
                                 <TextBlock Text="辽A4392F"  HorizontalAlignment="Center" TextWrapping="NoWrap"  VerticalAlignment="Center"  FontSize="24" Background="#FF3333DA" Foreground="White"  />
                             </Border>
-                            
+
                             <Grid Grid.Row="3">
                                 <Image Grid.Row="1" Source="/YZXDMS;component/Img/car2.png"   />
                             </Grid>
@@ -148,7 +148,7 @@
 
 
         <Grid Grid.Row="1">
-            <dxg:GridControl x:Name="grid" EnableSmartColumnsGeneration="True" SelectionMode="Row" FontWeight="Bold">
+            <dxg:GridControl x:Name="grid"  EnableSmartColumnsGeneration="True" SelectionMode="Row" FontWeight="Bold" AutoGenerateColumns="KeepOld">
                 <dxg:GridControl.Bands>
                     <dxg:GridControlBand Fixed="Left" OverlayHeaderByChildren="True" >
                         <dxg:GridColumn FieldName="Column1CAR" Header="车牌号码" Width="200" Fixed="Left" HorizontalHeaderContentAlignment="Center" HeaderStyle="{DynamicResource columStyle}"/>
@@ -197,7 +197,38 @@
 
 
         <Grid Grid.Row="2" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="153*"/>
+                <ColumnDefinition Width="47*"/>
+            </Grid.ColumnDefinitions>
             <Label HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Red" Content="此处可添加实时显示检测数据" />
+
+            <dxc:ChartControl Grid.Column="1">
+                <!--<dxc:ChartControl.Legends>
+                    <dxc:Legend/>
+                </dxc:ChartControl.Legends>-->
+                <dxc:ChartControl.CrosshairOptions>
+
+                    <dxc:CrosshairOptions
+                        ShowArgumentLine="True"
+                        ShowValueLine="True"
+                        ShowArgumentLabels="False"
+                        ShowValueLabels="True"
+                        ShowCrosshairLabels="True"
+                        SnapMode="NearestArgument" />
+
+                </dxc:ChartControl.CrosshairOptions>
+                <dxc:XYDiagram2D>
+                    <dxc:SplineAreaStackedSeries2D DisplayName="Series 1">
+                        <dxc:SeriesPoint Argument="1" Value="0.1"/>
+                        <dxc:SeriesPoint Argument="2" Value="0.3"/>
+                        <dxc:SeriesPoint Argument="3" Value="0.3"/>
+                        <dxc:SeriesPoint Argument="4" Value="0.5"/>
+                        <dxc:SeriesPoint Argument="5" Value="0.3"/>
+                    </dxc:SplineAreaStackedSeries2D>
+                </dxc:XYDiagram2D>
+            </dxc:ChartControl>
+
         </Grid>
 
         <Grid Grid.Row="3" >

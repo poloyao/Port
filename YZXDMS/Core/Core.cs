@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using YZXDMS.DataProvider;
 using YZXDMS.Detections;
+using YZXDMS.Model;
 
 namespace YZXDMS.Core
 {
@@ -30,6 +31,16 @@ namespace YZXDMS.Core
         }
 
         private Core() { }
+
+
+        public static IDBProvider GetDBProvider()
+        {
+            return new SQLServerDBProvider();
+        }
+
+        public static Users User { get; set; }
+
+
 
 
         public static void GetDeviceConfig()

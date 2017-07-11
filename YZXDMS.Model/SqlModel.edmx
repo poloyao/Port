@@ -1,0 +1,435 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="YZXModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="BFD">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="CarInfoID" Type="int" />
+          <Property Name="Asis" Type="int" />
+          <Property Name="jylsh" Type="varchar" MaxLength="50" />
+          <Property Name="jyjgbh" Type="varchar" MaxLength="50" />
+          <Property Name="jcxdh" Type="varchar" MaxLength="50" />
+          <Property Name="jyxm" Type="varchar" MaxLength="50" />
+          <Property Name="jycs" Type="varchar" MaxLength="50" />
+          <Property Name="zlz" Type="varchar" MaxLength="50" />
+          <Property Name="ylz" Type="varchar" MaxLength="50" />
+          <Property Name="qhzzdl" Type="varchar" MaxLength="50" />
+          <Property Name="qhyzdl" Type="varchar" MaxLength="50" />
+          <Property Name="qczzdl" Type="varchar" MaxLength="50" />
+          <Property Name="qcyzdl" Type="varchar" MaxLength="50" />
+          <Property Name="dll" Type="varchar" MaxLength="50" />
+          <Property Name="zdlpd" Type="varchar" MaxLength="50" />
+          <Property Name="bphl" Type="varchar" MaxLength="50" />
+          <Property Name="bphlpd" Type="varchar" MaxLength="50" />
+          <Property Name="jzzh" Type="varchar" MaxLength="50" />
+          <Property Name="jzzzdl" Type="varchar" MaxLength="50" />
+          <Property Name="jzbphl" Type="varchar" MaxLength="50" />
+          <Property Name="jzbphlpd" Type="varchar" MaxLength="50" />
+          <Property Name="zdpd" Type="varchar" MaxLength="50" />
+          <Property Name="zldtlh" Type="varchar" MaxLength="50" />
+          <Property Name="yldtlh" Type="varchar" MaxLength="50" />
+          <Property Name="zdlqx" Type="varchar" MaxLength="50" />
+          <Property Name="UPD" Type="datetime" />
+          <Property Name="Status" Type="int" />
+        </EntityType>
+        <EntityType Name="CarInfo">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="ComplexResult">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="p1" Type="int" />
+          <Property Name="p2" Type="int" />
+        </EntityType>
+        <EntityType Name="ParkBFD">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="CarInfoID" Type="int" />
+          <Property Name="jylsh" Type="varchar" MaxLength="50" />
+          <Property Name="jyjgbh" Type="varchar" MaxLength="50" />
+          <Property Name="jcxdh" Type="varchar" MaxLength="50" />
+          <Property Name="jyxm" Type="varchar" MaxLength="50" />
+          <Property Name="jycs" Type="varchar" MaxLength="50" />
+          <Property Name="yzzczdl" Type="varchar" MaxLength="50" />
+          <Property Name="ezzczdl" Type="varchar" MaxLength="50" />
+          <Property Name="sanzzczdl" Type="varchar" MaxLength="50" />
+          <Property Name="sizzczdl" Type="varchar" MaxLength="50" />
+          <Property Name="wzzczdl" Type="varchar" MaxLength="50" />
+          <Property Name="zczczdl" Type="varchar" MaxLength="50" />
+          <Property Name="tczzdl" Type="varchar" MaxLength="50" />
+          <Property Name="tcyzdl" Type="varchar" MaxLength="50" />
+          <Property Name="tczdl" Type="varchar" MaxLength="50" />
+          <Property Name="tczdpd" Type="varchar" MaxLength="50" />
+          <Property Name="UDP" Type="datetime" />
+          <Property Name="Status" Type="int" />
+        </EntityType>
+        <EntityType Name="Powers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" />
+          <Property Name="Code" Type="varchar" MaxLength="50" />
+          <Property Name="Status" Type="int" />
+        </EntityType>
+        <EntityType Name="SafaResult">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="p1" Type="int" />
+          <Property Name="p2" Type="int" />
+        </EntityType>
+        <EntityType Name="Speed">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="CarInfoID" Type="int" />
+          <Property Name="SDBZ" Type="varchar" MaxLength="50" />
+          <Property Name="SDCS" Type="varchar" MaxLength="50" />
+          <Property Name="SDB" Type="varchar" MaxLength="50" />
+          <Property Name="SDBPJ" Type="varchar" MaxLength="50" />
+          <Property Name="UPD" Type="datetime" />
+          <Property Name="Status" Type="int" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" />
+          <Property Name="Account" Type="varchar" MaxLength="50" />
+          <Property Name="PWD" Type="varchar" MaxLength="50" />
+          <Property Name="Title" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="WaitDetection">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CarInfoId" Type="int" Nullable="false" />
+          <Property Name="LineID" Type="int" />
+          <Property Name="Status" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="YZXModelStoreContainer">
+          <EntitySet Name="BFD" EntityType="Self.BFD" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CarInfo" EntityType="Self.CarInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ComplexResult" EntityType="Self.ComplexResult" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ParkBFD" EntityType="Self.ParkBFD" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Powers" EntityType="Self.Powers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SafaResult" EntityType="Self.SafaResult" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Speed" EntityType="Self.Speed" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WaitDetection" EntityType="Self.WaitDetection" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="YZXModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="CarInfo">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="WaitDetection">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="CarInfoId" Type="Int32" Nullable="false" />
+          <Property Name="Status" Type="Int32" Nullable="false" />
+          <Property Name="LineID" Type="Int32" />
+        </EntityType>
+        <EntityContainer Name="YZXEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="CarInfo" EntityType="Self.CarInfo" />
+          <EntitySet Name="WaitDetection" EntityType="Self.WaitDetection" />
+          <EntitySet Name="Powers" EntityType="YZXModel.Powers" />
+          <EntitySet Name="Users" EntityType="YZXModel.Users" />
+          <EntitySet Name="ComplexResult" EntityType="YZXModel.ComplexResult" />
+          <EntitySet Name="SafaResult" EntityType="YZXModel.SafaResult" />
+          <EntitySet Name="BFD" EntityType="YZXModel.BFD" />
+          <EntitySet Name="ParkBFD" EntityType="YZXModel.ParkBFD" />
+          <EntitySet Name="Speed" EntityType="YZXModel.Speed" />
+        </EntityContainer>
+        <EntityType Name="Powers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Code" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Status" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Account" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PWD" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="ComplexResult">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="p1" Type="Int32" />
+          <Property Name="p2" Type="Int32" />
+        </EntityType>
+        <EntityType Name="SafaResult">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="p1" Type="Int32" />
+          <Property Name="p2" Type="Int32" />
+        </EntityType>
+        <EntityType Name="BFD">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="CarInfoID" Type="Int32" />
+          <Property Name="Asis" Type="Int32" />
+          <Property Name="jylsh" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="jyjgbh" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="jcxdh" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="jyxm" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="jycs" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="zlz" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ylz" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="qhzzdl" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="qhyzdl" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="qczzdl" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="qcyzdl" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="dll" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="zdlpd" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="bphl" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="bphlpd" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="jzzh" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="jzzzdl" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="jzbphl" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="jzbphlpd" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="zdpd" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="zldtlh" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="yldtlh" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="zdlqx" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UPD" Type="DateTime" Precision="3" />
+          <Property Name="Status" Type="Int32" />
+        </EntityType>
+        <EntityType Name="ParkBFD">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="CarInfoID" Type="Int32" />
+          <Property Name="jylsh" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="jyjgbh" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="jcxdh" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="jyxm" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="jycs" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="yzzczdl" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ezzczdl" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="sanzzczdl" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="sizzczdl" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="wzzczdl" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="zczczdl" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="tczzdl" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="tcyzdl" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="tczdl" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="tczdpd" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UDP" Type="DateTime" Precision="3" />
+          <Property Name="Status" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Speed">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="CarInfoID" Type="Int32" />
+          <Property Name="SDBZ" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SDCS" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SDB" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SDBPJ" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UPD" Type="DateTime" Precision="3" />
+          <Property Name="Status" Type="Int32" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="YZXModelStoreContainer" CdmEntityContainer="YZXEntities">
+          <EntitySetMapping Name="CarInfo">
+            <EntityTypeMapping TypeName="YZXModel.CarInfo">
+              <MappingFragment StoreEntitySet="CarInfo">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WaitDetection">
+            <EntityTypeMapping TypeName="YZXModel.WaitDetection">
+              <MappingFragment StoreEntitySet="WaitDetection">
+                <ScalarProperty Name="LineID" ColumnName="LineID" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="CarInfoId" ColumnName="CarInfoId" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Powers">
+            <EntityTypeMapping TypeName="YZXModel.Powers">
+              <MappingFragment StoreEntitySet="Powers">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="YZXModel.Users">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="PWD" ColumnName="PWD" />
+                <ScalarProperty Name="Account" ColumnName="Account" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ComplexResult">
+            <EntityTypeMapping TypeName="YZXModel.ComplexResult">
+              <MappingFragment StoreEntitySet="ComplexResult">
+                <ScalarProperty Name="p2" ColumnName="p2" />
+                <ScalarProperty Name="p1" ColumnName="p1" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SafaResult">
+            <EntityTypeMapping TypeName="YZXModel.SafaResult">
+              <MappingFragment StoreEntitySet="SafaResult">
+                <ScalarProperty Name="p2" ColumnName="p2" />
+                <ScalarProperty Name="p1" ColumnName="p1" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BFD">
+            <EntityTypeMapping TypeName="YZXModel.BFD">
+              <MappingFragment StoreEntitySet="BFD">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="UPD" ColumnName="UPD" />
+                <ScalarProperty Name="zdlqx" ColumnName="zdlqx" />
+                <ScalarProperty Name="yldtlh" ColumnName="yldtlh" />
+                <ScalarProperty Name="zldtlh" ColumnName="zldtlh" />
+                <ScalarProperty Name="zdpd" ColumnName="zdpd" />
+                <ScalarProperty Name="jzbphlpd" ColumnName="jzbphlpd" />
+                <ScalarProperty Name="jzbphl" ColumnName="jzbphl" />
+                <ScalarProperty Name="jzzzdl" ColumnName="jzzzdl" />
+                <ScalarProperty Name="jzzh" ColumnName="jzzh" />
+                <ScalarProperty Name="bphlpd" ColumnName="bphlpd" />
+                <ScalarProperty Name="bphl" ColumnName="bphl" />
+                <ScalarProperty Name="zdlpd" ColumnName="zdlpd" />
+                <ScalarProperty Name="dll" ColumnName="dll" />
+                <ScalarProperty Name="qcyzdl" ColumnName="qcyzdl" />
+                <ScalarProperty Name="qczzdl" ColumnName="qczzdl" />
+                <ScalarProperty Name="qhyzdl" ColumnName="qhyzdl" />
+                <ScalarProperty Name="qhzzdl" ColumnName="qhzzdl" />
+                <ScalarProperty Name="ylz" ColumnName="ylz" />
+                <ScalarProperty Name="zlz" ColumnName="zlz" />
+                <ScalarProperty Name="jycs" ColumnName="jycs" />
+                <ScalarProperty Name="jyxm" ColumnName="jyxm" />
+                <ScalarProperty Name="jcxdh" ColumnName="jcxdh" />
+                <ScalarProperty Name="jyjgbh" ColumnName="jyjgbh" />
+                <ScalarProperty Name="jylsh" ColumnName="jylsh" />
+                <ScalarProperty Name="Asis" ColumnName="Asis" />
+                <ScalarProperty Name="CarInfoID" ColumnName="CarInfoID" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ParkBFD">
+            <EntityTypeMapping TypeName="YZXModel.ParkBFD">
+              <MappingFragment StoreEntitySet="ParkBFD">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="UDP" ColumnName="UDP" />
+                <ScalarProperty Name="tczdpd" ColumnName="tczdpd" />
+                <ScalarProperty Name="tczdl" ColumnName="tczdl" />
+                <ScalarProperty Name="tcyzdl" ColumnName="tcyzdl" />
+                <ScalarProperty Name="tczzdl" ColumnName="tczzdl" />
+                <ScalarProperty Name="zczczdl" ColumnName="zczczdl" />
+                <ScalarProperty Name="wzzczdl" ColumnName="wzzczdl" />
+                <ScalarProperty Name="sizzczdl" ColumnName="sizzczdl" />
+                <ScalarProperty Name="sanzzczdl" ColumnName="sanzzczdl" />
+                <ScalarProperty Name="ezzczdl" ColumnName="ezzczdl" />
+                <ScalarProperty Name="yzzczdl" ColumnName="yzzczdl" />
+                <ScalarProperty Name="jycs" ColumnName="jycs" />
+                <ScalarProperty Name="jyxm" ColumnName="jyxm" />
+                <ScalarProperty Name="jcxdh" ColumnName="jcxdh" />
+                <ScalarProperty Name="jyjgbh" ColumnName="jyjgbh" />
+                <ScalarProperty Name="jylsh" ColumnName="jylsh" />
+                <ScalarProperty Name="CarInfoID" ColumnName="CarInfoID" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Speed">
+            <EntityTypeMapping TypeName="YZXModel.Speed">
+              <MappingFragment StoreEntitySet="Speed">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="UPD" ColumnName="UPD" />
+                <ScalarProperty Name="SDBPJ" ColumnName="SDBPJ" />
+                <ScalarProperty Name="SDB" ColumnName="SDB" />
+                <ScalarProperty Name="SDCS" ColumnName="SDCS" />
+                <ScalarProperty Name="SDBZ" ColumnName="SDBZ" />
+                <ScalarProperty Name="CarInfoID" ColumnName="CarInfoID" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="无" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -20,26 +20,35 @@ namespace YZXDMS.ViewModels
         protected virtual ICurrentWindowService CurrentWindowService { get { return null; } }
         protected virtual ISplashScreenService SplashScreenService { get { return this.GetService<ISplashScreenService>(); } }
 
+        /// <summary>
+        /// 登录人名称
+        /// </summary>
+        public virtual string LoginName { get; set; }
+
+
         public MainViewModel()
         {
             List<ModuleInfo> modules = new List<ModuleInfo>()
             {
                  ViewModelSource.Create(()=>new ModuleInfo("SettingPortView",this,"串口设置")).SetIcon("setting"),
-                 ViewModelSource.Create(()=>new ModuleInfo("SettingStationView",this,"工位设置")).SetIcon("car"),
+                 //ViewModelSource.Create(()=>new ModuleInfo("SettingStationView",this,"工位设置")).SetIcon("car"),
                  ViewModelSource.Create(()=>new ModuleInfo("SettingLinkPortView",this,"模块设置")).SetIcon("car"),
+                 ViewModelSource.Create(()=>new ModuleInfo("AssignView",this,"待检车辆")).SetIcon("car"),
                  ViewModelSource.Create(()=>new ModuleInfo("MasterView",this,"主控检测")).SetIcon("car"),
-                 ViewModelSource.Create(()=>new ModuleInfo("QueryCarView",this,"车辆查询")).SetIcon("car"),
-                 ViewModelSource.Create(()=>new ModuleInfo("PrintView",this,"导出/打印")).SetIcon("car"),
-                 ViewModelSource.Create(()=>new ModuleInfo("TestyView",this,"实验1")).SetIcon("car"),
-                 ViewModelSource.Create(()=>new ModuleInfo("TestView",this,"实验")).SetIcon("car"),
+                 //ViewModelSource.Create(()=>new ModuleInfo("QueryCarView",this,"车辆查询")).SetIcon("car"),
+                 //ViewModelSource.Create(()=>new ModuleInfo("PrintView",this,"导出/打印")).SetIcon("car"),
+                 //ViewModelSource.Create(()=>new ModuleInfo("TestyView",this,"实验1")).SetIcon("car"),
+                 //ViewModelSource.Create(()=>new ModuleInfo("TestView",this,"实验")).SetIcon("car"),
                  ViewModelSource.Create(()=>new ModuleInfo("SettingBaseView",this,"基本信息")).SetIcon("setting"),
                  ViewModelSource.Create(()=>new ModuleInfo("SettingTimeView",this,"时间参数")).SetIcon("time"),
                  ViewModelSource.Create(()=>new ModuleInfo("QueryTestLineView",this,"查询")).SetIcon("port"),
-                 //ViewModelSource.Create(()=>new ModuleInfo("SettingLineView",this,"通道管理")).SetIcon("line"),
+                 ViewModelSource.Create(()=>new ModuleInfo("CarInfoView",this,"车籍信息")).SetIcon("line"),
             };
             ModuleGroups = new ModuleGroup[] {
                 new ModuleGroup("功能",modules)
             };
+
+            LoginName = Core.Core.User.Name;
         }
 
 

@@ -15,19 +15,13 @@ using System.Windows.Shapes;
 namespace YZXDMS.Views
 {
     /// <summary>
-    /// Interaction logic for QueryTestLineView.xaml
+    /// Interaction logic for AssignView.xaml
     /// </summary>
-    public partial class QueryTestLineView : UserControl
+    public partial class AssignView : UserControl
     {
-        public QueryTestLineView()
+        public AssignView()
         {
             InitializeComponent();
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            Window owner = DevExpress.Xpf.Core.Native.LayoutHelper.FindParentObject<Window>(this);
-            DevExpress.Xpf.Grid.Printing.PrintHelper.ShowPrintPreviewDialog(owner, this.gird.View);
         }
     }
 }

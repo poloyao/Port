@@ -15,19 +15,13 @@ using System.Windows.Shapes;
 namespace YZXDMS.Views
 {
     /// <summary>
-    /// Interaction logic for QueryTestLineView.xaml
+    /// Interaction logic for CODView.xaml
     /// </summary>
-    public partial class QueryTestLineView : UserControl
+    public partial class CODView : UserControl
     {
-        public QueryTestLineView()
+        public CODView()
         {
             InitializeComponent();
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            Window owner = DevExpress.Xpf.Core.Native.LayoutHelper.FindParentObject<Window>(this);
-            DevExpress.Xpf.Grid.Printing.PrintHelper.ShowPrintPreviewDialog(owner, this.gird.View);
         }
     }
 }

@@ -1,0 +1,142 @@
+﻿<UserControl xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid" 
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm" xmlns:ViewModels="clr-namespace:YZXDMS.ViewModels"
+             xmlns:dxlc="http://schemas.devexpress.com/winfx/2008/xaml/layoutcontrol" xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors" x:Class="YZXDMS.Views.CarInfoView"
+             mc:Ignorable="d"
+             DataContext="{dxmvvm:ViewModelSource Type={x:Type ViewModels:CarInfoViewModel}}"
+             d:DesignHeight="500" d:DesignWidth="800">
+    <Grid>
+        <dxlc:LayoutControl Orientation="Vertical">
+            <dxlc:LayoutGroup Orientation="Vertical" View="GroupBox" Header="车辆信息">
+                <dxlc:LayoutGroup>
+                    <dxlc:LayoutItem Label="车辆类型">
+                        <dxe:TextEdit />
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="发动机号码">
+                        <dxe:TextEdit />
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="VIN号码">
+                        <dxe:TextEdit />
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="出厂日期">
+                        <dxe:TextEdit />
+                    </dxlc:LayoutItem>
+                </dxlc:LayoutGroup>
+                <dxlc:LayoutGroup>
+                    <dxlc:LayoutItem Label="车辆所有人">
+                        <dxe:TextEdit />
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="厂牌型号">
+                        <dxe:TextEdit />
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="燃料">
+                        <dxe:TextEdit />
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="悬挂形式">
+                        <dxe:TextEdit />
+                    </dxlc:LayoutItem>
+                </dxlc:LayoutGroup>
+                <dxlc:LayoutGroup>
+                    <dxlc:LayoutItem Label="初次登录日期">
+                        <dxe:TextEdit />
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="前照灯制式">
+                        <dxe:TextEdit />
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="远光单独调整">
+                        <dxe:TextEdit />
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="核定载客">
+                        <dxe:TextEdit />
+                    </dxlc:LayoutItem>
+
+                </dxlc:LayoutGroup>
+                <dxlc:LayoutGroup>
+                    <dxlc:LayoutItem Label="驻车轴">
+                        <dxe:TextEdit />
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="驱动形式">
+                        <dxe:TextEdit />
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="牵引挂车轴数">
+                        <dxe:TextEdit />
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="悬架形式">
+                        <dxe:TextEdit />
+                    </dxlc:LayoutItem>
+                </dxlc:LayoutGroup>
+                <dxlc:LayoutGroup>
+                    <dxlc:LayoutItem Label="总质量">
+                        <dxe:TextEdit />
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="整备质量">
+                        <dxe:TextEdit />
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="333" Visibility="Hidden">
+                        <dxe:TextEdit />
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="33" Visibility="Hidden">
+                        <dxe:TextEdit />
+                    </dxlc:LayoutItem>
+                </dxlc:LayoutGroup>
+            </dxlc:LayoutGroup>
+            <dxlc:LayoutGroup Orientation="Vertical" View="GroupBox" Header="检测信息">
+                <dxlc:LayoutGroup>
+                    <dxlc:LayoutItem Label="登录员">
+                        <dxe:TextEdit />
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="引车员">
+                        <dxe:TextEdit />
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="地沟检测员">
+                        <dxe:TextEdit />
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="外观检测员">
+                        <dxe:TextEdit />
+                    </dxlc:LayoutItem>
+                </dxlc:LayoutGroup>
+                <dxlc:LayoutGroup>
+                    <dxlc:LayoutItem Label="检测次数">
+                        <dxe:TextEdit />
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="底盘动态不合格项">
+                        <dxe:TextEdit />
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="车辆底盘不合格项">
+                        <dxe:TextEdit />
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="外观不合格项">
+                        <dxe:TextEdit />
+                    </dxlc:LayoutItem>
+                </dxlc:LayoutGroup>
+                <dxlc:LayoutGroup>
+                    <dxlc:LayoutItem Label="检测线号">
+                        <dxe:TextEdit />
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="主挂同检主车制动">
+                        <dxe:TextEdit />
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="33" Visibility="Hidden">
+                        <dxe:TextEdit />
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="33" Visibility="Hidden">
+                        <dxe:TextEdit />
+                    </dxlc:LayoutItem>
+                </dxlc:LayoutGroup>
+            </dxlc:LayoutGroup>
+            <dxlc:LayoutGroup HorizontalAlignment="Left" VerticalAlignment="Top">
+                <Button Command="{Binding AddCarInfoCommand}">添加车辆信息</Button>
+            </dxlc:LayoutGroup>
+            <dxlc:LayoutGroup HorizontalAlignment="Right" VerticalAlignment="Top">
+                <Button Command="{Binding AddWaitItemCommand}" CommandParameter="{Binding ElementName=grid,Path=SelectedItem}">添加待检车辆</Button>
+            </dxlc:LayoutGroup>
+            <dxlc:LayoutGroup Orientation="Horizontal">
+                <dxg:GridControl x:Name="grid" ItemsSource="{Binding Items}" SelectionMode="Row" AutoGenerateColumns="AddNew"/>
+                <dxg:GridControl ItemsSource="{Binding WaitItems}" SelectionMode="Row" AutoGenerateColumns="AddNew"/>
+            </dxlc:LayoutGroup>
+        </dxlc:LayoutControl>
+    </Grid>
+</UserControl>
