@@ -15,7 +15,9 @@ namespace YZXDMS.Model
     public partial class Speed
     {
         public int Id { get; set; }
+        public string jylsh { get; set; }
         public Nullable<int> CarInfoID { get; set; }
+        public Nullable<int> Mode { get; set; }
         public string SDBZ { get; set; }
         public string SDCS { get; set; }
         public string SDB { get; set; }

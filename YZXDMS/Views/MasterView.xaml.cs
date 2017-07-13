@@ -22,12 +22,12 @@ namespace YZXDMS.Views
         public MasterView()
         {
             InitializeComponent();
-            List<int> items = new List<int>();
-            for (int i = 0; i < 5; i++)
-            {
-                items.Add(i);
-            }
-            this.grid.ItemsSource = items;
+            //List<int> items = new List<int>();
+            //for (int i = 0; i < 5; i++)
+            //{
+            //    items.Add(i);
+            //}
+            //this.grid.ItemsSource = items;
         }
     }
 }

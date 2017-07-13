@@ -10,6 +10,7 @@ namespace YZXDMS.DataProvider
 {
     public class SQLServerDBProvider : IDBProvider
     {
+
         public bool AddCarInfoItem(CarInfo item)
         {
             //using (YZXEntities db = new YZXEntities())
@@ -40,6 +41,48 @@ namespace YZXDMS.DataProvider
             
         }
 
+        public void AddSpeed(IList<Speed> speeds)
+        {
+            YZXEntities db = new YZXEntities();
+            var connection = db.Database.Connection;
+            if (connection.State != System.Data.ConnectionState.Open)
+            {
+                connection.Open();
+            }
+            var tran = connection.BeginTransaction();
+            try
+            {
+                db.Database.UseTransaction(tran);
+                //speeds[0].jylsh
+                switch (Core.Core.DetectionMode)
+                {
+                    case DetectionMode.ALL:
+                        db.Speed.Add(speeds.Single(x => x.Mode == (int)DetectionMode.CPD));
+                        db.Speed.Add(speeds.Single(x => x.Mode == (int)DetectionMode.SPD));
+                        break;
+                    case DetectionMode.CPD:                        
+                        db.Speed.Add(speeds.Single(x => x.Mode == (int)DetectionMode.CPD));
+                        break;
+                    case DetectionMode.SPD:
+                        db.Speed.Add(speeds.Single(x => x.Mode == (int)DetectionMode.SPD));
+                        break;
+                }
+                db.SaveChanges();
+                tran.Commit();
+            }
+            catch (Exception er)
+            {
+                tran.Rollback();
+            }
+            finally
+            {
+                tran.Dispose();
+                db.Dispose();
+            }
+
+
+        }
+
         public bool AddWaitDetection(CarInfo item)
         {
             bool _result = false;
@@ -47,6 +90,7 @@ namespace YZXDMS.DataProvider
             try
             {
                 WaitDetection wd = new WaitDetection();
+                wd.jylsh = Guid.NewGuid().ToString();
                 wd.CarInfoId = item.Id;
                 db.WaitDetection.Add(wd);
                 db.SaveChanges();
@@ -65,11 +109,38 @@ namespace YZXDMS.DataProvider
 
         }
 
+        public CarInfo GetCarInfoItem(string carID)
+        {
+            using (YZXEntities db = new YZXEntities())
+            {
+                var query = db.CarInfo.Single(x => x.HPHM == carID);
+                return query;
+            }
+        }
+
+        public CarInfo GetCarInfoItem(int id)
+        {
+            using (YZXEntities db = new YZXEntities())
+            {
+                var query = db.CarInfo.Single(x => x.Id == id);
+                return query;
+            }
+        }
+
         public IList<CarInfo> GetCarInfoList()
         {
             using (YZXEntities db = new YZXEntities())
             {
                 var query = db.CarInfo.ToList();
+                return query;
+            }
+        }
+
+        public IList<Speed> GetSpeedList(string lsh)
+        {
+            using (YZXEntities db = new YZXEntities())
+            {
+                var query = db.Speed.ToList();
                 return query;
             }
         }
@@ -103,7 +174,11 @@ namespace YZXDMS.DataProvider
 
         public LoginResult Login(string account, string pwd)
         {
-            using (YZXEntities db = new YZXEntities())
+            
+            YZXEntities db = new YZXEntities();
+            
+            LoginResult result;
+            try
             {
                 var query = db.Users.SingleOrDefault(x => x.Account == account && x.PWD == pwd);
                 if (query != null)
@@ -114,10 +189,20 @@ namespace YZXDMS.DataProvider
                 {
                     var queryErr = db.Users.SingleOrDefault(x => x.Account == account);
                     if (queryErr == null)
-                        return new LoginResult() { IsSuccess = false, Message = "用户不存在" };                    
+                        return new LoginResult() { IsSuccess = false, Message = "用户不存在" };
                     return new LoginResult() { IsSuccess = false, Message = "密码错误" };
                 }
             }
+            catch (Exception)
+            {
+                result = new LoginResult() { IsSuccess = false, Message = "网络中断！" };
+            }
+            finally
+            {
+                db.Dispose();
+            }
+            return result;
+
         }
 
         public bool SetWaitDetection(WaitDetection wd, int line)

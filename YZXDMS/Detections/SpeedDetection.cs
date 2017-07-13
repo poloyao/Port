@@ -253,6 +253,7 @@ namespace YZXDMS.Detections
         /// </summary>
     public class TestSpeedDetection : ISpeedDetection
     {
+        
 
         SerialPort port;
 
@@ -260,6 +261,7 @@ namespace YZXDMS.Detections
 
         public Speed GetSpeedResultData()
         {
+            System.Threading.Thread.Sleep(2000);
             return new Speed();
         }
 
@@ -293,19 +295,14 @@ namespace YZXDMS.Detections
         {
             this.port = port;
         }
-
-        public void StartDetect()
-        {
-            
-        }
-
+        
         public void StopDetect()
         {
             
         }
 
 
-        void Init()
+        public void DeviceInit()
         {
             if (port.IsOpen)
                 return;
@@ -333,6 +330,25 @@ namespace YZXDMS.Detections
         public void SetCarInfo(CarInfo carInfo)
         {
             this.carInfo = carInfo;
+        }
+
+        public IList<Speed> StartDetect()
+        {
+            //假设成功的情况下
+            List<Speed> result = new List<Speed>();
+
+            result.Add(new Speed() { CarInfoID = this.carInfo.Id, SDBPJ = "O", Mode = (int)DetectionMode.CPD });
+            result.Add(new Speed() { CarInfoID = this.carInfo.Id, SDBPJ = "O", Mode = (int)DetectionMode.SPD });
+
+            return result;
+
+
+            //throw new NotImplementedException();
+        }
+
+        public CarInfo GetCarInfo()
+        {
+            throw new NotImplementedException();
         }
     }
 

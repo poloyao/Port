@@ -16,7 +16,8 @@ namespace YZXDMS.Model
     {
         public int Id { get; set; }
         public int CarInfoId { get; set; }
-        public int Status { get; set; }
+        public string jylsh { get; set; }
         public Nullable<int> LineID { get; set; }
+        public int Status { get; set; }
     }
 }

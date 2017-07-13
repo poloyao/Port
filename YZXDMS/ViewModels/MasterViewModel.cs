@@ -7,6 +7,11 @@ using System.Linq;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using YZXDMS.Model;
+using System.Collections.ObjectModel;
+using System.Collections.Generic;
+using DevExpress.Xpf.Core;
+using DevExpress.Mvvm.POCO;
+using System.Windows.Threading;
 
 namespace YZXDMS.ViewModels
 {
@@ -15,25 +20,215 @@ namespace YZXDMS.ViewModels
     {
         ISpeedDetection sd;
 
+        public virtual ObservableCollectionCore<DetectResult> ResultItems { get; set; }
+
+        protected IDispatcherService dispatcherService { get { return this.GetService<IDispatcherService>(); } }
+
+   
+
+        DispatcherTimer dispatcherTimer = new DispatcherTimer();
+
         public MasterViewModel()
         {
+            //SpeedInit();
             Init();
+
+        }
+
+        ~MasterViewModel()
+        {
+            if (dispatcherTimer.IsEnabled)
+                dispatcherTimer.Stop();
+            
         }
 
         void Init()
         {
+
+            ResultItems = Core.Core.ResultItems;
+
+            //dispatcherTimer.Interval = new TimeSpan(0, 0, 1);
+            //dispatcherTimer.IsEnabled = true;
+            //dispatcherTimer.Tick += dispatcherTimer_Tick;
+            //dispatcherTimer.Start();
+
+            //CRC16Helper.GetInstance().ReadYLZ(20f);
+            //var speeds = Core.Core.GetDBProvider().GetSpeedList("");
+
+        }
+
+        private void dispatcherTimer_Tick(object sender, EventArgs e)
+        {
+            var speeds = Core.Core.GetDBProvider().GetSpeedList("");
+
+
+            if(speeds.Count() > 0)
+            {
+                ResultItems.BeginUpdate();
+                ResultItems[0].CarID = "完成";
+                ResultItems.EndUpdate();
+                dispatcherTimer.Stop();
+            }
+        }
+
+        /// <summary>
+        /// 速度台初始化
+        /// </summary>
+        void SpeedInit()
+        {
             sd = new TestSpeedDetection();
             var sdStatus = sd.GetCurrentStatus();
-            sd.SetCarInfo(new CarInfo());
+            
             sd.SetPort(new System.IO.Ports.SerialPort());
 
-            sd.StartDetect();
+
+           
+            
+        }
+        
+        public void StartAll()
+        {
+
+            Task task = new TaskFactory().StartNew((new Action(() =>
+             {
+                 while (true)
+                 {
+                     //获取当前状态
+                     switch (sd.GetCurrentStatus())
+                     {
+                         case DetectionStatus.IDLE:
+                             break;
+                         case DetectionStatus.WORK:
+                             continue;
+                         case DetectionStatus.ABN:
+                             continue;
+                     }
+
+                     sd.SetCarInfo(new CarInfo() { Name = "辽A4392F" });
+
+                     sd.StartDetect();
+
+                    // var srd = sd.GetSpeedResultData();
+
+                     dispatcherService.BeginInvoke(() =>
+                     {
+                         ResultItems.BeginUpdate();
+                         ResultItems[0].CarID = "完成";
+                         ResultItems.EndUpdate();
+                     });
+
+                     
+                     
+                     break;
+                 }
+             })));
+            
+        }
+
+        public void SpeedStart()
+        {
+            //StartAll();
+            Core.Core.StartDetection();
+
         }
 
     }
 
+    /// <summary>
+    /// 检测结果状态
+    /// </summary>
+    public enum DetectResultStatus
+    {
+        /// <summary>
+        /// 默认待检
+        /// </summary>
+        Wait = 0,
+        /// <summary>
+        /// 合格 O
+        /// </summary>
+        Qualified,
+        /// <summary>
+        /// 不合格 X
+        /// </summary>
+        Unqualified,
+         /// <summary>
+         /// 未检 -
+         /// </summary>
+        NotChecked,
+    }
 
 
+    /// <summary>
+    /// 检测结果
+    /// </summary>
+    public class DetectResult
+    {
+        public string CarID { get; set; }
+        /// <summary>
+        /// 流水号
+        /// </summary>
+        public string SerialData { get; set; }
+
+        /// <summary>
+        /// 最终结果
+        /// </summary>
+        public bool Final { get; set; }
+
+
+        /// <summary>
+        /// 外检
+        /// </summary>
+        public DetectResultStatus Shape { get; set; }
+        /// <summary>
+        /// 侧滑
+        /// </summary>
+        public DetectResultStatus SideSlide { get; set; }
+        /// <summary>
+        /// 速度
+        /// </summary>
+        public DetectResultStatus Speed { get; set; }
+        /// <summary>
+        /// 灯光
+        /// </summary>
+        public DetectResultStatus Light { get; set; }
+        /// <summary>
+        /// 制动
+        /// </summary>
+        public DetectResultStatus Brake { get; set; }
+        /// <summary>
+        /// 称重
+        /// </summary>
+        public DetectResultStatus Weigh { get; set; }
+        /// <summary>
+        /// 地盘
+        /// </summary>
+        public DetectResultStatus bottom { get; set; }
+        /// <summary>
+        /// 地盘间隙
+        /// </summary>
+        public DetectResultStatus BoottomInterval { get; set; }
+        /// <summary>
+        /// 声级计
+        /// </summary>
+        public DetectResultStatus SoundLevel { get; set; }
+        /// <summary>
+        /// 功率
+        /// </summary>
+        public DetectResultStatus Power { get; set; }
+        /// <summary>
+        /// 油耗
+        /// </summary>
+        public DetectResultStatus FuelConsumption { get; set; }
+        /// <summary>
+        /// 尾气
+        /// </summary>
+        public DetectResultStatus Exhaust { get; set; }
+        /// <summary>
+        /// 探平衡仪
+        /// </summary>
+        public DetectResultStatus Balancer { get; set; }
+    }
+    
     //[POCOViewModel]
     //public class MasterViewModel
     //{

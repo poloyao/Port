@@ -185,7 +185,7 @@ namespace YZXDMS.Helpers
         //    jyjgxtEntities1 je = new jyjgxtEntities1();
         //    var t = default(T);
         //    je.Entry<T>(t);
-            
+
         //}
 
         #endregion

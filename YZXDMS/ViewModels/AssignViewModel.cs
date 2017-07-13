@@ -33,7 +33,8 @@ namespace YZXDMS.ViewModels
         [Command(CanExecuteMethodName = "CanAddCurrent")]
         public void AddCurrent(WaitDetection item)
         {
-            Core.Core.GetDBProvider().SetWaitDetection(item, _line);
+            Core.Core.AddCurrentCar(item);
+            //Core.Core.GetDBProvider().SetWaitDetection(item, _line);
             Init();
         }
 

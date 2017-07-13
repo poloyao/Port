@@ -5,15 +5,15 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="2dd1b2df0fbb453587c53f3ca2db2b49" Name="Diagram1">
-        <EntityTypeShape EntityType="YZXModel.CarInfo" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="YZXModel.WaitDetection" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="YZXModel.Powers" Width="1.5" PointX="0.75" PointY="3.75" />
-        <EntityTypeShape EntityType="YZXModel.Users" Width="1.5" PointX="3.375" PointY="3.75" />
-        <EntityTypeShape EntityType="YZXModel.ComplexResult" Width="1.5" PointX="5.375" PointY="0.75" />
-        <EntityTypeShape EntityType="YZXModel.SafaResult" Width="1.5" PointX="5.375" PointY="3.75" />
-        <EntityTypeShape EntityType="YZXModel.BFD" Width="1.5" PointX="0.75" PointY="6.75" />
-        <EntityTypeShape EntityType="YZXModel.ParkBFD" Width="1.5" PointX="2.75" PointY="6.75" />
-        <EntityTypeShape EntityType="YZXModel.Speed" Width="1.5" PointX="4.75" PointY="6.75" />
+        <EntityTypeShape EntityType="YZXModel.BFD" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="YZXModel.CarInfo" Width="1.5" PointX="2.75" PointY="0.75" />
+        <EntityTypeShape EntityType="YZXModel.ComplexResult" Width="1.5" PointX="4.75" PointY="0.75" />
+        <EntityTypeShape EntityType="YZXModel.ParkBFD" Width="1.5" PointX="4.75" PointY="3.75" />
+        <EntityTypeShape EntityType="YZXModel.Powers" Width="1.5" PointX="6.75" PointY="0.75" />
+        <EntityTypeShape EntityType="YZXModel.SafaResult" Width="1.5" PointX="6.75" PointY="3.75" />
+        <EntityTypeShape EntityType="YZXModel.Speed" Width="1.5" PointX="6.75" PointY="6.75" />
+        <EntityTypeShape EntityType="YZXModel.Users" Width="1.5" PointX="8.75" PointY="0.75" />
+        <EntityTypeShape EntityType="YZXModel.WaitDetection" Width="1.5" PointX="8.75" PointY="3.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

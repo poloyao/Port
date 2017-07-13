@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using DevExpress.Mvvm.POCO;
 using System.Linq;
 using DevExpress.Utils;
+using System.Windows.Threading;
 
 namespace YZXDMS.ViewModels
 {
@@ -24,6 +25,10 @@ namespace YZXDMS.ViewModels
         /// 登录人名称
         /// </summary>
         public virtual string LoginName { get; set; }
+
+        private DispatcherTimer clockTimer = new DispatcherTimer();
+
+        public virtual string TimeDateText { get; set; }
 
 
         public MainViewModel()
@@ -49,6 +54,31 @@ namespace YZXDMS.ViewModels
             };
 
             LoginName = Core.Core.User.Name;
+            clockTimer.Interval = new TimeSpan(0, 0, 1);
+            clockTimer.IsEnabled = true;
+            clockTimer.Tick += ClockTimer_Tick;
+            clockTimer.Start();
+
+        }
+
+        private void ClockTimer_Tick(object sender, EventArgs e)
+        {
+            UpdateTimeDate();
+        }
+
+        private void UpdateTimeDate()
+        {
+            string timeDateString = "";
+            DateTime now = DateTime.Now;
+            timeDateString = string.Format("{0}年{1}月{2}日 {3}:{4}:{5}",
+                now.Year,
+                now.Month.ToString("00"),
+                now.Day.ToString("00"),
+                now.Hour.ToString("00"),
+                now.Minute.ToString("00"),
+                now.Second.ToString("00"));
+
+            TimeDateText = timeDateString;
         }
 
 

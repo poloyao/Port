@@ -56,6 +56,18 @@ namespace YZXDMS.DataProvider
         bool AddWaitDetection(CarInfo item);
 
         /// <summary>
+        /// 根据id获取车籍
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        CarInfo GetCarInfoItem(int id);
+        /// <summary>
+        /// 根据车牌号码获取车籍
+        /// </summary>
+        /// <param name="carID"></param>
+        /// <returns></returns>
+        CarInfo GetCarInfoItem(string carID);
+        /// <summary>
         /// 获取车籍列表
         /// </summary>
         /// <returns></returns>
@@ -69,6 +81,18 @@ namespace YZXDMS.DataProvider
         bool AddCarInfoItem(CarInfo item);
 
 
+        /// <summary>
+        /// 添加速度检测结果，同时往2个结果表保存
+        /// </summary>
+        /// <param name="speed"></param>
+        void AddSpeed(IList<Speed> speeds);
+
+        /// <summary>
+        /// 获取速度检测结果集
+        /// </summary>
+        /// <param name="lsh">流水号</param>
+        /// <returns></returns>
+        IList<Speed> GetSpeedList(string lsh);
 
 
     }

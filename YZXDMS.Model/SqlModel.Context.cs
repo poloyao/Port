@@ -25,14 +25,14 @@ namespace YZXDMS.Model
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<CarInfo> CarInfo { get; set; }
-        public virtual DbSet<WaitDetection> WaitDetection { get; set; }
-        public virtual DbSet<Powers> Powers { get; set; }
-        public virtual DbSet<Users> Users { get; set; }
-        public virtual DbSet<ComplexResult> ComplexResult { get; set; }
-        public virtual DbSet<SafaResult> SafaResult { get; set; }
         public virtual DbSet<BFD> BFD { get; set; }
+        public virtual DbSet<CarInfo> CarInfo { get; set; }
+        public virtual DbSet<ComplexResult> ComplexResult { get; set; }
         public virtual DbSet<ParkBFD> ParkBFD { get; set; }
+        public virtual DbSet<Powers> Powers { get; set; }
+        public virtual DbSet<SafaResult> SafaResult { get; set; }
         public virtual DbSet<Speed> Speed { get; set; }
+        public virtual DbSet<Users> Users { get; set; }
+        public virtual DbSet<WaitDetection> WaitDetection { get; set; }
     }
 }

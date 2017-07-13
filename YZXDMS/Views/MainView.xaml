@@ -33,7 +33,8 @@
                 <RowDefinition Height="81*"/>
                 <RowDefinition Height="19*"/>
             </Grid.RowDefinitions>
-            <TextBlock x:Name="textBlock" Grid.Column="3" Grid.Row="1" TextWrapping="Wrap" Text="{Binding LoginName}" Foreground="Red"/>
+            <TextBlock  Grid.Column="3" Grid.Row="1" HorizontalAlignment="Right" TextWrapping="Wrap" Text="{Binding TimeDateText}" Foreground="Red"/>
+            <TextBlock  Grid.Column="3" Grid.Row="1" TextWrapping="Wrap" Text="{Binding LoginName}" Foreground="Red"/>
             <!--<TextBlock x:Name="textBlock2" Grid.Column="3" Grid.Row="1" TextWrapping="Wrap" Text="某某汽车检测中心" Foreground="Red"/>-->
             <TextBlock x:Name="textBlock3" Grid.ColumnSpan="3" Margin="24,24,10,10" TextWrapping="Wrap" Text="机车检测与管理系统" Foreground="White" FontSize="36"/>
         </Grid>

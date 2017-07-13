@@ -14,6 +14,9 @@
             <Setter Property="FontWeight" Value="Bold" />
         </Style>
     </UserControl.Resources>
+    <dxmvvm:Interaction.Behaviors>
+        <dxmvvm:DispatcherService/>
+    </dxmvvm:Interaction.Behaviors>
 
     <Grid>
         <Grid.RowDefinitions>
@@ -148,37 +151,37 @@
 
 
         <Grid Grid.Row="1">
-            <dxg:GridControl x:Name="grid"  EnableSmartColumnsGeneration="True" SelectionMode="Row" FontWeight="Bold" AutoGenerateColumns="KeepOld">
+            <dxg:GridControl x:Name="grid" ItemsSource="{Binding ResultItems}"  EnableSmartColumnsGeneration="True" SelectionMode="Row" FontWeight="Bold" AutoGenerateColumns="KeepOld" >
                 <dxg:GridControl.Bands>
                     <dxg:GridControlBand Fixed="Left" OverlayHeaderByChildren="True" >
-                        <dxg:GridColumn FieldName="Column1CAR" Header="车牌号码" Width="200" Fixed="Left" HorizontalHeaderContentAlignment="Center" HeaderStyle="{DynamicResource columStyle}"/>
+                        <dxg:GridColumn FieldName="CarID" Header="车牌号码" Width="200" Fixed="Left" HorizontalHeaderContentAlignment="Center" HeaderStyle="{DynamicResource columStyle}"/>
                     </dxg:GridControlBand>
                     <dxg:GridControlBand Fixed="Left" OverlayHeaderByChildren="True">
-                        <dxg:GridColumn FieldName="Column1CAR" Header="速度" Fixed="Left" HorizontalHeaderContentAlignment="Center"  HeaderStyle="{DynamicResource columStyle}"/>
+                        <dxg:GridColumn FieldName="Speed" Header="速度" Fixed="Left" HorizontalHeaderContentAlignment="Center"  HeaderStyle="{DynamicResource columStyle}"/>
                     </dxg:GridControlBand>
                     <dxg:GridControlBand Header="制动" Fixed="Left" HorizontalHeaderContentAlignment="Center" >
-                        <dxg:GridColumn FieldName="前轴" Header="前轴"/>
-                        <dxg:GridColumn FieldName="中轴" Header="中轴"/>
-                        <dxg:GridColumn FieldName="三轴" Header="三轴"/>
-                        <dxg:GridColumn FieldName="四轴" Header="四轴"/>
-                        <dxg:GridColumn FieldName="后轴" Header="后轴"/>
-                        <dxg:GridColumn FieldName="手刹" Header="手刹"/>
+                        <dxg:GridColumn FieldName="CarID" Header="前轴"/>
+                        <dxg:GridColumn FieldName="CarID" Header="中轴"/>
+                        <dxg:GridColumn FieldName="CarID" Header="三轴"/>
+                        <dxg:GridColumn FieldName="CarID" Header="四轴"/>
+                        <dxg:GridColumn FieldName="CarID" Header="后轴"/>
+                        <dxg:GridColumn FieldName="CarID" Header="手刹"/>
                     </dxg:GridControlBand>
                     <dxg:GridControlBand Fixed="Left" OverlayHeaderByChildren="True">
-                        <dxg:GridColumn FieldName="Column1CAR" Header="侧滑"  HorizontalHeaderContentAlignment="Center"/>
+                        <dxg:GridColumn FieldName="CarID" Header="侧滑"  HorizontalHeaderContentAlignment="Center"/>
                     </dxg:GridControlBand>
                     <dxg:GridControlBand Header="前照灯"  Fixed="Left" HorizontalHeaderContentAlignment="Center">
-                        <dxg:GridColumn FieldName="左灯" Header="左灯"/>
-                        <dxg:GridColumn FieldName="右灯" Header="右灯"/>
+                        <dxg:GridColumn FieldName="CarID" Header="左灯"/>
+                        <dxg:GridColumn FieldName="CarID" Header="右灯"/>
                     </dxg:GridControlBand>
                     <dxg:GridControlBand Fixed="Left" OverlayHeaderByChildren="True">
-                        <dxg:GridColumn FieldName="Column1CAR" Header="底盘"  HorizontalHeaderContentAlignment="Center"/>
+                        <dxg:GridColumn FieldName="CarID" Header="底盘"  HorizontalHeaderContentAlignment="Center"/>
                     </dxg:GridControlBand>
                     <dxg:GridControlBand Fixed="Left" OverlayHeaderByChildren="True">
-                        <dxg:GridColumn FieldName="Column1CAR" Header="动态"  HorizontalHeaderContentAlignment="Center"/>
+                        <dxg:GridColumn FieldName="CarID" Header="动态"  HorizontalHeaderContentAlignment="Center"/>
                     </dxg:GridControlBand>
                     <dxg:GridControlBand Fixed="Right" OverlayHeaderByChildren="True">
-                        <dxg:GridColumn FieldName="Column1CAR" Header="总评"  HorizontalHeaderContentAlignment="Center"/>
+                        <dxg:GridColumn FieldName="CarID" Header="总评"  HorizontalHeaderContentAlignment="Center"/>
                     </dxg:GridControlBand>
                 </dxg:GridControl.Bands>
                 <dxg:GridControl.View>
@@ -233,7 +236,7 @@
 
         <Grid Grid.Row="3" >
 
-            <dx:SimpleButton Content="一工位复位" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Glyph="{dx:DXImage Image=Reset2_32x32.png}"/>
+            <dx:SimpleButton Content="一工位复位" Command="{Binding SpeedStartCommand}" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Glyph="{dx:DXImage Image=Reset2_32x32.png}"/>
             <dx:SimpleButton Content="二工位复位" HorizontalAlignment="Left" Margin="152,10,0,0" VerticalAlignment="Top" Glyph="{dx:DXImage Image=Reset2_32x32.png}"/>
             <dx:SimpleButton Content="三工位复位" HorizontalAlignment="Left" Margin="297,10,384,0" VerticalAlignment="Top" Glyph="{dx:DXImage Image=Reset2_32x32.png}"/>
             <dx:SimpleButton Content="四工位复位" HorizontalAlignment="Left" Margin="431,10,0,0" VerticalAlignment="Top" Glyph="{dx:DXImage Image=Reset2_32x32.png}"/>

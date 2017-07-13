@@ -15,7 +15,7 @@ namespace YZXDMS.Model
     public partial class ComplexResult
     {
         public int Id { get; set; }
-        public Nullable<int> p1 { get; set; }
+        public Nullable<int> Speed { get; set; }
         public Nullable<int> p2 { get; set; }
     }
 }

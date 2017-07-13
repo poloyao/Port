@@ -30,9 +30,16 @@ namespace YZXDMS.Detections
         void SetCarInfo(CarInfo carInfo);
 
         /// <summary>
-        /// 开始检测
+        /// 获取车籍信息
         /// </summary>
-        void StartDetect();
+        /// <returns></returns>
+        CarInfo GetCarInfo();
+
+        /// <summary>
+        /// 设备初始化
+        /// </summary>
+        void DeviceInit();
+        
         /// <summary>
         /// 终止检测
         /// </summary>
@@ -82,12 +89,24 @@ namespace YZXDMS.Detections
 
     }
 
+    ///// <summary>
+    ///// 制动力轴数
+    ///// </summary>
+    //public enum BFDAxis
+    //{
+
+    //}
+
     /// <summary>
     /// 制动力检测接口
     /// </summary>
     public interface IBFDDetection : IDetection
     {
-
+        /// <summary>
+        /// 启动检测
+        /// </summary>
+        /// <param name="asis"></param>
+        void StartDetect(int asis);
     }
 
     /// <summary>
@@ -95,10 +114,99 @@ namespace YZXDMS.Detections
     /// </summary>
     public interface ISpeedDetection : IDetection
     {
+        ///// <summary>
+        ///// 获取速度检测结果
+        ///// </summary>
+        ///// <returns></returns>
+        //Speed GetSpeedResultData();
+
         /// <summary>
-        /// 获取速度检测结果
+        /// 启动检测，返回检测结果
         /// </summary>
-        /// <returns></returns>
-        Speed GetSpeedResultData();
+        IList<Speed> StartDetect();
     }
+
+    
+
+
+
+
+    //public abstract class SpeedDetectionBase : ISpeedDetection
+    //{
+        
+        
+    //    protected DetectionStatus IsStatus;
+
+    //    public abstract void DeviceInit();
+    //    public virtual DetectionStatus GetCurrentStatus()
+    //    {
+    //        return IsStatus;
+    //    }
+    //    public abstract Speed GetSpeedResultData();
+    //    public abstract void Reset();
+    //    public abstract void SetCarInfo(CarInfo carInfo);
+    //    public abstract void SetCongfig();
+    //    public abstract void SetLatticeScreen(ILatticeScreenOperate LSO);
+    //    public abstract void SetPort(SerialPort port);
+    //    public abstract void StartDetect();
+    //    public abstract void StopDetect();
+    //}
+
+
+    //public class asdaajeee : SpeedDetectionBase
+    //{
+
+    //    public asdaajeee():base()
+    //    {
+    //        IsStatus = DetectionStatus.IDLE;
+    //    }
+        
+
+    //    public override void DeviceInit()
+    //    {
+    //        throw new NotImplementedException();
+    //    }
+        
+    //    public override Speed GetSpeedResultData()
+    //    {
+    //        throw new NotImplementedException();
+    //    }
+
+    //    public override void Reset()
+    //    {
+    //        throw new NotImplementedException();
+    //    }
+
+    //    public override void SetCarInfo(CarInfo carInfo)
+    //    {
+    //        throw new NotImplementedException();
+    //    }
+
+    //    public override void SetCongfig()
+    //    {
+    //        throw new NotImplementedException();
+    //    }
+
+    //    public override void SetLatticeScreen(ILatticeScreenOperate LSO)
+    //    {
+    //        throw new NotImplementedException();
+    //    }
+
+    //    public override void SetPort(SerialPort port)
+    //    {
+    //        throw new NotImplementedException();
+    //    }
+
+    //    public override void StartDetect()
+    //    {
+    //        throw new NotImplementedException();
+    //    }
+
+    //    public override void StopDetect()
+    //    {
+    //        throw new NotImplementedException();
+    //    }
+    //}
 }
+
+
