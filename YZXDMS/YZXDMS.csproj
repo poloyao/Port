@@ -102,7 +102,6 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Core\Core.cs" />
-    <Compile Include="CRC16Helper.cs" />
     <Compile Include="DataProvider\IDBProvider.cs" />
     <Compile Include="DataProvider\SQLServerDBProvider.cs" />
     <Compile Include="Detections\IDetection.cs" />

@@ -162,28 +162,28 @@
                         <dxg:GridColumn FieldName="Speed" Header="速度" Fixed="Left" HorizontalHeaderContentAlignment="Center"  HeaderStyle="{DynamicResource columStyle}"/>
                     </dxg:GridControlBand>
                     <dxg:GridControlBand Header="制动" Fixed="Left" HorizontalHeaderContentAlignment="Center" >
-                        <dxg:GridColumn FieldName="CarID" Header="前轴"/>
-                        <dxg:GridColumn FieldName="CarID" Header="中轴"/>
-                        <dxg:GridColumn FieldName="CarID" Header="三轴"/>
-                        <dxg:GridColumn FieldName="CarID" Header="四轴"/>
-                        <dxg:GridColumn FieldName="CarID" Header="后轴"/>
-                        <dxg:GridColumn FieldName="CarID" Header="手刹"/>
+                        <dxg:GridColumn FieldName="CarD" Header="前轴"/>
+                        <dxg:GridColumn FieldName="CarD" Header="中轴"/>
+                        <dxg:GridColumn FieldName="CarD" Header="三轴"/>
+                        <dxg:GridColumn FieldName="CarD" Header="四轴"/>
+                        <dxg:GridColumn FieldName="CarD" Header="后轴"/>
+                        <dxg:GridColumn FieldName="CarD" Header="手刹"/>
                     </dxg:GridControlBand>
                     <dxg:GridControlBand Fixed="Left" OverlayHeaderByChildren="True">
-                        <dxg:GridColumn FieldName="CarID" Header="侧滑"  HorizontalHeaderContentAlignment="Center"/>
+                        <dxg:GridColumn FieldName="CarD" Header="侧滑"  HorizontalHeaderContentAlignment="Center"/>
                     </dxg:GridControlBand>
                     <dxg:GridControlBand Header="前照灯"  Fixed="Left" HorizontalHeaderContentAlignment="Center">
-                        <dxg:GridColumn FieldName="CarID" Header="左灯"/>
-                        <dxg:GridColumn FieldName="CarID" Header="右灯"/>
+                        <dxg:GridColumn FieldName="CarD" Header="左灯"/>
+                        <dxg:GridColumn FieldName="CarD" Header="右灯"/>
                     </dxg:GridControlBand>
                     <dxg:GridControlBand Fixed="Left" OverlayHeaderByChildren="True">
-                        <dxg:GridColumn FieldName="CarID" Header="底盘"  HorizontalHeaderContentAlignment="Center"/>
+                        <dxg:GridColumn FieldName="CarD" Header="底盘"  HorizontalHeaderContentAlignment="Center"/>
                     </dxg:GridControlBand>
                     <dxg:GridControlBand Fixed="Left" OverlayHeaderByChildren="True">
-                        <dxg:GridColumn FieldName="CarID" Header="动态"  HorizontalHeaderContentAlignment="Center"/>
+                        <dxg:GridColumn FieldName="CarD" Header="动态"  HorizontalHeaderContentAlignment="Center"/>
                     </dxg:GridControlBand>
                     <dxg:GridControlBand Fixed="Right" OverlayHeaderByChildren="True">
-                        <dxg:GridColumn FieldName="CarID" Header="总评"  HorizontalHeaderContentAlignment="Center"/>
+                        <dxg:GridColumn FieldName="CarD" Header="总评"  HorizontalHeaderContentAlignment="Center"/>
                     </dxg:GridControlBand>
                 </dxg:GridControl.Bands>
                 <dxg:GridControl.View>

@@ -238,6 +238,7 @@ namespace YZXDMS.Core
                 //全部检测项目完成后更新队列
                 //将完毕检验完毕的移除队列
                 //MyBug 不合格车辆是否暂不移除？
+
                 lock (SyncCurrentDetectionList)
                 {
                     var sing = ResultItems.Single(x => x.SerialData == CurrentDetectionList[0].jylsh);
