@@ -22,19 +22,28 @@ namespace YZXDMS.ViewModels
         {
             if (Pwd != null && Pwd.Length > 0)
             {
-                var query = Core.Core.GetDBProvider().Login(Account, Pwd);
-                if (query.IsSuccess == true)
+                try
                 {
-                    //成功后操作此动作
-                    Core.Core.User = query.User;
-                    LoginSucess(this, EventArgs.Empty);
-                    
-                    return;
+                    var query = Core.Core.GetDBProvider().Login(Account, Pwd);
+                    if (query.IsSuccess == true)
+                    {
+                        //成功后操作此动作
+                        Core.Core.User = query.User;
+                        LoginSucess(this, EventArgs.Empty);
+
+                        return;
+                    }
+                    else
+                    {
+                        Message = query.Message;
+                    }
                 }
-                else
+                catch (Exception)
                 {
-                    Message = query.Message;
+
+                    Message = "连接失败";
                 }
+
             }
         }
     }

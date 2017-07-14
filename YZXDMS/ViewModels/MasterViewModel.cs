@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using DevExpress.Xpf.Core;
 using DevExpress.Mvvm.POCO;
 using System.Windows.Threading;
+using DevExpress.Utils;
 
 namespace YZXDMS.ViewModels
 {
@@ -167,6 +168,14 @@ namespace YZXDMS.ViewModels
 
     }
 
+
+    static class ResultImgHelper
+    {
+        public const string CellMergingImagesPath = "pack://application:,,,/YZXDMS;component/Img/Result/";
+        // public const string CellMergingImagesPath = "YZXDMS;component/Img/Result/";
+        ///pack://application:,,,/GridDemo;
+        //AssemblyHelper.GetResourceUri(typeof(this).Assembly, string.Format("Img/{0}.png", icon));
+    }
     /// <summary>
     /// 检测结果状态
     /// </summary>
@@ -174,19 +183,23 @@ namespace YZXDMS.ViewModels
     {
         /// <summary>
         /// 默认待检
-        /// </summary>
+        /// </summary>       
+        //[Image(ResultImgHelper.CellMergingImagesPath + "Qualified" + ".png")]
         Wait = 0,
         /// <summary>
         /// 合格 O
         /// </summary>
+        [Image(ResultImgHelper.CellMergingImagesPath + "Qualified" + ".png")]
         Qualified,
         /// <summary>
         /// 不合格 X
         /// </summary>
+        [Image(ResultImgHelper.CellMergingImagesPath + "Unqualified" + ".png")]
         Unqualified,
-         /// <summary>
-         /// 未检 -
-         /// </summary>
+        /// <summary>
+        /// 未检 -
+        /// </summary>
+        [Image(ResultImgHelper.CellMergingImagesPath + "NotChecked" + ".png")]
         NotChecked,
     }
 
@@ -261,7 +274,10 @@ namespace YZXDMS.ViewModels
         /// </summary>
         public DetectResultStatus Balancer { get; set; }
     }
+
+
     
+
     //[POCOViewModel]
     //public class MasterViewModel
     //{
