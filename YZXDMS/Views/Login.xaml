@@ -6,7 +6,7 @@
     xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
     xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm" xmlns:ViewModels="clr-namespace:YZXDMS.ViewModels"
     DataContext="{dxmvvm:ViewModelSource Type={x:Type ViewModels:LoginViewModel}}"
-    Title="Login" Height="350" Width="525" WindowStartupLocation="CenterScreen"
+    Title="Login" Height="596" Width="389" WindowStartupLocation="CenterScreen"
     >
     <dx:DXWindow.Background>
         <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -21,7 +21,7 @@
             <ColumnDefinition Width="1*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="1*"/>
+            <RowDefinition Height="2*"/>
             <RowDefinition Height="100" />
             <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
