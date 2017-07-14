@@ -24,9 +24,9 @@ namespace YZXDMS.ViewModels
 
         protected IDispatcherService dispatcherService { get { return this.GetService<IDispatcherService>(); } }
 
-   
 
-        DispatcherTimer dispatcherTimer = new DispatcherTimer();
+
+        DispatcherTimer dispatcherTimer;// = new DispatcherTimer();
 
         public MasterViewModel()
         {
@@ -45,30 +45,63 @@ namespace YZXDMS.ViewModels
         void Init()
         {
 
-            ResultItems = Core.Core.ResultItems;
+            //ResultItems = Core.Core.ResultItems;
 
-            //dispatcherTimer.Interval = new TimeSpan(0, 0, 1);
-            //dispatcherTimer.IsEnabled = true;
-            //dispatcherTimer.Tick += dispatcherTimer_Tick;
-            //dispatcherTimer.Start();
+            //使用唯一时钟，bug只能在下次进入此页面时触发
+            //开启后会一直运行，没有想好触发的关闭位置
+            dispatcherTimer = Core.Core.MasterDispatcherTimer;
+            if (dispatcherTimer.IsEnabled)
+                dispatcherTimer.Stop();
+            
 
-            //CRC16Helper.GetInstance().ReadYLZ(20f);
-            //var speeds = Core.Core.GetDBProvider().GetSpeedList("");
+            dispatcherTimer.Interval = new TimeSpan(0, 0, 1);
+            dispatcherTimer.IsEnabled = true;
+            dispatcherTimer.Tick += dispatcherTimer_Tick;
+            dispatcherTimer.Start();
+
+
+            //Core.Core.OnRemoveDetectionHandler += Core_OnRemoveDetectionHandler;           
 
         }
+        
 
+        /// <summary>
+        /// 时钟更新grid
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void dispatcherTimer_Tick(object sender, EventArgs e)
         {
-            var speeds = Core.Core.GetDBProvider().GetSpeedList("");
+            //断开与Core.ResultItems的直接联系           
+            var list = Core.Core.ResultItems;
+            if (ResultItems == null)
+                ResultItems = new ObservableCollectionCore<DetectResult>();
+            ResultItems.BeginUpdate();
+            //直接情况会闪屏，不友好
+            //ResultItems.Clear();
 
-
-            if(speeds.Count() > 0)
+            foreach (var item in list)
             {
-                ResultItems.BeginUpdate();
-                ResultItems[0].CarID = "完成";
-                ResultItems.EndUpdate();
-                dispatcherTimer.Stop();
+                var query = ResultItems.SingleOrDefault(x => x.SerialData == item.SerialData);
+                if (query == null)
+                    ResultItems.Add(item);
+                else
+                    query = item;
+                //ResultItems.Add(item);
             }
+            var exc = ResultItems.Except(list);
+            if (exc.Count() > 0)
+            {
+                for (int i = exc.Count(); i > 0; i--)
+                {
+                    ResultItems.Remove(exc.First());
+                }
+            }
+
+            ResultItems.EndUpdate();
+
+
+
         }
 
         /// <summary>

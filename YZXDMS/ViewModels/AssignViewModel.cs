@@ -3,6 +3,7 @@ using DevExpress.Mvvm.DataAnnotations;
 using DevExpress.Mvvm;
 using YZXDMS.Model;
 using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace YZXDMS.ViewModels
 {
@@ -34,14 +35,20 @@ namespace YZXDMS.ViewModels
         public void AddCurrent(WaitDetection item)
         {
             Core.Core.AddCurrentCar(item);
-            //Core.Core.GetDBProvider().SetWaitDetection(item, _line);
-            Init();
+           Init();
         }
 
         public bool CanAddCurrent(WaitDetection item)
         {
+            //1.不能为null
+            //2.在检测队列中不能重复
             if (item != null)
+            {
+                var query = Core.Core.CurrentDetectionList.SingleOrDefault(x => x.CarInfoId == item.CarInfoId);
+                if (query != null)
+                    return false;
                 return true;
+            }
             return false;
         }
 

@@ -52,19 +52,34 @@ namespace YZXDMS.DataProvider
             var tran = connection.BeginTransaction();
             try
             {
+                //内部使用的还是引用类型，后期应将实体继承iclone接口，
+                //Speed[] copySp = new Speed[speeds.Count];
+                //speeds.CopyTo(copySp, 0);
+
+
                 db.Database.UseTransaction(tran);
                 //speeds[0].jylsh
+                var spCPD = speeds.Single(x => x.Mode == (int)DetectionMode.CPD);
+                var spSPD = speeds.Single(x => x.Mode == (int)DetectionMode.SPD);
                 switch (Core.Core.DetectionMode)
                 {
                     case DetectionMode.ALL:
-                        db.Speed.Add(speeds.Single(x => x.Mode == (int)DetectionMode.CPD));
-                        db.Speed.Add(speeds.Single(x => x.Mode == (int)DetectionMode.SPD));
+                        db.Speed.Add(spCPD);
+                        db.Speed.Add(spSPD);
+                        db.SaveChanges();
+                        db.Speed.Single(x => x.Id == spCPD.Id).Status = 1;
+                        db.Speed.Single(x => x.Id == spSPD.Id).Status = 1;
+                        //db.Speed.Where(x=>x.jylsh)
                         break;
                     case DetectionMode.CPD:                        
-                        db.Speed.Add(speeds.Single(x => x.Mode == (int)DetectionMode.CPD));
+                        db.Speed.Add(spCPD);
+                        db.SaveChanges();
+                        db.Speed.Single(x => x.Id == spCPD.Id).Status = 1;
                         break;
                     case DetectionMode.SPD:
-                        db.Speed.Add(speeds.Single(x => x.Mode == (int)DetectionMode.SPD));
+                        db.Speed.Add(spSPD);
+                        db.SaveChanges();
+                        db.Speed.Single(x => x.Id == spSPD.Id).Status = 1;
                         break;
                 }
                 db.SaveChanges();

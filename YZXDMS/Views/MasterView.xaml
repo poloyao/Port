@@ -151,7 +151,9 @@
 
 
         <Grid Grid.Row="1">
-            <dxg:GridControl x:Name="grid" ItemsSource="{Binding ResultItems}"  EnableSmartColumnsGeneration="True" SelectionMode="Row" FontWeight="Bold" AutoGenerateColumns="KeepOld" >
+            <dxg:GridControl x:Name="grid" ItemsSource="{Binding ResultItems}"
+                             
+                             EnableSmartColumnsGeneration="True" SelectionMode="Row" FontWeight="Bold" AutoGenerateColumns="KeepOld" >
                 <dxg:GridControl.Bands>
                     <dxg:GridControlBand Fixed="Left" OverlayHeaderByChildren="True" >
                         <dxg:GridColumn FieldName="CarID" Header="车牌号码" Width="200" Fixed="Left" HorizontalHeaderContentAlignment="Center" HeaderStyle="{DynamicResource columStyle}"/>
