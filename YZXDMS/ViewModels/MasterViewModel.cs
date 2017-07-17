@@ -248,7 +248,7 @@ namespace YZXDMS.ViewModels
         /// <summary>
         /// 地盘
         /// </summary>
-        public DetectResultStatus bottom { get; set; }
+        public DetectResultStatus Bottom { get; set; }
         /// <summary>
         /// 地盘间隙
         /// </summary>

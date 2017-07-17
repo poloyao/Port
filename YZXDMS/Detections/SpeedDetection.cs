@@ -259,6 +259,8 @@ namespace YZXDMS.Detections
 
         CarInfo carInfo;
 
+        DetectionStatus _DetectionStatus = DetectionStatus.IDLE;
+
         public Speed GetSpeedResultData()
         {
             System.Threading.Thread.Sleep(2000);
@@ -267,7 +269,14 @@ namespace YZXDMS.Detections
 
         public DetectionStatus GetCurrentStatus()
         {
-            return DetectionStatus.IDLE;
+            //return DetectionStatus.IDLE;
+            return _DetectionStatus;
+        }
+
+
+        public void SetCurrentStatusWORK()
+        {
+            this._DetectionStatus = DetectionStatus.WORK;
         }
 
 
@@ -278,7 +287,8 @@ namespace YZXDMS.Detections
 
         public void Reset()
         {
-
+            carInfo = null;
+            _DetectionStatus = DetectionStatus.IDLE;
         }
 
         public void SetCongfig()
@@ -329,6 +339,7 @@ namespace YZXDMS.Detections
 
         public void SetCarInfo(CarInfo carInfo)
         {
+            this._DetectionStatus = DetectionStatus.WORK;
             this.carInfo = carInfo;
         }
 
@@ -340,6 +351,9 @@ namespace YZXDMS.Detections
             result.Add(new Speed() { CarInfoID = this.carInfo.Id, SDBPJ = "O", Mode = (int)DetectionMode.CPD });
             result.Add(new Speed() { CarInfoID = this.carInfo.Id, SDBPJ = "O", Mode = (int)DetectionMode.SPD });
 
+            //结果无异常后恢复空闲状态,否则返回异常状态
+            //_DetectionStatus = DetectionStatus.IDLE;
+            //无异常时由Reset统一重置。
             return result;
 
 
@@ -352,5 +366,219 @@ namespace YZXDMS.Detections
         }
     }
 
+
+    public class TestShapeDetection : IDetection
+    {
+        DetectionStatus _DetectionStatus = DetectionStatus.IDLE;
+        public void SetCurrentStatusWORK()
+        {
+            _DetectionStatus = DetectionStatus.WORK;
+        }
+
+        public void DeviceInit()
+        {
+            throw new NotImplementedException();
+        }
+
+        public CarInfo GetCarInfo()
+        {
+            throw new NotImplementedException();
+        }
+
+        public DetectionStatus GetCurrentStatus()
+        {
+            return _DetectionStatus;
+        }
+
+        public void Reset()
+        {
+            _DetectionStatus = DetectionStatus.IDLE;
+        }
+
+        public void SetCarInfo(CarInfo carInfo)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SetCongfig()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SetLatticeScreen(ILatticeScreenOperate LSO)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SetPort(SerialPort port)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void StopDetect()
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class TestBrakeDetection : IDetection
+    {
+        DetectionStatus _DetectionStatus = DetectionStatus.IDLE;
+        public void SetCurrentStatusWORK()
+        {
+            _DetectionStatus = DetectionStatus.WORK;
+        }
+
+        public void DeviceInit()
+        {
+            throw new NotImplementedException();
+        }
+
+        public CarInfo GetCarInfo()
+        {
+            throw new NotImplementedException();
+        }
+
+        public DetectionStatus GetCurrentStatus()
+        {
+            return _DetectionStatus;
+        }
+
+        public void Reset()
+        {
+            _DetectionStatus = DetectionStatus.IDLE;
+        }
+
+        public void SetCarInfo(CarInfo carInfo)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SetCongfig()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SetLatticeScreen(ILatticeScreenOperate LSO)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SetPort(SerialPort port)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void StopDetect()
+        {
+            throw new NotImplementedException();
+        }
+    }
+    public class TestBottomDetection : IDetection
+    {
+        DetectionStatus _DetectionStatus = DetectionStatus.IDLE;
+        public void SetCurrentStatusWORK()
+        {
+            _DetectionStatus = DetectionStatus.WORK;
+        }
+
+        public void DeviceInit()
+        {
+            throw new NotImplementedException();
+        }
+
+        public CarInfo GetCarInfo()
+        {
+            throw new NotImplementedException();
+        }
+
+        public DetectionStatus GetCurrentStatus()
+        {
+            return _DetectionStatus;
+        }
+
+        public void Reset()
+        {
+            _DetectionStatus = DetectionStatus.IDLE;
+        }
+
+        public void SetCarInfo(CarInfo carInfo)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SetCongfig()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SetLatticeScreen(ILatticeScreenOperate LSO)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SetPort(SerialPort port)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void StopDetect()
+        {
+            throw new NotImplementedException();
+        }
+    }
+    public class TestBalancerDetection : IDetection
+    {
+        DetectionStatus _DetectionStatus = DetectionStatus.IDLE;
+        public void SetCurrentStatusWORK()
+        {
+            _DetectionStatus = DetectionStatus.WORK;
+        }
+
+        public void DeviceInit()
+        {
+            throw new NotImplementedException();
+        }
+
+        public CarInfo GetCarInfo()
+        {
+            throw new NotImplementedException();
+        }
+
+        public DetectionStatus GetCurrentStatus()
+        {
+            return _DetectionStatus;
+        }
+
+        public void Reset()
+        {
+            _DetectionStatus = DetectionStatus.IDLE;
+        }
+
+        public void SetCarInfo(CarInfo carInfo)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SetCongfig()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SetLatticeScreen(ILatticeScreenOperate LSO)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SetPort(SerialPort port)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void StopDetect()
+        {
+            throw new NotImplementedException();
+        }
+    }
 
 }

@@ -1,5 +1,6 @@
 ﻿using DevExpress.Xpf.Core;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -137,6 +138,19 @@ namespace YZXDMS.Core
                 dr.SerialData = item.jylsh;
                 ResultItems.Add(dr);
             }
+            //ResultItems[0].Speed = DetectResultStatus.Wait;
+            ResultItems[0].Balancer = DetectResultStatus.NotChecked;
+            //ResultItems[0].Brake = DetectResultStatus.NotChecked;
+
+            ResultItems[1].Speed = DetectResultStatus.NotChecked;
+            //ResultItems[1].Balancer = DetectResultStatus.NotChecked;
+            ResultItems[1].Bottom = DetectResultStatus.NotChecked;
+
+            ResultItems[2].Speed = DetectResultStatus.NotChecked;
+            ResultItems[2].Shape = DetectResultStatus.NotChecked;
+            //ResultItems[2].Balancer = DetectResultStatus.NotChecked;
+
+            ResultItems[3].Speed = DetectResultStatus.NotChecked;
         }
         /// <summary>
         /// 追加新检测车辆到检测结果列表
@@ -184,74 +198,597 @@ namespace YZXDMS.Core
         /// <summary>
         /// 速度检测项目
         /// </summary>
-        static ISpeedDetection sd;
+        static ISpeedDetection sd = new TestSpeedDetection();
+
+        static IDetection shapeD = new TestShapeDetection();
+
+        static IDetection brakeD = new TestBrakeDetection();
+
+        static IDetection bottomD = new TestBottomDetection();
+
+        static IDetection balacerD = new TestBalancerDetection();
+
+        private static readonly object SDLock = new object();
+
+        static readonly object ResultLock = new object();
+
+        static Queue<DetectResult> ResultQueue = new Queue<DetectResult>();
+
+        static Queue<WaitDetection> currentQueue = new Queue<WaitDetection>();
+
+        static Queue<WaitDetection> SpeedQueue = new Queue<WaitDetection>();
+        static Queue<DetectResult> ShapeQueue = new Queue<DetectResult>();
+        static Queue<DetectResult> BalancerQueue = new Queue<DetectResult>();
+        static Queue<DetectResult> BottomQueue = new Queue<DetectResult>();
+        static Queue<DetectResult> BrakeQueue = new Queue<DetectResult>();
+
+
         /// <summary>
         /// 开始检测,获取当前待检列表车辆，
         /// </summary>
         public static void StartDetection()
         {
-            var db = GetDBProvider();
-            sd = new TestSpeedDetection();
 
+            //判断是否需要进入此检测模块
+            if (CurrentDetectionList.Count() == 0)
+                return;
+            
+            ////MyBug 后去改成用计时器刷新列表，并压入线程内。
+            ////myBug 线程无序检测
+            //for (int i = 0; i < CurrentDetectionList.Count(); i++)
+            //{
+            //    var currentTemp = CurrentDetectionList[i];
+            //    currentQueue.Enqueue(currentTemp);
+            //    StartDetect(currentTemp);
+                
+            //}
+            //Semaphore se = new Semaphore(1, 2);
+            //se.WaitOne();
+            //se.Release();
 
-            Task task = new TaskFactory().StartNew((new Action(() =>
+            for (int i = 0; i < ResultItems.Count(); i++)
             {
-                //判断是否需要进入此检测模块
-                if (CurrentDetectionList.Count() == 0)
-                    return;
-                while (true)
+                var item = ResultItems[i];
+                ResultQueue.Enqueue(item);
+                StartDetect(item);
+                //创建各检测项目的队列
+                //if (item.Shape == DetectResultStatus.Wait)
+                    ShapeQueue.Enqueue(item);
+                //if (item.Balancer == DetectResultStatus.Wait)
+                    BalancerQueue.Enqueue(item);
+                //if (item.Bottom == DetectResultStatus.Wait)
+                    BottomQueue.Enqueue(item);
+                //if (item.Brake == DetectResultStatus.Wait)
+                    BrakeQueue.Enqueue(item);
+            }
+
+
+            
+        }
+
+
+        private static void StartDetect(DetectResult currentResult)
+        {
+            Console.WriteLine($"创建{currentResult.CarID} 线程");
+            var db = GetDBProvider();
+            Task task = new TaskFactory().StartNew(() => {
+
+            })
+            #region MyRegion
+            //.ContinueWith((action) =>
+            //{
+            //    Console.WriteLine($"启动{currentResult.CarID} 线程");
+            //    #region MyRegion
+            //    {
+            //        #region MyRegion
+
+            //        if (currentResult.Speed != DetectResultStatus.Wait)
+            //            return;
+
+
+            //        while (true)
+            //        {
+
+            //            ////获取当前状态
+            //            switch (sd.GetCurrentStatus())
+            //            {
+            //                case DetectionStatus.IDLE:
+            //                    break;
+            //                case DetectionStatus.WORK:
+            //                    continue;
+            //                case DetectionStatus.ABN:
+            //                    continue;
+            //            }
+            //            lock (SDLock)
+            //            {
+
+            //                if (currentResult.Speed == DetectResultStatus.NotChecked)
+            //                    return;
+
+
+            //                //传入车籍后，应申明当前状态为WORK
+            //                sd.SetCurrentStatusWORK();
+            //                var carinfo = db.GetCarInfoItem(currentResult.CarID);                              
+
+            //                sd.SetCarInfo(carinfo);
+
+            //                //Console.WriteLine($"{currentTemp.Id} 线程开始---运行");
+            //                var speedResult = sd.StartDetect();
+            //                if (speedResult == null)
+            //                {
+            //                    //检测失败
+            //                    return;
+            //                }
+            //                //保存结果
+            //                db.AddSpeed(speedResult);
+
+            //                //更新当前显示结果集
+            //                //测试虚假延迟
+            //                Thread.Sleep(2000);
+            //                //Console.WriteLine($"{currentTemp.Id} 线程开始---复位");
+            //                sd.Reset();
+            //                currentResult.Speed = DetectResultStatus.Qualified;
+
+            //                break;
+            //            }
+            //        }
+            //        #endregion
+            //    }
+            //    #endregion
+            //})
+            #endregion
+            .ContinueWith((action) =>
+            {
+                StartShapeUnit(currentResult);
+            })
+            .ContinueWith((action) =>
+            {
+                StartBalancerUnit(currentResult);
+            })
+            .ContinueWith((action) =>
+            {
+                StartBottomUnit(currentResult);
+            })
+            .ContinueWith((action) =>
+            {
+                StartBrakeUnit(currentResult);
+            })
+            .ContinueWith((action) =>
+            {
+                //全部检测项目完成后更新队列
+                //将完毕检验完毕的移除队列
+                //MyBug 不合格车辆是否暂不移除？
+
+                //lock (SyncCurrentDetectionList)
+                //{
+                //    var sing = ResultItems.Single(x => x.SerialData == currentTemp.jylsh);
+                //    ResultItems.Remove(sing);
+                //}
+
+                //CurrentDetectionList.Remove(currentTemp);
+                //lock (SDLock)
+                //{
+                Console.WriteLine($"移除{currentResult.CarID}");
+                ResultQueue.Dequeue();
+                //}
+            });
+
+        }
+
+        private static void StartBrakeUnit(DetectResult currentResult)
+        {
+            bool isWhile = true;
+            while (isWhile)
+            {
+                if (BrakeQueue.Peek() != currentResult)
+                    continue;
+
+                switch (brakeD.GetCurrentStatus())
                 {
-                    //获取当前状态
-                    switch (sd.GetCurrentStatus())
+                    case DetectionStatus.IDLE:
+                        isWhile = false;
+                        break;
+                    case DetectionStatus.WORK:
+                        continue;
+                    case DetectionStatus.ABN:
+                        continue;
+                }
+            }
+
+            brakeD.SetCurrentStatusWORK();
+            //模拟其他项目
+            Thread.Sleep( new Random(Guid.NewGuid().GetHashCode()).Next(1,3) * 1000);
+
+            if (currentResult.Brake == DetectResultStatus.NotChecked)
+            {
+                brakeD.Reset();
+                BrakeQueue.Dequeue();
+                return;
+            }
+
+            currentResult.Brake = DetectResultStatus.Qualified;
+
+            brakeD.Reset();
+            BrakeQueue.Dequeue();
+        }
+
+        private static void StartBottomUnit(DetectResult currentResult)
+        {
+            bool isWhile = true;
+            while (isWhile)
+            {
+                if (BottomQueue.Peek() != currentResult)
+                    continue;
+
+                switch (bottomD.GetCurrentStatus())
+                {
+                    case DetectionStatus.IDLE:
+                        isWhile = false;
+                        break;
+                    case DetectionStatus.WORK:
+                        continue;
+                    case DetectionStatus.ABN:
+                        continue;
+                }
+            }
+
+            bottomD.SetCurrentStatusWORK();
+            //模拟其他项目
+            Thread.Sleep(new Random(Guid.NewGuid().GetHashCode()).Next(1, 3) * 1000);
+
+            if (currentResult.Bottom == DetectResultStatus.NotChecked)
+            {
+                bottomD.Reset();
+                BottomQueue.Dequeue();
+                return;
+            }
+
+            currentResult.Bottom = DetectResultStatus.Qualified;
+
+            bottomD.Reset();
+            BottomQueue.Dequeue();
+        }
+
+        private static void StartBalancerUnit(DetectResult currentResult)
+        {
+            bool isWhile = true;
+            while (isWhile)
+            {
+                if (BalancerQueue.Peek() != currentResult)
+                    continue;
+
+                switch (balacerD.GetCurrentStatus())
+                {
+                    case DetectionStatus.IDLE:
+                        isWhile = false;
+                        break;
+                    case DetectionStatus.WORK:
+                        continue;
+                    case DetectionStatus.ABN:
+                        continue;
+                }
+            }
+
+            balacerD.SetCurrentStatusWORK();
+            //模拟其他项目
+            Thread.Sleep(new Random(Guid.NewGuid().GetHashCode()).Next(1, 3) * 1000);
+
+            if (currentResult.Balancer == DetectResultStatus.NotChecked)
+            {
+                balacerD.Reset();
+                BalancerQueue.Dequeue();
+                return;
+            }
+
+            currentResult.Balancer = DetectResultStatus.Qualified;
+
+            balacerD.Reset();
+            BalancerQueue.Dequeue();
+        }
+
+        private static void StartShapeUnit(DetectResult currentResult)
+        {
+            bool isWhile = true;
+            while (isWhile)
+            {
+                if (ShapeQueue.Peek() != currentResult)
+                    continue;
+
+                switch (shapeD.GetCurrentStatus())
+                {
+                    case DetectionStatus.IDLE:
+                        isWhile = false;
+                        break;
+                    case DetectionStatus.WORK:
+                        continue;
+                    case DetectionStatus.ABN:
+                        continue;
+                }
+            }
+
+            shapeD.SetCurrentStatusWORK();
+
+            //判断是否要执行此项目
+            if (currentResult.Shape == DetectResultStatus.NotChecked)
+            {
+                shapeD.Reset();
+                ShapeQueue.Dequeue();
+                return;
+            }
+
+            Thread.Sleep(new Random(Guid.NewGuid().GetHashCode()).Next(1, 3) * 1000);
+
+            currentResult.Shape = DetectResultStatus.Qualified;
+
+            shapeD.Reset();
+            ShapeQueue.Dequeue();
+        }
+
+        /// <summary>
+        /// 开始检测
+        /// </summary>
+        /// <param name="currentTemp"></param>
+        private static void StartDetect(WaitDetection currentTemp)
+        {
+            Console.WriteLine($"创建{currentTemp.Id} 线程");
+            var db = GetDBProvider();
+            Task task = new TaskFactory().StartNew(() =>{
+
+            })
+            .ContinueWith((action) =>
+            {
+                Console.WriteLine($"启动{currentTemp.Id} 线程");
+                #region MyRegion
+                {
+                    #region MyRegion
+
+                    var single = ResultItems.Single(x => x.SerialData == currentTemp.jylsh);//.Speed = DetectResultStatus.Qualified;
+                    var index = ResultItems.IndexOf(single);
+                    if (ResultItems[index].Speed != DetectResultStatus.Wait)
+                        return;
+
+
+                    while (true)
+                    {
+
+                        ////获取当前状态
+                        switch (sd.GetCurrentStatus())
+                        {
+                            case DetectionStatus.IDLE:
+                                break;
+                            case DetectionStatus.WORK:
+                                continue;
+                            case DetectionStatus.ABN:
+                                continue;
+                        }
+                        lock (SDLock)
+                        {
+                            //判断是否需要开始检测此车籍
+                            if (currentQueue.Count() > 0)
+                            {
+                                if (currentQueue.Peek() == currentTemp)
+                                {
+                                    //currentQueue.Dequeue();
+                                }
+                                else
+                                {
+                                    continue;
+                                }
+                            }
+                            else
+                            {
+                                throw new Exception("线程错误");
+                            }
+
+                            if (ResultItems[index].Speed == DetectResultStatus.NotChecked)
+                                return;
+
+
+                            //传入车籍后，应申明当前状态为WORK
+                            sd.SetCurrentStatusWORK();
+                            Console.WriteLine($"{currentTemp.Id} 线程开始---工作");
+                            var carinfo = db.GetCarInfoItem(currentTemp.CarInfoId);
+
+                            sd.SetCarInfo(carinfo);
+
+                            //Console.WriteLine($"{currentTemp.Id} 线程开始---运行");
+                            var speedResult = sd.StartDetect();
+                            if (speedResult == null)
+                            {
+                                //检测失败
+                                return;
+                            }
+                            //保存结果
+                            db.AddSpeed(speedResult);
+
+                            //更新当前显示结果集
+                            //测试虚假延迟
+                            Thread.Sleep(2000);
+                            //Console.WriteLine($"{currentTemp.Id} 线程开始---复位");
+                            sd.Reset();
+                            ResultItems[index].Speed = DetectResultStatus.Qualified;
+
+                            break;
+                        }
+                    }
+                    #endregion
+                }
+                #endregion
+            })
+            .ContinueWith((action) =>
+            {
+                var single = ResultItems.Single(x => x.SerialData == currentTemp.jylsh);//.Speed = DetectResultStatus.Qualified;
+                var index = ResultItems.IndexOf(single);
+                if (ResultItems[index].Shape != DetectResultStatus.Wait)
+                    return;
+                //模拟其他项目
+                bool isWhile = true;
+                while (isWhile)
+                {
+
+
+                    switch (shapeD.GetCurrentStatus())
                     {
                         case DetectionStatus.IDLE:
+                            isWhile = false;
                             break;
                         case DetectionStatus.WORK:
                             continue;
                         case DetectionStatus.ABN:
                             continue;
                     }
-                    var carinfo = db.GetCarInfoItem(CurrentDetectionList[0].CarInfoId);
-                    sd.SetCarInfo(carinfo);
-
-                    var speedResult = sd.StartDetect();
-                    if (speedResult == null)
-                    {
-                        //检测失败
-                        return;
-                    }
-                    //保存结果
-                    db.AddSpeed(speedResult);
-                    //更新当前显示结果集
-                    var single = ResultItems.Single(x => x.SerialData == CurrentDetectionList[0].jylsh);//.Speed = DetectResultStatus.Qualified;
-                    var index = ResultItems.IndexOf(single);
-                    //测试虚假延迟
-                    Thread.Sleep(3000);
-                    ResultItems[index].Speed = DetectResultStatus.Qualified;
-
-                    Thread.Sleep(3000);         
-
-                    break;
                 }
-            }))).ContinueWith((action) =>
+
+                shapeD.SetCurrentStatusWORK();
+
+
+                Thread.Sleep(2000);
+                Console.WriteLine($"{currentTemp.Id} [Shape] 线程开始");
+                
+
+                if (ResultItems[index].Shape == DetectResultStatus.NotChecked)
+                {
+                    shapeD.Reset();
+                    return;
+                }
+
+                ResultItems[index].Shape = DetectResultStatus.Qualified;
+
+                shapeD.Reset();
+
+            })
+            .ContinueWith((action) =>
+            {
+                var single = ResultItems.Single(x => x.SerialData == currentTemp.jylsh);//.Speed = DetectResultStatus.Qualified;
+                var index = ResultItems.IndexOf(single);
+                if (ResultItems[index].Balancer != DetectResultStatus.Wait)
+                    return;
+                bool isWhile = true;
+                while (isWhile)
+                {
+
+
+                    switch (balacerD.GetCurrentStatus())
+                    {
+                        case DetectionStatus.IDLE:
+                            isWhile = false;
+                            break;
+                        case DetectionStatus.WORK:
+                            continue;
+                        case DetectionStatus.ABN:
+                            continue;
+                    }
+                }
+
+                balacerD.SetCurrentStatusWORK();
+                //模拟其他项目
+                Thread.Sleep(2000);
+                Console.WriteLine($"{currentTemp.Id} [Balancer] 线程开始");
+                if (ResultItems[index].Balancer == DetectResultStatus.NotChecked)
+                {
+                    balacerD.Reset();
+                    return;
+                }
+
+                ResultItems[index].Balancer = DetectResultStatus.Qualified;
+
+                balacerD.Reset();
+            })
+            .ContinueWith((action) =>
+            {
+                var single = ResultItems.Single(x => x.SerialData == currentTemp.jylsh);//.Speed = DetectResultStatus.Qualified;
+                var index = ResultItems.IndexOf(single);
+                if (ResultItems[index].Bottom != DetectResultStatus.Wait)
+                    return;
+
+                bool isWhile = true;
+                while (isWhile)
+                {
+
+
+                    switch (bottomD.GetCurrentStatus())
+                    {
+                        case DetectionStatus.IDLE:
+                            isWhile = false;
+                            break;
+                        case DetectionStatus.WORK:
+                            continue;
+                        case DetectionStatus.ABN:
+                            continue;
+                    }
+                }
+
+                bottomD.SetCurrentStatusWORK();
+                //模拟其他项目
+                Thread.Sleep(2000);
+                Console.WriteLine($"{currentTemp.Id} [bottom] 线程开始");
+
+                if (ResultItems[index].Bottom == DetectResultStatus.NotChecked)
+                {
+                    bottomD.Reset();
+                    return;
+                }
+
+                ResultItems[index].Bottom = DetectResultStatus.Qualified;
+
+                bottomD.Reset();
+            })
+            .ContinueWith((action) =>
+            {
+                var single = ResultItems.Single(x => x.SerialData == currentTemp.jylsh);//.Speed = DetectResultStatus.Qualified;
+                var index = ResultItems.IndexOf(single);
+                if (ResultItems[index].Brake != DetectResultStatus.Wait)
+                    return;
+
+                bool isWhile = true;
+                while (isWhile)
+                {
+
+
+                    switch (brakeD.GetCurrentStatus())
+                    {
+                        case DetectionStatus.IDLE:
+                            isWhile = false;
+                            break;
+                        case DetectionStatus.WORK:
+                            continue;
+                        case DetectionStatus.ABN:
+                            continue;
+                    }
+                }
+
+                brakeD.SetCurrentStatusWORK();
+                //模拟其他项目
+                Thread.Sleep(2000);
+                Console.WriteLine($"{currentTemp.Id} [Brake] 线程开始");
+
+                if (ResultItems[index].Brake == DetectResultStatus.NotChecked)
+                {
+                    brakeD.Reset();
+                    return;
+                }
+
+                ResultItems[index].Brake = DetectResultStatus.Qualified;
+
+                brakeD.Reset();
+            })
+            .ContinueWith((action) =>
             {
                 //全部检测项目完成后更新队列
                 //将完毕检验完毕的移除队列
                 //MyBug 不合格车辆是否暂不移除？
 
-                lock (SyncCurrentDetectionList)
-                {
-                    var sing = ResultItems.Single(x => x.SerialData == CurrentDetectionList[0].jylsh);
-                    ResultItems.Remove(sing);
-                }
+                //lock (SyncCurrentDetectionList)
+                //{
+                //    var sing = ResultItems.Single(x => x.SerialData == currentTemp.jylsh);
+                //    ResultItems.Remove(sing);
+                //}
 
-                CurrentDetectionList.Remove(CurrentDetectionList[0]);
+                //CurrentDetectionList.Remove(currentTemp);
+
+                currentQueue.Dequeue();
             });
-
-
-
-
+            
         }
-
     }
 }

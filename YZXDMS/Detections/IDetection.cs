@@ -67,6 +67,12 @@ namespace YZXDMS.Detections
         /// </summary>
         /// <returns></returns>
         DetectionStatus GetCurrentStatus();
+
+        /// <summary>
+        /// 将当前状态 改变为WORK
+        /// </summary>
+        void SetCurrentStatusWORK();
+
     }
 
     /// <summary>

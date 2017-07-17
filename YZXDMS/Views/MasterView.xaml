@@ -174,11 +174,43 @@
                         </dxg:GridColumn>
                     </dxg:GridControlBand>
                     <dxg:GridControlBand Header="制动" Fixed="Left" HorizontalHeaderContentAlignment="Center" >
-                        <dxg:GridColumn FieldName="CarID" Header="前轴"/>
-                        <dxg:GridColumn FieldName="CarID" Header="中轴"/>
-                        <dxg:GridColumn FieldName="CarID" Header="三轴"/>
-                        <dxg:GridColumn FieldName="CarID" Header="四轴"/>
-                        <dxg:GridColumn FieldName="CarID" Header="后轴"/>
+                        <dxg:GridColumn FieldName="Shape" Header="前轴">
+                            <dxg:GridColumn.EditSettings>
+                                <dxe:ComboBoxEditSettings ItemsSource="{dxe:EnumItemsSource AllowImages=False,EnumType=ViewModels:DetectResultStatus}"
+                                                          ApplyItemTemplateToSelectedItem="True" IsTextEditable="False"
+                                                          HorizontalContentAlignment="Stretch" ItemTemplate="{StaticResource ResultCellTemplate}"
+                                                          ></dxe:ComboBoxEditSettings>
+
+                            </dxg:GridColumn.EditSettings>
+                        </dxg:GridColumn>
+                        <dxg:GridColumn FieldName="Balancer" Header="中轴">
+                            <dxg:GridColumn.EditSettings>
+                                <dxe:ComboBoxEditSettings ItemsSource="{dxe:EnumItemsSource AllowImages=False,EnumType=ViewModels:DetectResultStatus}"
+                                                          ApplyItemTemplateToSelectedItem="True" IsTextEditable="False"
+                                                          HorizontalContentAlignment="Stretch" ItemTemplate="{StaticResource ResultCellTemplate}"
+                                                          ></dxe:ComboBoxEditSettings>
+
+                            </dxg:GridColumn.EditSettings>
+                        </dxg:GridColumn>
+                        <dxg:GridColumn FieldName="Bottom" Header="三轴">
+                            <dxg:GridColumn.EditSettings>
+                                <dxe:ComboBoxEditSettings ItemsSource="{dxe:EnumItemsSource AllowImages=False,EnumType=ViewModels:DetectResultStatus}"
+                                                          ApplyItemTemplateToSelectedItem="True" IsTextEditable="False"
+                                                          HorizontalContentAlignment="Stretch" ItemTemplate="{StaticResource ResultCellTemplate}"
+                                                          ></dxe:ComboBoxEditSettings>
+
+                            </dxg:GridColumn.EditSettings>
+                        </dxg:GridColumn>
+                        <dxg:GridColumn FieldName="Brake" Header="四轴">
+                            <dxg:GridColumn.EditSettings>
+                                <dxe:ComboBoxEditSettings ItemsSource="{dxe:EnumItemsSource AllowImages=False,EnumType=ViewModels:DetectResultStatus}"
+                                                          ApplyItemTemplateToSelectedItem="True" IsTextEditable="False"
+                                                          HorizontalContentAlignment="Stretch" ItemTemplate="{StaticResource ResultCellTemplate}"
+                                                          ></dxe:ComboBoxEditSettings>
+
+                            </dxg:GridColumn.EditSettings>
+                        </dxg:GridColumn>
+                        <dxg:GridColumn FieldName="CarID" Header="后轴" />
                         <dxg:GridColumn FieldName="CarID" Header="手刹"/>
                     </dxg:GridControlBand>
                     <dxg:GridControlBand Fixed="Left" OverlayHeaderByChildren="True">
@@ -189,7 +221,15 @@
                         <dxg:GridColumn FieldName="CarID" Header="右灯"/>
                     </dxg:GridControlBand>
                     <dxg:GridControlBand Fixed="Left" OverlayHeaderByChildren="True">
-                        <dxg:GridColumn FieldName="CarID" Header="底盘"  HorizontalHeaderContentAlignment="Center"/>
+                        <dxg:GridColumn FieldName="CarID" Header="底盘"  HorizontalHeaderContentAlignment="Center">
+                            <dxg:GridColumn.EditSettings>
+                                <dxe:ComboBoxEditSettings ItemsSource="{dxe:EnumItemsSource AllowImages=False,EnumType=ViewModels:DetectResultStatus}"
+                                                          ApplyItemTemplateToSelectedItem="True" IsTextEditable="False"
+                                                          HorizontalContentAlignment="Stretch" ItemTemplate="{StaticResource ResultCellTemplate}"
+                                                          ></dxe:ComboBoxEditSettings>
+
+                            </dxg:GridColumn.EditSettings>
+                        </dxg:GridColumn>
                     </dxg:GridControlBand>
                     <dxg:GridControlBand Fixed="Left" OverlayHeaderByChildren="True">
                         <dxg:GridColumn FieldName="CarID" Header="动态"  HorizontalHeaderContentAlignment="Center"/>

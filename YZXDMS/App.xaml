@@ -34,7 +34,6 @@
                 <Setter Property="AllowSorting" Value="False" />
                 <Setter Property="ShowFilterPanelMode" Value="Never" />
                 <Setter Property="AutoWidth" Value="True" />
-                <Setter Property="AlternateRowBackground" Value="{DynamicResource gridviewRowBackground}" />
                 <Setter Property="UseEvenRowBackground" Value="True" />
                 <Setter Property="RowStyle" Value="{DynamicResource TableRowStyle}" />
             </Style>
