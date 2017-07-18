@@ -60,7 +60,7 @@ namespace YZXDMS.ViewModels
                 }
 
                 var pci = Helpers.DeviceHelper.GetPortConfigItems();
-                //PortConfigItems = new ObservableCollection<PortConfig>(pci);//pci.Where(x => (int)x.DeviceType < 100).ToList();
+
                 if (this.IsMain)
                 {
                     PortConfigItems = pci.Where(x => (int)x.DeviceType < 100).ToList();

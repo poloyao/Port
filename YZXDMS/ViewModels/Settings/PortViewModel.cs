@@ -15,8 +15,7 @@ namespace YZXDMS.ViewModels
 
         public PortViewModel()
         {
-            //Item.Port = new System.IO.Ports.SerialPort();
-            //Item.Protocol = new ProtocolModel();
+
         }
 
         protected override void OnParameterChanged(object parameter)
@@ -33,7 +32,6 @@ namespace YZXDMS.ViewModels
         {
             IsChange = true;
             DevExpress.Xpf.Core.DXMessageBox.Show("添加成功！");
-            //DocumentOwner.Close(this);
             if (DocumentOwner != null)
                 DocumentOwner.Close(this);
         }
