@@ -230,13 +230,13 @@ namespace YZXDMS.Core
         static void InitDetectionDevice()
         {
             speedD = new TestSpeedDetection();
-            ILatticeScreenOperate lso = new LatticeScreenOperate();
-            //获取速度模块
-            var speedDetect = Helpers.DeviceHelper.GetDetection(DetectionType.速度);
-            //获取速度串口
-            var speedInfo = Helpers.DeviceHelper.GetDetectionInfo(speedDetect);
-            speedD.SetPort(speedInfo.Port);
-            var leds = speedDetect.AssistList.Where(x => x.PortConfig.DeviceType == DeviceType.灯屏设备);
+            //ILatticeScreenOperate lso = new LatticeScreenOperate();
+            ////获取速度模块
+            //var speedDetect = Helpers.DeviceHelper.GetDetection(DetectionType.速度);
+            ////获取速度串口
+            //var speedInfo = Helpers.DeviceHelper.GetDetectionInfo(speedDetect);
+            //speedD.SetPort(speedInfo.Port);
+            //var leds = speedDetect.AssistList.Where(x => x.PortConfig.DeviceType == Models.DeviceType.灯屏设备);
             //leds.First().PortConfig.
 
 

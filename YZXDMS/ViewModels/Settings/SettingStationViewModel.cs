@@ -18,10 +18,10 @@ namespace YZXDMS.ViewModels
         {
             StationItems = new List<StationModel>();
 
-            StationItems.Add(new StationModel() { Name = "1 工位", });
-            StationItems.Add(new StationModel() { Name = "2 工位", });
-            StationItems.Add(new StationModel() { Name = "3 工位", });
-            StationItems.Add(new StationModel() { Name = "4 工位", });
+            //StationItems.Add(new StationModel() { Name = "1 工位", });
+            //StationItems.Add(new StationModel() { Name = "2 工位", });
+            //StationItems.Add(new StationModel() { Name = "3 工位", });
+            //StationItems.Add(new StationModel() { Name = "4 工位", });
 
             //StationItems.Add(new StationModel()
             //{

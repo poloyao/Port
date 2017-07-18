@@ -3,6 +3,7 @@ using DevExpress.Mvvm.DataAnnotations;
 using DevExpress.Mvvm;
 using YZXDMS.Models;
 using System.ComponentModel;
+using YZXDMS.DataProvider;
 
 namespace YZXDMS.ViewModels
 {
@@ -30,6 +31,12 @@ namespace YZXDMS.ViewModels
 
         public void Save()
         {
+            using (SQLiteDBContext db = new SQLiteDBContext())
+            {
+                db.Ports.Add(Item);
+                db.SaveChanges();
+            }
+
             IsChange = true;
             DevExpress.Xpf.Core.DXMessageBox.Show("添加成功！");
             if (DocumentOwner != null)

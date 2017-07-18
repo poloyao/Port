@@ -10,7 +10,7 @@ namespace YZXDMS.ViewModels
     [POCOViewModel]
     public class TestyViewModel
     {
-        public List<Detection> DetectionItems { get; set; } = new List<Detection>();
+        //public List<Detection> DetectionItems { get; set; } = new List<Detection>();
 
 
         public TestyViewModel()

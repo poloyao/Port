@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using YZXDMS.DataProvider;
 
 namespace YZXDMS
 {
@@ -13,5 +14,9 @@ namespace YZXDMS
     /// </summary>
     public partial class App : Application
     {
+        public App()
+        {
+           
+        }
     }
 }
