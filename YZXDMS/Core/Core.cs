@@ -200,6 +200,8 @@ namespace YZXDMS.Core
         /// </summary>
         static ISpeedDetection sd = new TestSpeedDetection();
 
+        static ISpeedDetection speedD = new TestSpeedDetection();
+
         static IDetection shapeD = new TestShapeDetection();
 
         static IDetection brakeD = new TestBrakeDetection();
@@ -216,7 +218,7 @@ namespace YZXDMS.Core
 
         static Queue<WaitDetection> currentQueue = new Queue<WaitDetection>();
 
-        static Queue<WaitDetection> SpeedQueue = new Queue<WaitDetection>();
+        static Queue<DetectResult> SpeedQueue = new Queue<DetectResult>();
         static Queue<DetectResult> ShapeQueue = new Queue<DetectResult>();
         static Queue<DetectResult> BalancerQueue = new Queue<DetectResult>();
         static Queue<DetectResult> BottomQueue = new Queue<DetectResult>();
@@ -232,7 +234,7 @@ namespace YZXDMS.Core
             //判断是否需要进入此检测模块
             if (CurrentDetectionList.Count() == 0)
                 return;
-            
+
             ////MyBug 后去改成用计时器刷新列表，并压入线程内。
             ////myBug 线程无序检测
             //for (int i = 0; i < CurrentDetectionList.Count(); i++)
@@ -240,30 +242,34 @@ namespace YZXDMS.Core
             //    var currentTemp = CurrentDetectionList[i];
             //    currentQueue.Enqueue(currentTemp);
             //    StartDetect(currentTemp);
-                
+
             //}
             //Semaphore se = new Semaphore(1, 2);
             //se.WaitOne();
             //se.Release();
 
-            for (int i = 0; i < ResultItems.Count(); i++)
+            lock (ResultLock)
             {
-                var item = ResultItems[i];
-                ResultQueue.Enqueue(item);
-                StartDetect(item);
-                //创建各检测项目的队列
-                //if (item.Shape == DetectResultStatus.Wait)
+                for (int i = 0; i < ResultItems.Count(); i++)
+                {
+                    var item = ResultItems[i];
+
+                    if (ResultQueue.Contains(item))
+                    {
+                        continue;
+                    }
+
+                    ResultQueue.Enqueue(item);
+                    StartDetect(item);
+                    //创建各检测项目的队列
+                    SpeedQueue.Enqueue(item);
                     ShapeQueue.Enqueue(item);
-                //if (item.Balancer == DetectResultStatus.Wait)
                     BalancerQueue.Enqueue(item);
-                //if (item.Bottom == DetectResultStatus.Wait)
                     BottomQueue.Enqueue(item);
-                //if (item.Brake == DetectResultStatus.Wait)
                     BrakeQueue.Enqueue(item);
+                }
             }
 
-
-            
         }
 
 
@@ -271,7 +277,8 @@ namespace YZXDMS.Core
         {
             Console.WriteLine($"创建{currentResult.CarID} 线程");
             var db = GetDBProvider();
-            Task task = new TaskFactory().StartNew(() => {
+            Task task = new TaskFactory().StartNew(() =>
+            {
 
             })
             #region MyRegion
@@ -339,6 +346,10 @@ namespace YZXDMS.Core
             #endregion
             .ContinueWith((action) =>
             {
+                StartSpeedUnit(currentResult);
+            })
+            .ContinueWith((action) =>
+            {
                 StartShapeUnit(currentResult);
             })
             .ContinueWith((action) =>
@@ -374,7 +385,60 @@ namespace YZXDMS.Core
             });
 
         }
+        private static void StartSpeedUnit(DetectResult currentResult)
+        {
+            var db = GetDBProvider();
+            bool isWhile = true;
+            while (isWhile)
+            {
+                if (SpeedQueue.Peek() != currentResult)
+                    continue;
 
+                switch (speedD.GetCurrentStatus())
+                {
+                    case DetectionStatus.IDLE:
+                        isWhile = false;
+                        break;
+                    case DetectionStatus.WORK:
+                        continue;
+                    case DetectionStatus.ABN:
+                        continue;
+                }
+            }
+
+            speedD.SetCurrentStatusWORK();
+            Console.WriteLine($"{currentResult.CarID} 使用Speed");
+            //模拟其他项目
+            Thread.Sleep(new Random(Guid.NewGuid().GetHashCode()).Next(5, 10) * 1000);
+
+            if (currentResult.Speed == DetectResultStatus.NotChecked)
+            {
+                speedD.Reset();
+                SpeedQueue.Dequeue();
+                Console.WriteLine($"{currentResult.CarID} 使用Speed完毕");
+                return;
+            }
+
+            //传入车籍后
+            var carinfo = db.GetCarInfoItem(currentResult.CarID);
+            speedD.SetCarInfo(carinfo);
+            var speedResult = speedD.StartDetect();
+            if (speedResult == null)
+            {
+                //检测失败
+                //return;
+                throw new Exception("检测失败");
+            }
+            //保存结果
+            db.AddSpeed(speedResult);
+
+            //更新当前显示结果集
+            currentResult.Speed = DetectResultStatus.Qualified;
+
+            speedD.Reset();
+            SpeedQueue.Dequeue();
+            Console.WriteLine($"{currentResult.CarID} 使用Speed完毕");
+        }
         private static void StartBrakeUnit(DetectResult currentResult)
         {
             bool isWhile = true;
@@ -396,13 +460,15 @@ namespace YZXDMS.Core
             }
 
             brakeD.SetCurrentStatusWORK();
+            Console.WriteLine($"{currentResult.CarID} 使用Brake");
             //模拟其他项目
-            Thread.Sleep( new Random(Guid.NewGuid().GetHashCode()).Next(1,3) * 1000);
+            Thread.Sleep(new Random(Guid.NewGuid().GetHashCode()).Next(5, 10) * 1000);
 
             if (currentResult.Brake == DetectResultStatus.NotChecked)
             {
                 brakeD.Reset();
                 BrakeQueue.Dequeue();
+                Console.WriteLine($"{currentResult.CarID} 使用Brake完毕");
                 return;
             }
 
@@ -410,6 +476,7 @@ namespace YZXDMS.Core
 
             brakeD.Reset();
             BrakeQueue.Dequeue();
+            Console.WriteLine($"{currentResult.CarID} 使用Brake完毕");
         }
 
         private static void StartBottomUnit(DetectResult currentResult)
@@ -433,13 +500,15 @@ namespace YZXDMS.Core
             }
 
             bottomD.SetCurrentStatusWORK();
+            Console.WriteLine($"{currentResult.CarID} 使用Bottom");
             //模拟其他项目
-            Thread.Sleep(new Random(Guid.NewGuid().GetHashCode()).Next(1, 3) * 1000);
+            Thread.Sleep(new Random(Guid.NewGuid().GetHashCode()).Next(5, 10) * 1000);
 
             if (currentResult.Bottom == DetectResultStatus.NotChecked)
             {
                 bottomD.Reset();
                 BottomQueue.Dequeue();
+                Console.WriteLine($"{currentResult.CarID} 使用Bottom完毕");
                 return;
             }
 
@@ -447,6 +516,7 @@ namespace YZXDMS.Core
 
             bottomD.Reset();
             BottomQueue.Dequeue();
+            Console.WriteLine($"{currentResult.CarID} 使用Bottom完毕");
         }
 
         private static void StartBalancerUnit(DetectResult currentResult)
@@ -470,13 +540,15 @@ namespace YZXDMS.Core
             }
 
             balacerD.SetCurrentStatusWORK();
+            Console.WriteLine($"{currentResult.CarID} 使用Balancer");
             //模拟其他项目
-            Thread.Sleep(new Random(Guid.NewGuid().GetHashCode()).Next(1, 3) * 1000);
+            Thread.Sleep(new Random(Guid.NewGuid().GetHashCode()).Next(5, 10) * 1000);
 
             if (currentResult.Balancer == DetectResultStatus.NotChecked)
             {
                 balacerD.Reset();
                 BalancerQueue.Dequeue();
+                Console.WriteLine($"{currentResult.CarID} 使用Balancer完毕");
                 return;
             }
 
@@ -484,6 +556,7 @@ namespace YZXDMS.Core
 
             balacerD.Reset();
             BalancerQueue.Dequeue();
+            Console.WriteLine($"{currentResult.CarID} 使用Balancer完毕");
         }
 
         private static void StartShapeUnit(DetectResult currentResult)
@@ -507,21 +580,24 @@ namespace YZXDMS.Core
             }
 
             shapeD.SetCurrentStatusWORK();
+            Console.WriteLine($"{currentResult.CarID} 使用Shape");
 
             //判断是否要执行此项目
             if (currentResult.Shape == DetectResultStatus.NotChecked)
             {
                 shapeD.Reset();
                 ShapeQueue.Dequeue();
+                Console.WriteLine($"{currentResult.CarID} 使用Shape完毕");
                 return;
             }
 
-            Thread.Sleep(new Random(Guid.NewGuid().GetHashCode()).Next(1, 3) * 1000);
+            Thread.Sleep(new Random(Guid.NewGuid().GetHashCode()).Next(5, 10) * 1000);
 
             currentResult.Shape = DetectResultStatus.Qualified;
 
             shapeD.Reset();
             ShapeQueue.Dequeue();
+            Console.WriteLine($"{currentResult.CarID} 使用Shape完毕");
         }
 
         /// <summary>
@@ -532,7 +608,8 @@ namespace YZXDMS.Core
         {
             Console.WriteLine($"创建{currentTemp.Id} 线程");
             var db = GetDBProvider();
-            Task task = new TaskFactory().StartNew(() =>{
+            Task task = new TaskFactory().StartNew(() =>
+            {
 
             })
             .ContinueWith((action) =>
@@ -644,7 +721,7 @@ namespace YZXDMS.Core
 
                 Thread.Sleep(2000);
                 Console.WriteLine($"{currentTemp.Id} [Shape] 线程开始");
-                
+
 
                 if (ResultItems[index].Shape == DetectResultStatus.NotChecked)
                 {
@@ -788,7 +865,7 @@ namespace YZXDMS.Core
 
                 currentQueue.Dequeue();
             });
-            
+
         }
     }
 }
