@@ -120,6 +120,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Core\Core.cs" />
+    <Compile Include="DataProvider\GlobalPVC.cs" />
     <Compile Include="DataProvider\IDBProvider.cs" />
     <Compile Include="DataProvider\SQLiteDBContext.cs" />
     <Compile Include="DataProvider\SQLServerDBProvider.cs" />
