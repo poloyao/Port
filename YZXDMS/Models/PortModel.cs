@@ -224,9 +224,10 @@ namespace YZXDMS.Models
     {
         public long Id { get; set; }
         public string DetectorName { get; set; }
-        public PortConfig port { get; set; }
+        //public PortConfig port { get; set; }
+        public long PortId { get; set; }
 
-        public List<AssistModel> AssistList { get; set; }
+        //public  List<AssistModel> AssistList { get; set; }
 
     }
 
@@ -237,9 +238,23 @@ namespace YZXDMS.Models
     public class AssistModel
     {
         public long Id { get; set; }
-        public PortConfig port { get; set; }
+
+        public long DetectorId { get; set; }
+
+        public long PortId { get; set; }
+
+        //public PortConfig port { get; set; }
 
         public int Route { get; set; }
+    }
+
+    /// <summary>
+    /// 用于显示的辅助
+    /// </summary>
+    public class AssistDisplayModel
+    {
+        public AssistModel Assist { get; set; }
+        public PortConfig Port { get; set; }
     }
 
     /// <summary>

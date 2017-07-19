@@ -30,7 +30,7 @@
 
         <DataTemplate x:Key="FlowLayoutControlTemplate">
             <dxlc:GroupBox x:Name="select" Content="{Binding}" 
-                Header="{Binding Detection.Name}"  
+                Header="{Binding Detector.DetectorName}"  
                 Height="200" Width="200"
                 MaximizeElementVisibility="Visible">
                 <dxlc:GroupBox.ContentTemplate>
@@ -40,7 +40,7 @@
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
-                            <Label Content="{Binding Detection.Name}" />
+                            <Label Content="{Binding Detector.DetectorName}" />
                             <Image Grid.Row="1" Source="/YZXDMS;component/Img/machine1.png"  />
                         </Grid>
                     </DataTemplate>

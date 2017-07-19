@@ -21,6 +21,8 @@ namespace YZXDMS.DataProvider
 
         public virtual DbSet<StationModel> Stations { get; set; }
 
+        public virtual DbSet<AssistModel> Assist { get; set; }
+
         public SQLiteDBContext() : base("ConfigDb")
         {
             Configuar();

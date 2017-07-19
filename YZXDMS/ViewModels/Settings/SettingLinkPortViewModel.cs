@@ -27,8 +27,7 @@ namespace YZXDMS.ViewModels
             //根据枚举创建检测项目列表
             foreach (var dt in Enum.GetValues(typeof(DetectionType)))
             {
-                DetectionItems.Add(new VMDetection() { Detector = new DetectorModel() { DetectorName = dt.ToString() } });
-
+                DetectionItems.Add(new VMDetection((DetectionType)Enum.Parse(typeof(DetectionType), dt.ToString())));
             }
         }
 
@@ -144,46 +143,166 @@ namespace YZXDMS.ViewModels
       
     }
 
-
+    [POCOViewModel]
     public class VMDetection : ViewModelBase
     {
 
         protected IDocumentManagerService documentManagerService { get { return this.GetService<IDocumentManagerService>(); } }
 
-        public DetectorModel Detector { get; set; }
+        public virtual DetectorModel Detector { get; set; }
+        /// <summary>
+        /// 显示主设备串口
+        /// </summary>
+        public virtual PortConfig MainPort { get; set; }
+
+        /// <summary>
+        /// 界面显示的辅助列表
+        /// </summary>
+        public virtual ObservableCollection<AssistDisplayModel> assistList { get; set; } = new ObservableCollection<AssistDisplayModel>();
+
+        /// <summary>
+        /// 加载关联信息
+        /// </summary>
+        /// <param name="dt"></param>
+        public VMDetection(DetectionType dt)
+        {
+            using (SQLiteDBContext db = new SQLiteDBContext())
+            {
+                var query = db.Detectors.SingleOrDefault(x => x.DetectorName == dt.ToString());
+                db.Assist.ToList();
+                if (query == null)
+                {
+                    Detector = new DetectorModel() { DetectorName = dt.ToString() };
+                }
+                else
+                {
+                    Detector = query;
+                    UpdateDetector();
+                    if (query.PortId != 0)
+                    {
+                        MainPort = db.Ports.Single(x => x.Id == query.PortId);
+                    }
+                }
+
+            }
+        }
+
+        /// <summary>
+        /// 更改主检测设备
+        /// </summary>
+        [Command(true)]
+        public void UpdateMainDevice()
+        {
+            IDocument doc = documentManagerService.CreateDocument("SelectAssistView", true, this);
+            doc.Id = documentManagerService.Documents.Count();
+            doc.Title = "主检测设备";
+            var VM = (SelectAssistViewModel)doc.Content;
+            VM.IsMain = true;
+            doc.Show();
+
+            if (VM.IsChanged)
+            {
+                using (SQLiteDBContext db = new SQLiteDBContext())
+                {
+                    MainPort = db.Ports.Single(x => x.Id == VM.Data.PortId);
+                    this.RaisePropertiesChanged();
+                    var det = db.Detectors.SingleOrDefault(x => x.Id == Detector.Id);
+                    if (det == null)
+                    {
+                        Detector.PortId = MainPort.Id;
+                        db.Detectors.Add(Detector);
+                        db.SaveChanges();
+                    }
+                    else
+                    {
+                        det.PortId = MainPort.Id;
+                        db.SaveChanges();
+                    }
+                }
+            }
+
+        }
+
 
         [Command(true)]
         public void Add()
         {
-            IDocument doc = documentManagerService.CreateDocument("SelectAssistView", null, this);
+
+            IDocument doc = documentManagerService.CreateDocument("SelectAssistView", false, this);
             doc.Id = documentManagerService.Documents.Count();
             doc.Title = "追加辅助设备";
             var VM = (SelectAssistViewModel)doc.Content;
             doc.Show();
             if (VM.IsChanged)
             {
+                //注意实体与数据库结构并不相同，查询结果IList懒加载的问题
                 using (SQLiteDBContext db = new SQLiteDBContext())
                 {
                     var query = db.Detectors.SingleOrDefault(x =>  x.DetectorName == Detector.DetectorName);
+                    //var queryAssist = db.Assist.ToList();
                     if (query == null)
                     {
-                        if (Detector.AssistList == null)
-                            Detector.AssistList = new List<AssistModel>();
-                        Detector.AssistList.Add(VM.Data);
                         db.Detectors.Add(Detector);
                         db.SaveChanges();
-                    }else
-                    {
-                        if (query.AssistList == null)
-                            query.AssistList = new List<AssistModel>();
-                        query.AssistList.Add(VM.Data);
-                        db.SaveChanges();
+                        query = db.Detectors.SingleOrDefault(x => x.DetectorName == Detector.DetectorName);
                     }
-                }
 
+                    VM.Data.DetectorId = query.Id;
+                    db.Assist.Add(VM.Data);
+                    db.SaveChanges();
+                    
+                }
+                UpdateDetector();
             }
 
         }
+
+        void UpdateDetector()
+        {
+            using (SQLiteDBContext db = new SQLiteDBContext())
+            {
+                var query = db.Detectors.SingleOrDefault(x => x.DetectorName == Detector.DetectorName);
+
+                if (query != null)
+                {
+                    var main = db.Ports.SingleOrDefault(x => x.Id == query.PortId);
+                    //if (main != null)
+                        MainPort = main;
+                    var queryAssist = db.Assist.Where(x => x.DetectorId == query.Id);
+                    assistList.Clear();
+                    foreach (var item in queryAssist)
+                    {
+                        var ass = new AssistDisplayModel() { Assist = item };
+                        ass.Port = db.Ports.Single(x => x.Id == item.PortId);
+                        assistList.Add(ass);
+                    }
+                }
+                
+            }
+        }
+
+
+        [Command(CanExecuteMethodName = "CanDeleteItem")]
+        public void DeleteItem(AssistDisplayModel item)
+        {
+            if (DevExpress.Xpf.Core.DXMessageBox.Show($"是否删除{item.Port.Name} {item.Port.DeviceType}?", "提示", System.Windows.MessageBoxButton.YesNo, System.Windows.MessageBoxImage.Warning, System.Windows.MessageBoxResult.No)
+                 == System.Windows.MessageBoxResult.Yes)
+            {
+                using (SQLiteDBContext db = new SQLiteDBContext())
+                {
+                    var query = db.Assist.Single(x => x.Id == item.Assist.Id);
+                    db.Assist.Remove(query);
+                    db.SaveChanges();
+                    UpdateDetector();
+                }
+            }
+        }
+
+        public bool CanDeleteItem(AssistDisplayModel item)
+        {
+            return item == null ? false : true;
+        }
+
 
 
 

@@ -21,54 +21,7 @@ namespace YZXDMS.ViewModels
 
         public SettingPortViewModel()
         {
-            UpdatePortItems();
-
-            //var configs = Helpers.DeviceHelper.GetPortConfigItems();
-            ////如果回传的值未null 则从新创建xml文件
-            //if (configs == null)
-            //    return;
-            //Items = new ObservableCollection<PortConfig>(configs);
-
-            //如果没有Port.xml文件，则搜索Detection.xml文件，根据此文件结构创建port.xml文件
-            //Items = Helpers.XmlHelper.DeserializerXml<ObservableCollection<PortConfig>>("Port.xml");
-            //if (Items == null)
-            //{
-            //    List<Detection> det = Helpers.XmlHelper.DeserializerXml<List<Detection>>("Detection.xml");
-            //    if (det != null)
-            //    {
-            //        Items = new ObservableCollection<PortConfig>();
-
-            //        foreach (var detItem in det)
-            //        {
-            //            if (detItem.PortConfig == null)
-            //                continue;
-            //            Items.Add(detItem.PortConfig);
-
-            //            if (detItem.AssistList == null)
-            //                continue;
-            //            foreach (var assistItem in detItem.AssistList)
-            //            {
-            //                if (assistItem.Assist.PortConfig == null)
-            //                    continue;
-
-            //                //此处可以忽略，在循环完毕后，删除同类项。但需要创建比较器
-            //                List<PortConfig> tempds = new List<PortConfig>();
-            //                foreach (var ds in Items)
-            //                {
-            //                    var comp = Helpers.DataHelper.EntityComparison(ds, assistItem.Assist.PortConfig);
-            //                    if(!comp)
-            //                        tempds.Add(assistItem.Assist.PortConfig);
-            //                }
-            //                tempds.ForEach(x => { Items.Insert(Items.Count(), x); });
-            //            }
-            //        }
-
-            //        //var kkkk = Items.Distinct(System.Collections.Generic.Comparer.Default);
-            //    }                
-            //}
-
-
-
+            UpdatePortItems();            
         }
 
         private void UpdatePortItems()

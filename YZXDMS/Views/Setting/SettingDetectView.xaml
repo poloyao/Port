@@ -30,10 +30,10 @@
     <Grid>
         <dxlc:LayoutControl DataContext="{Binding}">
             <dxlc:LayoutGroup Orientation="Vertical">
-                <dxlc:LayoutGroup x:Name="lg" Orientation="Vertical" View="GroupBox" Header="{Binding Name}" DataContext="{Binding Detection.PortConfig}">
+                <dxlc:LayoutGroup x:Name="lg" Orientation="Vertical" View="GroupBox" Header="{Binding Name}" DataContext="{Binding MainPort,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
                     <dxlc:LayoutGroup>
                         <dxlc:LayoutItem Label="名称">
-                            <dxe:TextEdit EditValue="{Binding Name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                            <dxe:TextEdit  EditValue="{Binding Name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
                         </dxlc:LayoutItem>
                         <dxlc:LayoutItem Label="串口">
                             <dxe:TextEdit EditValue="{Binding PortName}"/>
@@ -92,18 +92,18 @@
                 </dxlc:LayoutGroup>
 
                 <dxlc:LayoutGroup Orientation="Vertical">
-                    <dxg:GridControl x:Name="gird" ItemsSource="{Binding Detection.AssistList}"
+                    <dxg:GridControl x:Name="gird" ItemsSource="{Binding assistList}"
                                      AutoGenerateColumns="KeepOld"  SelectionMode="Row">
                         <dxmvvm:Interaction.Behaviors>
                             <dxmvvm:EventToCommand EventName="MouseDoubleClick" Command="{Binding ShowItemCommand}" CommandParameter="{Binding ElementName=gird,Path=SelectedItem}"/>
                         </dxmvvm:Interaction.Behaviors>
-                        <dxg:GridColumn FieldName="PortConfig.Name" IsSmart="True" />
-                        <dxg:GridColumn FieldName="PortConfig.DeviceType" IsSmart="True" />
-                        <dxg:GridColumn FieldName="RouteNumber" IsSmart="True" />
-                        
-                        <dxg:GridColumn FieldName="PortConfig.PortName" IsSmart="True" />
-                        <dxg:GridColumn FieldName="PortConfig.BaudRate" IsSmart="True" />
-                        <dxg:GridColumn FieldName="PortConfig.Protocol" IsSmart="True" />
+                        <dxg:GridColumn FieldName="Port.Name" IsSmart="True" />
+                        <dxg:GridColumn FieldName="Port.DeviceType" IsSmart="True" />
+                        <dxg:GridColumn FieldName="Assist.Route" IsSmart="True" />
+
+                        <dxg:GridColumn FieldName="Port.PortName" IsSmart="True" />
+                        <dxg:GridColumn FieldName="Port.BaudRate" IsSmart="True" />
+                        <dxg:GridColumn FieldName="Port.Protocol" IsSmart="True" />
                         <dxg:GridControl.View>
                             <dxg:TableView  AutoWidth="True" AllowEditing="False"/>
                         </dxg:GridControl.View>
