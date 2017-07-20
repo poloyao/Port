@@ -17,13 +17,6 @@ namespace YZXDMS.Core
 {
     public class Core
     {
-        #region 属性
-
-
-
-        #endregion
-
-
         private static readonly Core instance = new Core();
 
 
@@ -41,6 +34,7 @@ namespace YZXDMS.Core
             CurrentLine = 1;
             GetCurrentDetectionList();
             //OnRemoveDetectionHandler += RemoveDetection;
+            InitDetectionDevice();
         }
 
         /// <summary>
@@ -115,7 +109,6 @@ namespace YZXDMS.Core
                 }
                 CurrentDetectionList.Add(item);
             }
-
             DetectionInit();
         }
 
@@ -134,10 +127,13 @@ namespace YZXDMS.Core
                     continue;
 
                 DetectResult dr = new DetectResult();
-                dr.CarID = cid;//db.GetCarInfoItem(item.CarInfoId).HPHM;
+                dr.CarID = cid;
                 dr.SerialData = item.jylsh;
                 ResultItems.Add(dr);
             }
+
+            #region 测试
+                     
             //ResultItems[0].Speed = DetectResultStatus.Wait;
             ResultItems[0].Balancer = DetectResultStatus.NotChecked;
             //ResultItems[0].Brake = DetectResultStatus.NotChecked;
@@ -151,6 +147,8 @@ namespace YZXDMS.Core
             //ResultItems[2].Balancer = DetectResultStatus.NotChecked;
 
             ResultItems[3].Speed = DetectResultStatus.NotChecked;
+
+            #endregion
         }
         /// <summary>
         /// 追加新检测车辆到检测结果列表
@@ -172,10 +170,7 @@ namespace YZXDMS.Core
         static void RemoveDetection(WaitDetection item)
         {
             var sing = ResultItems.Single(x => x.SerialData == item.jylsh);
-            //var index = ResultItems.IndexOf(sing);
-            // ResultItems.BeginUpdate();
             ResultItems.Remove(sing);
-            // ResultItems.EndUpdate();
             CurrentDetectionList.Remove(CurrentDetectionList[0]);
         }
 
@@ -230,6 +225,16 @@ namespace YZXDMS.Core
         static void InitDetectionDevice()
         {
             speedD = new TestSpeedDetection();
+
+            //获取此项目的光电
+            //var pvc =  GlobalPVC.GetInstance().GetItem(1, 1);
+
+            //while (true)
+            //{
+            //    if (pvc.IsTrigger)
+            //        break;
+            //}
+
             //ILatticeScreenOperate lso = new LatticeScreenOperate();
             ////获取速度模块
             //var speedDetect = Helpers.DeviceHelper.GetDetection(DetectionType.速度);
@@ -258,6 +263,33 @@ namespace YZXDMS.Core
             bottomD = new TestBottomDetection();
 
             balacerD = new TestBalancerDetection();
+        }
+
+        /// <summary>
+        /// 初始化速度检测单元
+        /// </summary>
+        public static void InitSpeedDetection()
+        {
+            speedD = new TestSpeedDetection();
+            //获取此项目的光电
+
+            var pvc = GlobalPVC.GetInstance().GetItem(5, 1);
+            List<PVCModel> pvcs = new List<PVCModel>();
+            pvcs.Add(pvc);
+            //传入所有的光电
+            speedD.SetPVCs(pvcs);
+
+            #region 测试用
+            //while (true)
+            //{
+            //    if (pvc.IsTrigger)
+            //    {
+            //        Console.WriteLine($"触发光电{pvc.IsTrigger}");
+            //        break;
+            //    }
+            //}
+            #endregion
+
         }
 
         /// <summary>
@@ -298,7 +330,10 @@ namespace YZXDMS.Core
 
         }
 
-
+        /// <summary>
+        /// 启动检测项目组合
+        /// </summary>
+        /// <param name="currentResult"></param>
         private static void StartDetect(DetectResult currentResult)
         {
             Console.WriteLine($"创建{currentResult.CarID} 线程");
@@ -411,6 +446,10 @@ namespace YZXDMS.Core
             });
 
         }
+
+        #region 启动检测项目单元
+
+       
         private static void StartSpeedUnit(DetectResult currentResult)
         {
             var db = GetDBProvider();
@@ -625,6 +664,10 @@ namespace YZXDMS.Core
             ShapeQueue.Dequeue();
             Console.WriteLine($"{currentResult.CarID} 使用Shape完毕");
         }
+
+        
+
+        #endregion
 
         ///// <summary>
         ///// 开始检测

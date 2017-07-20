@@ -4,6 +4,7 @@ using System.IO.Ports;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using YZXDMS.DataProvider;
 using YZXDMS.Model;
 
 namespace YZXDMS.Detections
@@ -61,6 +62,12 @@ namespace YZXDMS.Detections
         /// </summary>
         /// <param name="LSO"></param>
         void SetLatticeScreen(ILatticeScreenOperate LSO);
+
+        /// <summary>
+        /// 设置所有的光电
+        /// </summary>
+        /// <param name="pvcs"></param>
+        void SetPVCs(IList<PVCModel> pvcs);
 
         /// <summary>
         /// 当前状态，根据枚举DetectionStatus回值

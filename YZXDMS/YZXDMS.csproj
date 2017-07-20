@@ -133,6 +133,7 @@
     <Compile Include="Helpers\DataHelper.cs" />
     <Compile Include="Helpers\DataSetToEntityHelper.cs" />
     <Compile Include="Helpers\MySqlHelper.cs" />
+    <Compile Include="Helpers\SerialPortHelper.cs" />
     <Compile Include="Helpers\XmlHelper.cs" />
     <Compile Include="Models\DetectionMode.cs" />
     <Compile Include="Models\LoginResult.cs" />

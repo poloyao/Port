@@ -165,7 +165,7 @@ namespace YZXDMS.Models
         public StopBits StopBits { get; set; } = StopBits.One;
 
         /// <summary>
-        /// 通道数量
+        /// 通道数量,1到8
         /// </summary>
         [Display(Name = "通道数量")]
 

@@ -9,6 +9,25 @@ using Newtonsoft.Json;
 
 namespace YZXDMS.Helpers
 {
+    /// <summary>
+    /// 设备帮助类
+    /// </summary>
+    public class DeviceHelper
+    {
+        private static readonly DeviceHelper instance = new DeviceHelper();
+
+        private DeviceHelper() { }
+
+        public DeviceHelper GetInstance()
+        {
+            return instance;
+        }
+
+
+
+    }
+
+
     ///// <summary>
     ///// 设备帮助类
     ///// </summary>
@@ -18,7 +37,7 @@ namespace YZXDMS.Helpers
     //    /// 检测项目信息列表
     //    /// </summary>
     //    public static List<Detection> DetectionItems { get; private set; } = new List<Detection>();
-        
+
 
     //    /// <summary>
     //    /// 检测项目串口信息
@@ -49,7 +68,7 @@ namespace YZXDMS.Helpers
     //    private DeviceHelper()
     //    {
     //        InitPort();
-            
+
     //    }
 
     //    void InitPort()
@@ -247,7 +266,7 @@ namespace YZXDMS.Helpers
     //                assistsp.Parity = aConf.Parity;
     //                assistsp.DataBits = aConf.DataBits;
     //                assistsp.StopBits = aConf.StopBits;
-                    
+
 
     //                var ad = new AssistDevice();
     //                ad.PortConfig = assist.PortConfig;
@@ -268,7 +287,7 @@ namespace YZXDMS.Helpers
     //                    default:
     //                        break;
     //                }
-                    
+
 
     //                AssistPortItems.Add(new AssistPort()
     //                {
@@ -458,7 +477,7 @@ namespace YZXDMS.Helpers
     //    public AssistDevice Assist { get; set; }
     //}
 
-    
+
 
 
 

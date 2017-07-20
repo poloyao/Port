@@ -77,7 +77,7 @@ namespace YZXDMS.ViewModels
 
         public void Selected(PortConfig item)
         {
-            if (item == null)
+             if (item == null)
                 return;
 
             PortConfig itemClone = (PortConfig)item.Clone();
@@ -86,12 +86,14 @@ namespace YZXDMS.ViewModels
             doc.Title = $"{item.Name }串口配置";
             var VM = (PortViewModel)doc.Content;
             doc.Show();
-            if (VM.IsChange)
-            {
-                Items.Remove(item);
-                Items.Add(VM.Item);
-                Helpers.XmlHelper.serializeToXml(Items, "Port.xml");
-            }
+
+            DeletePortItem(item);
+            //if (VM.IsChange)
+            //{
+            //    Items.Remove(item);
+            //    Items.Add(VM.Item);
+            //    Helpers.XmlHelper.serializeToXml(Items, "Port.xml");
+            //}
         }
 
     }

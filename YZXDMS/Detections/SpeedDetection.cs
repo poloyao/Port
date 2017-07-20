@@ -7,6 +7,7 @@ using YZXDMS.Models;
 using YZXDMS.Helpers;
 using System.IO.Ports;
 using YZXDMS.Model;
+using YZXDMS.DataProvider;
 
 namespace YZXDMS.Detections
 {
@@ -364,6 +365,11 @@ namespace YZXDMS.Detections
         {
             throw new NotImplementedException();
         }
+
+        public void SetPVCs(IList<PVCModel> pvcs)
+        {
+            throw new NotImplementedException();
+        }
     }
 
 
@@ -416,6 +422,11 @@ namespace YZXDMS.Detections
         }
 
         public void StopDetect()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SetPVCs(IList<PVCModel> pvcs)
         {
             throw new NotImplementedException();
         }
@@ -473,6 +484,11 @@ namespace YZXDMS.Detections
         {
             throw new NotImplementedException();
         }
+
+        public void SetPVCs(IList<PVCModel> pvcs)
+        {
+            throw new NotImplementedException();
+        }
     }
     public class TestBottomDetection : IDetection
     {
@@ -526,6 +542,11 @@ namespace YZXDMS.Detections
         {
             throw new NotImplementedException();
         }
+
+        public void SetPVCs(IList<PVCModel> pvcs)
+        {
+            throw new NotImplementedException();
+        }
     }
     public class TestBalancerDetection : IDetection
     {
@@ -576,6 +597,11 @@ namespace YZXDMS.Detections
         }
 
         public void StopDetect()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SetPVCs(IList<PVCModel> pvcs)
         {
             throw new NotImplementedException();
         }

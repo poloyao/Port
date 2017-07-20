@@ -4,6 +4,7 @@ using DevExpress.Mvvm;
 using YZXDMS.Models;
 using System.ComponentModel;
 using YZXDMS.DataProvider;
+using System.Linq;
 
 namespace YZXDMS.ViewModels
 {
@@ -33,8 +34,25 @@ namespace YZXDMS.ViewModels
         {
             using (SQLiteDBContext db = new SQLiteDBContext())
             {
-                db.Ports.Add(Item);
-                db.SaveChanges();
+                if (Item.Id > 0)
+                {
+                    var query = db.Ports.Single(x => x.Id == Item.Id);
+                    query.Name = Item.Name;
+                    query.PortName = Item.PortName;
+                    query.BaudRate = Item.BaudRate;
+                    query.DataBits = Item.DataBits;
+                    query.Parity = Item.Parity;
+                    query.StopBits = Item.StopBits;
+                    query.RouteTotal = Item.RouteTotal;
+                    query.Protocol = Item.Protocol;
+                    query.DeviceType = Item.DeviceType;
+                    db.SaveChanges();
+                }
+                else
+                {
+                    db.Ports.Add(Item);
+                    db.SaveChanges();
+                }
             }
 
             IsChange = true;

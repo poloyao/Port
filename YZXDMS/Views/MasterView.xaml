@@ -291,7 +291,7 @@
         <Grid Grid.Row="3" >
 
             <dx:SimpleButton Content="一工位复位" Command="{Binding SpeedStartCommand}" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Glyph="{dx:DXImage Image=Reset2_32x32.png}"/>
-            <dx:SimpleButton Content="二工位复位" HorizontalAlignment="Left" Margin="152,10,0,0" VerticalAlignment="Top" Glyph="{dx:DXImage Image=Reset2_32x32.png}"/>
+            <dx:SimpleButton Content="二工位复位" Command="{Binding CheckDeviceCommand}" HorizontalAlignment="Left" Margin="152,10,0,0" VerticalAlignment="Top" Glyph="{dx:DXImage Image=Reset2_32x32.png}"/>
             <dx:SimpleButton Content="三工位复位" HorizontalAlignment="Left" Margin="297,10,384,0" VerticalAlignment="Top" Glyph="{dx:DXImage Image=Reset2_32x32.png}"/>
             <dx:SimpleButton Content="四工位复位" HorizontalAlignment="Left" Margin="431,10,0,0" VerticalAlignment="Top" Glyph="{dx:DXImage Image=Reset2_32x32.png}"/>
 

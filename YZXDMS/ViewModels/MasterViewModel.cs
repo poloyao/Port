@@ -36,18 +36,15 @@ namespace YZXDMS.ViewModels
 
         }
 
-        ~MasterViewModel()
-        {
-            if (dispatcherTimer.IsEnabled)
-                dispatcherTimer.Stop();
+        //~MasterViewModel()
+        //{
+        //    if (dispatcherTimer.IsEnabled)
+        //        dispatcherTimer.Stop();
             
-        }
+        //}
 
         void Init()
         {
-
-            //ResultItems = Core.Core.ResultItems;
-
             //使用唯一时钟，bug只能在下次进入此页面时触发
             //开启后会一直运行，没有想好触发的关闭位置
             dispatcherTimer = Core.Core.MasterDispatcherTimer;
@@ -165,6 +162,13 @@ namespace YZXDMS.ViewModels
             Core.Core.StartDetection();
 
         }
+
+
+        public void CheckDevice()
+        {
+            //Core.Core.InitDet();
+        }
+
 
     }
 
