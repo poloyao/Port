@@ -229,6 +229,8 @@ namespace YZXDMS.Models
 
         //public  List<AssistModel> AssistList { get; set; }
 
+        public long StationId { get; set; }
+
     }
 
     /// <summary>
@@ -257,6 +259,8 @@ namespace YZXDMS.Models
         public PortConfig Port { get; set; }
     }
 
+    
+
     /// <summary>
     /// 工位配置
     /// </summary>
@@ -265,8 +269,7 @@ namespace YZXDMS.Models
     {
         public long Id { get; set; }
         public string StationName { get; set; }
-
-        public List<DetectorModel> Detectors { get; set; }
+        
     }
 
 

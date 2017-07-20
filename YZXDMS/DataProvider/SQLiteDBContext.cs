@@ -62,6 +62,13 @@ namespace YZXDMS.DataProvider
         protected override void Seed(SQLiteDBContext context)
         {
             base.Seed(context);
+
+            context.Set<StationModel>().Add(new StationModel() { StationName = "一工位" });
+            context.Set<StationModel>().Add(new StationModel() { StationName = "二工位" });
+            context.Set<StationModel>().Add(new StationModel() { StationName = "三工位" });
+            context.Set<StationModel>().Add(new StationModel() { StationName = "四工位" });
+
+
         }
 
     }

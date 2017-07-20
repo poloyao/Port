@@ -35,9 +35,9 @@ namespace YZXDMS.ViewModels
         {
             List<ModuleInfo> modules = new List<ModuleInfo>()
             {
-                 ViewModelSource.Create(()=>new ModuleInfo("SettingPortView",this,"串口设置")).SetIcon("setting"),
-                 //ViewModelSource.Create(()=>new ModuleInfo("SettingStationView",this,"工位设置")).SetIcon("car"),
+                 ViewModelSource.Create(()=>new ModuleInfo("SettingPortView",this,"串口设置")).SetIcon("setting"),                 
                  ViewModelSource.Create(()=>new ModuleInfo("SettingLinkPortView",this,"模块设置")).SetIcon("car"),
+                 ViewModelSource.Create(()=>new ModuleInfo("SettingStationView",this,"工位设置")).SetIcon("car"),
                  ViewModelSource.Create(()=>new ModuleInfo("AssignView",this,"待检车辆")).SetIcon("car"),
                  ViewModelSource.Create(()=>new ModuleInfo("MasterView",this,"主控检测")).SetIcon("car"),
                  //ViewModelSource.Create(()=>new ModuleInfo("QueryCarView",this,"车辆查询")).SetIcon("car"),
