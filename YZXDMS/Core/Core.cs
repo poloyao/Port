@@ -270,12 +270,22 @@ namespace YZXDMS.Core
         /// </summary>
         public static void InitSpeedDetection()
         {
+            //初始化检测模块
             speedD = new TestSpeedDetection();
+
+            var speedDet = GlobalStation.GetInstance().GetUintInStation(DetectionType.速度);
+
+            //设置此检测项目的串口信息
+            speedD.SetPort(GlobalPort.GetInstance().GetPort(speedDet.PortId).Port);
+
+            //获取此项目所在工位
+            // GlobalStation.GetInstance().
+
             //获取此项目的光电
 
-            var pvc = GlobalPVC.GetInstance().GetItem(5, 1);
+            //var pvc = GlobalPVC.GetInstance().GetItem(5, 1);
             List<PVCModel> pvcs = new List<PVCModel>();
-            pvcs.Add(pvc);
+            //pvcs.Add(pvc);
             //传入所有的光电
             speedD.SetPVCs(pvcs);
 

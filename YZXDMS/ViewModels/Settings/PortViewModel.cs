@@ -34,7 +34,7 @@ namespace YZXDMS.ViewModels
         {
             using (SQLiteDBContext db = new SQLiteDBContext())
             {
-                if (Item.Id > 0)
+                if (Item.Id != Guid.Empty)
                 {
                     var query = db.Ports.Single(x => x.Id == Item.Id);
                     query.Name = Item.Name;
@@ -50,6 +50,7 @@ namespace YZXDMS.ViewModels
                 }
                 else
                 {
+                    Item.Id = Guid.NewGuid();
                     db.Ports.Add(Item);
                     db.SaveChanges();
                 }

@@ -13,11 +13,13 @@ namespace YZXDMS.ViewModels
     [POCOViewModel]
     public class SelectAssistViewModel : ViewModelBase, IDocumentContent
     {
-        public virtual List<PortConfig> PortConfigItems { get; set; }
+        public virtual ObservableCollection<PortConfig> PortConfigItems { get; set; }
 
         public virtual PortConfig PConfig { get; set; }
 
         public virtual int Route { get; set; } = 1;
+
+        public virtual int Index { get; set; }
 
         public virtual AssistDeviceType ADT { get; set; }
 
@@ -40,7 +42,7 @@ namespace YZXDMS.ViewModels
 
         public SelectAssistViewModel()
         {
-           
+
         }
 
         protected override void OnParameterChanged(object parameter)
@@ -52,16 +54,17 @@ namespace YZXDMS.ViewModels
 
                 using (SQLiteDBContext db = new SQLiteDBContext())
                 {
-                     if (this.IsMain)
+                    if (this.IsMain)
                     {
-                        PortConfigItems = db.Ports.Where(x => (int)x.DeviceType < 100).ToList();
+                        var query = db.Ports.Where(x => (int)x.DeviceType < 100).ToList();
+                        PortConfigItems = new ObservableCollection<PortConfig>(query);
                     }
                     else
                     {
-                        PortConfigItems = db.Ports.Where(x => (int)x.DeviceType > 100).ToList();
+                        var query = db.Ports.Where(x => (int)x.DeviceType > 100).ToList();
+                        PortConfigItems = new ObservableCollection<PortConfig>(query);
                     }
-                }
-
+                }              
             }
         }
 
@@ -76,11 +79,17 @@ namespace YZXDMS.ViewModels
             {
                 //port = PConfig,
                 Route = Route,
-                PortId = PConfig.Id
+                PortId = PConfig.Id,
+                Index = Index
             };
             IsChanged = true;
             DevExpress.Xpf.Core.DXMessageBox.Show("保存成功!");
             this.DocumentOwner.Close(this);
+        }
+
+        public void SelectCom()
+        {
+
         }
 
 
@@ -100,4 +109,18 @@ namespace YZXDMS.ViewModels
         #endregion
 
     }
+
+    
+    //public class SAVMPram
+    //{
+    //    /// <summary>
+    //    /// 是否是主设备
+    //    /// </summary>
+    //    public bool IsMain { get; set; }
+    //    /// <summary>
+    //    /// 检测项目id
+    //    /// </summary>
+    //    public Guid MainId { get; set; }
+    //}
+
 }

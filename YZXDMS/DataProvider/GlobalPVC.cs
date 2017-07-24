@@ -49,16 +49,114 @@ namespace YZXDMS.DataProvider
             }
         }
 
-    }
-    /// <summary>
-    /// 串口实例和配置
-    /// </summary>
-    public class PortWithConfig
-    {
-        public SerialPort Port { get; set; }
 
-        public PortConfig Config { get; set; }
+        public PortWithConfig GetPort(Guid portId)
+        {
+            return PortWithConfigItems.Single(x => x.Config.Id == portId);
+        }
+
     }
+
+    /// <summary>
+    /// 全局工位信息
+    /// </summary>
+    public class GlobalStation
+    {
+        private static readonly GlobalStation instance = new GlobalStation();
+        public static GlobalStation GetInstance()
+        {
+            return instance;
+        }
+
+        private GlobalStation() { Init();  }
+
+        public List<DetectorModel> Station1 = new List<DetectorModel>();
+        public List<DetectorModel> Station2 = new List<DetectorModel>();
+        public List<DetectorModel> Station3 = new List<DetectorModel>();
+        public List<DetectorModel> Station4 = new List<DetectorModel>();
+
+
+
+        void Init()
+        {
+            using (SQLiteDBContext db = new SQLiteDBContext())
+            {
+                //读取检测项目信息
+                var query = db.Detectors.ToList();
+                //将项目分配到各工位
+                foreach (var item in query)
+                {
+                    switch (item.StationValue)
+                    {
+                        case 1:
+                            Station1.Add(item);
+                            break;
+                        case 2:
+                            Station2.Add(item);
+                            break;
+                        case 3:
+                            Station3.Add(item);
+                            break;
+                        case 4:
+                            Station4.Add(item);
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// 获取所在工位的此检测项目信息
+        /// </summary>
+        /// <param name="dt"></param>
+        public DetectorModel GetUintInStation(DetectionType dt)
+        {
+            foreach (var item in Station1)
+            {
+                if (item.DetectorType == dt)
+                {
+                    return item;
+                }
+            }
+            foreach (var item in Station2)
+            {
+                if (item.DetectorType == dt)
+                {
+                    return item;
+                }
+            }
+            foreach (var item in Station3)
+            {
+                if (item.DetectorType == dt)
+                {
+                    return item;
+                }
+            }
+            foreach (var item in Station4)
+            {
+                if (item.DetectorType == dt)
+                {
+                    return item;
+                }
+            }
+
+            return null;
+
+
+        }
+
+        //  var pvc = GlobalPVC.GetInstance().GetItem(5, 1);
+
+        public void GetPVCConfig()
+        {
+
+        }
+
+
+    }
+
 
     /// <summary>
     /// 全局光电控制器Photovoltaic Control
@@ -84,7 +182,7 @@ namespace YZXDMS.DataProvider
         /// <param name="portId">配置Id</param>
         /// <param name="route">通道数</param>
         /// <returns></returns>
-        public  PVCModel GetItem(int portId,int route)
+        public  PVCModel GetItem(Guid portId,int route)
         {
             if (items != null)
             {

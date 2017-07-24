@@ -23,16 +23,45 @@ namespace YZXDMS.ViewModels
 
         public SettingStationViewModel()
         {
+            Init();
+        }
+        /// <summary>
+        /// 初始化列表
+        /// </summary>
+        private void Init()
+        {
             using (SQLiteDBContext db = new SQLiteDBContext())
             {
+                //读取检测项目信息
                 var query = db.Detectors.ToList();
-                DetectorItems = new ObservableCollection<DetectorModel>(query);
+                DetectorItems = new ObservableCollection<DetectorModel>();
+                //将项目分配到各工位
+                foreach (var item in query)
+                {
+                    switch (item.StationValue)
+                    {
+                        case 1:
+                            Station1.Add(item);
+                            break;
+                        case 2:
+                            Station2.Add(item);
+                            break;
+                        case 3:
+                            Station3.Add(item);
+                            break;
+                        case 4:
+                            Station4.Add(item);
+                            break;
+                        default:
+                            DetectorItems.Add(item);
+                            break;
+                    }
+                }
             }
         }
 
         public void Save()
-        {
-            //废话太多，有待修改
+        {           
             using (SQLiteDBContext db = new SQLiteDBContext())
             {
                 var StationItems = db.Stations.ToList();
@@ -46,24 +75,25 @@ namespace YZXDMS.ViewModels
                 var queryDet = db.Detectors.ToList();
                 foreach (var item in queryDet)
                 {
-                    item.StationId = 0;
+                    //重置工位，归零
+                    item.StationValue = 0;
                 }
 
                 foreach (var item in Station1)
                 {
-                    queryDet.Single(x => x.Id == item.Id).StationId = query1.Id;
+                    queryDet.Single(x => x.Id == item.Id).StationValue = query1.Value;
                 }
                 foreach (var item in Station2)
                 {
-                    queryDet.Single(x => x.Id == item.Id).StationId = query2.Id;
+                    queryDet.Single(x => x.Id == item.Id).StationValue = query2.Value;
                 }
                 foreach (var item in Station3)
                 {
-                    queryDet.Single(x => x.Id == item.Id).StationId = query3.Id;
+                    queryDet.Single(x => x.Id == item.Id).StationValue = query3.Value;
                 }
                 foreach (var item in Station4)
                 {
-                    queryDet.Single(x => x.Id == item.Id).StationId = query4.Id;
+                    queryDet.Single(x => x.Id == item.Id).StationValue = query4.Value;
                 }
 
                 db.SaveChanges();

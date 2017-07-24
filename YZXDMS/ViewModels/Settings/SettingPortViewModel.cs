@@ -37,7 +37,9 @@ namespace YZXDMS.ViewModels
         {
             using (SQLiteDBContext db = new SQLiteDBContext())
             {
-                var item = db.Ports.SingleOrDefault(x => x.Id == port.Id);
+                //var item = db.Ports.SingleOrDefault(x => x.Id == port.Id);
+                //db.Ports.ToList().Where(x=>x.Id == Guid.Parse("5ae34417-ea9f-4dec-974a-fdc6ce02056e"))
+                var item = db.Ports.ToList().SingleOrDefault(x => x.Id == port.Id);
                 db.Ports.Remove(item);
                 db.SaveChanges();
             }

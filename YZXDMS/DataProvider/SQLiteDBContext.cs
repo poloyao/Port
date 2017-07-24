@@ -63,10 +63,10 @@ namespace YZXDMS.DataProvider
         {
             base.Seed(context);
 
-            context.Set<StationModel>().Add(new StationModel() { StationName = "一工位" });
-            context.Set<StationModel>().Add(new StationModel() { StationName = "二工位" });
-            context.Set<StationModel>().Add(new StationModel() { StationName = "三工位" });
-            context.Set<StationModel>().Add(new StationModel() { StationName = "四工位" });
+            context.Set<StationModel>().Add(new StationModel() { Id = Guid.NewGuid(), StationName = "一工位",Value = 1 });
+            context.Set<StationModel>().Add(new StationModel() { Id = Guid.NewGuid(), StationName = "二工位", Value = 2 });
+            context.Set<StationModel>().Add(new StationModel() { Id = Guid.NewGuid(), StationName = "三工位", Value = 3 });
+            context.Set<StationModel>().Add(new StationModel() { Id = Guid.NewGuid(), StationName = "四工位", Value = 4 });
 
 
         }

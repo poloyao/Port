@@ -147,7 +147,8 @@ namespace YZXDMS.Models
     [Table("PortConfig")]
     public class PortConfig : ICloneable
     {
-        public long Id { get; set; }
+        [Key]
+        public Guid Id { get; set; }
         /// <summary>
         /// 串口名称
         /// </summary>
@@ -222,14 +223,20 @@ namespace YZXDMS.Models
     [Table("Detector")]
     public class DetectorModel
     {
-        public long Id { get; set; }
-        public string DetectorName { get; set; }
+        [Key]
+        public Guid Id { get; set; }
+        public string DetectorName { get; set; }        
+
+        public DetectionType DetectorType { get; set; }
+
         //public PortConfig port { get; set; }
-        public long PortId { get; set; }
+        public Guid PortId { get; set; }
 
         //public  List<AssistModel> AssistList { get; set; }
 
-        public long StationId { get; set; }
+        public int StationValue { get; set; }
+        
+
 
     }
 
@@ -239,15 +246,20 @@ namespace YZXDMS.Models
     [Table("Assist")]
     public class AssistModel
     {
-        public long Id { get; set; }
+        [Key]
+        public Guid Id { get; set; }
 
-        public long DetectorId { get; set; }
+        public Guid DetectorId { get; set; }
 
-        public long PortId { get; set; }
+        public Guid PortId { get; set; }
 
         //public PortConfig port { get; set; }
 
         public int Route { get; set; }
+        /// <summary>
+        /// 此辅助项目同类型的排序
+        /// </summary>
+        public int Index { get; set; }
     }
 
     /// <summary>
@@ -267,9 +279,25 @@ namespace YZXDMS.Models
     [Table("Station")]
     public class StationModel
     {
-        public long Id { get; set; }
+        [Key]
+        //[Column(TypeName = "Text")]
+        public Guid Id { get; set; }
         public string StationName { get; set; }
-        
+        public int Value { get; set; }
+
+    }
+
+
+
+
+    /// <summary>
+    /// 串口实例和配置
+    /// </summary>
+    public class PortWithConfig
+    {
+        public SerialPort Port { get; set; }
+
+        public PortConfig Config { get; set; }
     }
 
 

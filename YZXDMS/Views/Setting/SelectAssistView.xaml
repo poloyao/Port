@@ -17,7 +17,7 @@
         <dxlc:LayoutControl  Orientation="Vertical">
             <dxlc:LayoutGroup Header="Phones" Orientation="Vertical" UseLayoutRounding="True" >
                 <dxlc:LayoutItem Label="设备类型" Visibility="{Binding IsVisibility,Converter={dxmvvm:BooleanToVisibilityConverter}}" >
-                    <dxe:ComboBoxEdit ItemsSource="{Binding Source={StaticResource EnumItemsSource}}" EditValue="{Binding ADT}" IsTextEditable="False"/>
+                    <dxe:ComboBoxEdit ItemsSource="{Binding Source={StaticResource EnumItemsSource}}"  EditValue="{Binding ADT}" IsTextEditable="False"/>
                 </dxlc:LayoutItem>
                 <dxlc:LayoutItem Label="设备">
                     <dxg:LookUpEdit ItemsSource="{Binding PortConfigItems}" EditValue="{Binding PConfig}" DisplayMember="Name"  IsTextEditable="False">
@@ -36,6 +36,9 @@
                 </dxlc:LayoutItem>
                 <dxlc:LayoutItem Label="调用通道" Visibility="{Binding IsVisibility,Converter={dxmvvm:BooleanToVisibilityConverter}}">
                     <dxe:TextEdit EditValue="{Binding Route }" />
+                </dxlc:LayoutItem>
+                <dxlc:LayoutItem Label="同类设备顺序" Visibility="{Binding IsVisibility,Converter={dxmvvm:BooleanToVisibilityConverter}}">
+                    <dxe:TextEdit EditValue="{Binding Index }" />
                 </dxlc:LayoutItem>
                 <dxlc:LayoutGroup VerticalAlignment="Bottom" HorizontalAlignment="Right" Orientation="Horizontal">
                     <Button Command="{Binding CancelCommand}">取消</Button>

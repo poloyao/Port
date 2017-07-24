@@ -172,16 +172,12 @@ namespace YZXDMS.ViewModels
                 db.Assist.ToList();
                 if (query == null)
                 {
-                    Detector = new DetectorModel() { DetectorName = dt.ToString() };
+                    Detector = new DetectorModel() { Id = Guid.NewGuid(), DetectorName = dt.ToString(),DetectorType = dt };
                 }
                 else
                 {
                     Detector = query;
                     UpdateDetector();
-                    if (query.PortId != 0)
-                    {
-                        MainPort = db.Ports.Single(x => x.Id == query.PortId);
-                    }
                 }
 
             }
@@ -204,9 +200,9 @@ namespace YZXDMS.ViewModels
             {
                 using (SQLiteDBContext db = new SQLiteDBContext())
                 {
-                    MainPort = db.Ports.Single(x => x.Id == VM.Data.PortId);
+                    MainPort = db.Ports.ToList().Single(x => x.Id == VM.Data.PortId);
                     this.RaisePropertiesChanged();
-                    var det = db.Detectors.SingleOrDefault(x => x.Id == Detector.Id);
+                    var det = db.Detectors.ToList().SingleOrDefault(x => x.Id == Detector.Id);
                     if (det == null)
                     {
                         Detector.PortId = MainPort.Id;
@@ -238,15 +234,14 @@ namespace YZXDMS.ViewModels
                 //注意实体与数据库结构并不相同，查询结果IList懒加载的问题
                 using (SQLiteDBContext db = new SQLiteDBContext())
                 {
-                    var query = db.Detectors.SingleOrDefault(x =>  x.DetectorName == Detector.DetectorName);
-                    //var queryAssist = db.Assist.ToList();
+                    var query = db.Detectors.ToList().SingleOrDefault(x =>  x.Id == Detector.Id);
                     if (query == null)
                     {
                         db.Detectors.Add(Detector);
                         db.SaveChanges();
-                        query = db.Detectors.SingleOrDefault(x => x.DetectorName == Detector.DetectorName);
+                        query = db.Detectors.ToList().SingleOrDefault(x => x.Id == Detector.Id);
                     }
-
+                    VM.Data.Id = Guid.NewGuid();
                     VM.Data.DetectorId = query.Id;
                     db.Assist.Add(VM.Data);
                     db.SaveChanges();
@@ -256,24 +251,26 @@ namespace YZXDMS.ViewModels
             }
 
         }
-
+        /// <summary>
+        /// 更新界面数据
+        /// </summary>
         void UpdateDetector()
         {
             using (SQLiteDBContext db = new SQLiteDBContext())
             {
-                var query = db.Detectors.SingleOrDefault(x => x.DetectorName == Detector.DetectorName);
+                var query = db.Detectors.ToList().SingleOrDefault(x => x.Id == Detector.Id);
 
                 if (query != null)
                 {
-                    var main = db.Ports.SingleOrDefault(x => x.Id == query.PortId);
+                    var main = db.Ports.ToList().SingleOrDefault(x => x.Id == query.PortId);
                     //if (main != null)
                         MainPort = main;
-                    var queryAssist = db.Assist.Where(x => x.DetectorId == query.Id);
+                    var queryAssist = db.Assist.ToList().Where(x => x.DetectorId == query.Id).ToList();
                     assistList.Clear();
                     foreach (var item in queryAssist)
                     {
                         var ass = new AssistDisplayModel() { Assist = item };
-                        ass.Port = db.Ports.Single(x => x.Id == item.PortId);
+                        ass.Port = db.Ports.ToList().Single(x => x.Id == item.PortId);
                         assistList.Add(ass);
                     }
                 }
@@ -290,7 +287,7 @@ namespace YZXDMS.ViewModels
             {
                 using (SQLiteDBContext db = new SQLiteDBContext())
                 {
-                    var query = db.Assist.Single(x => x.Id == item.Assist.Id);
+                    var query = db.Assist.ToList().Single(x => x.Id == item.Assist.Id);
                     db.Assist.Remove(query);
                     db.SaveChanges();
                     UpdateDetector();

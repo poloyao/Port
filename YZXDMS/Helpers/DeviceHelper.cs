@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using YZXDMS.Models;
 using System.IO.Ports;
 using Newtonsoft.Json;
+using YZXDMS.DataProvider;
 
 namespace YZXDMS.Helpers
 {
@@ -22,6 +23,72 @@ namespace YZXDMS.Helpers
         {
             return instance;
         }
+
+        
+        
+        /// <summary>
+        /// 根据检测类型获取此单元的配置信息
+        /// </summary>
+        /// <param name="dt"></param>
+        public void GetDetectorUnit(DetectionType dt)
+        {
+            
+            var pwcs = GlobalPort.GetInstance().PortWithConfigItems;
+            using (SQLiteDBContext db = new SQLiteDBContext())
+            {
+                //var sss = pwcs.Where(x => x.Config.DeviceType == DeviceType.外检).ToList();
+                List<PortWithConfig> queryItems = new List<PortWithConfig>();
+                switch (dt)
+                {
+                    case DetectionType.外检:
+                        queryItems = pwcs.Where(x => x.Config.DeviceType == DeviceType.外检).ToList();
+                        break;
+                    case DetectionType.侧滑:
+                        queryItems = pwcs.Where(x => x.Config.DeviceType == DeviceType.侧滑).ToList();
+                        break;
+                    case DetectionType.速度:
+                        queryItems = pwcs.Where(x => x.Config.DeviceType == DeviceType.速度).ToList();
+                        break;
+                    case DetectionType.灯光:
+                        queryItems = pwcs.Where(x => x.Config.DeviceType == DeviceType.灯光).ToList();
+                        break;
+                    case DetectionType.制动:
+                        queryItems = pwcs.Where(x => x.Config.DeviceType == DeviceType.制动).ToList();
+                        break;
+                    case DetectionType.称重:
+                        queryItems = pwcs.Where(x => x.Config.DeviceType == DeviceType.称重).ToList();
+                        break;
+                    case DetectionType.底盘:
+                        queryItems = pwcs.Where(x => x.Config.DeviceType == DeviceType.底盘).ToList();
+                        break;
+                    case DetectionType.底盘间隙:
+                        queryItems = pwcs.Where(x => x.Config.DeviceType == DeviceType.底盘间隙).ToList();
+                        break;
+                    case DetectionType.声级计:
+                        queryItems = pwcs.Where(x => x.Config.DeviceType == DeviceType.声级计).ToList();
+                        break;
+                    case DetectionType.功率:
+                        queryItems = pwcs.Where(x => x.Config.DeviceType == DeviceType.功率).ToList();
+                        break;
+                    case DetectionType.油耗:
+                        queryItems = pwcs.Where(x => x.Config.DeviceType == DeviceType.油耗).ToList();
+                        break;
+                    case DetectionType.尾气:
+                        queryItems = pwcs.Where(x => x.Config.DeviceType == DeviceType.尾气).ToList();
+                        break;
+                    case DetectionType.探平衡仪:
+                        queryItems = pwcs.Where(x => x.Config.DeviceType == DeviceType.探平衡仪).ToList();
+                        break;
+                    default:
+                        break;
+                }
+
+
+
+            }
+        }
+        
+        
 
 
 
