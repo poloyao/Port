@@ -32,5 +32,22 @@ namespace YZXDMS.Helpers
 
         }
 
+
+        void ass()
+        {
+            bbb b1 = new bbb();
+            bbb b2 = new bbb();
+            if (b1 == b2)
+            {
+
+            }
+            var ssss = EntityComparison(b1, b2);
+        }
+
+        public class bbb
+        {
+            public string Name { get; set; }
+        }
+
     }
 }

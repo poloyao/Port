@@ -6,44 +6,43 @@ using YZXDMS.Models;
 using System.ComponentModel;
 using System.Linq;
 using System.Collections.ObjectModel;
+using YZXDMS.DataProvider;
 
 namespace YZXDMS.ViewModels
 {
     [POCOViewModel]
-    public class SelectAssistViewModel:ViewModelBase, IDocumentContent
+    public class SelectAssistViewModel : ViewModelBase, IDocumentContent
     {
-
-        public virtual List<PortConfig> PortConfigItems { get; set; }
-
+        public virtual ObservableCollection<PortConfig> PortConfigItems { get; set; }
 
         public virtual PortConfig PConfig { get; set; }
 
         public virtual int Route { get; set; } = 1;
 
+        public virtual int Index { get; set; }
 
         public virtual AssistDeviceType ADT { get; set; }
 
-
+        /// <summary>
+        /// 回调的数据
+        /// </summary>
+        public AssistModel Data { get; set; }
         /// <summary>
         /// 是否有变化保存
         /// </summary>
         public bool IsChanged { get; set; }
-
-
-        public AssistRoute Data { get; set; }
         /// <summary>
         /// 是否是主检测设备
         /// </summary>
-        public  bool IsMain { get;  set; }
+        public bool IsMain { get; set; }
 
-        /// <summary>
-        /// 是否显示设备类型，通道等，与IsMain关联
-        /// </summary>
-        public virtual bool IsVisibility { get; set; }
+
+        DetectorModel _detector;
+
 
         public SelectAssistViewModel()
         {
-           // PortConfigItems = Helpers.DeviceHelper.GetPortConfigItems(); 
+
         }
 
         protected override void OnParameterChanged(object parameter)
@@ -51,58 +50,62 @@ namespace YZXDMS.ViewModels
             base.OnParameterChanged(parameter);
             if (parameter != null)
             {
-                var param = (parameter as SelectAssistParam);
-                this.IsMain = param.IsMain;
-                if (param.AR != null)
+                this.IsMain = (bool)parameter;
+
+                using (SQLiteDBContext db = new SQLiteDBContext())
                 {
-                    this.Route = param.AR.RouteNumber;
-                    this.PConfig = param.AR.PortConfig;
-                }
-
-                var pci = Helpers.DeviceHelper.GetPortConfigItems();
-
-                if (this.IsMain)
-                {
-                    PortConfigItems = pci.Where(x => (int)x.DeviceType < 100).ToList();
-                }
-                else
-                {
-                    PortConfigItems = pci.Where(x => (int)x.DeviceType > 100).ToList();
-                }
-
-                this.IsVisibility = !this.IsMain;
-
+                    if (this.IsMain)
+                    {
+                        var query = db.Ports.Where(x => (int)x.DeviceType < 100).ToList();
+                        PortConfigItems = new ObservableCollection<PortConfig>(query);
+                    }
+                    //else
+                    //{
+                    //    var query = db.Ports.Where(x => (int)x.DeviceType > 100).ToList();
+                    //    PortConfigItems = new ObservableCollection<PortConfig>(query);
+                    //}
+                }              
             }
         }
 
-
-
         public void Cancel()
         {
-            this.IsChanged = false;
             DocumentOwner.Close(this, true);
         }
 
+        [Command(CanExecuteMethodName = "CanSave")]
         public void Save()
         {
-            Data = new AssistRoute()
+            Data = new AssistModel()
             {
-                RouteNumber = Route,
-                //Assist = new AssistDevice()
-                //{
-                //    PortConfig = PConfig,
-                //    DeviceType = ADT
-                //},
-                PortConfig = PConfig
+                //port = PConfig,
+                Route = Route,
+                PortId = PConfig.Id,
+                Index = Index,
+                AssistType = ADT
             };
-            this.IsChanged = true;
+            IsChanged = true;
             DevExpress.Xpf.Core.DXMessageBox.Show("保存成功!");
             this.DocumentOwner.Close(this);
         }
 
+        public bool CanSave()
+        {
+            if (PConfig != null)
+                return true;
+            return false;
+        }
 
 
-        //public void Selected()
+        public void SelectCom(object adt)
+        {
+            PConfig = null;
+            using (SQLiteDBContext db = new SQLiteDBContext())
+            {
+                var query = db.Ports.ToList().Where(x => (int)x.DeviceType == (int)Enum.Parse(typeof(DeviceType),adt.ToString())).ToList();
+                PortConfigItems = new ObservableCollection<PortConfig>(query);
+            }
+        }
 
 
         #region IDocumentContent
@@ -122,12 +125,17 @@ namespace YZXDMS.ViewModels
 
     }
 
-
-    public class SelectAssistParam
-    {
-        public AssistRoute AR { get; set; }
-
-        public bool IsMain { get; set; }
-    }
+    
+    //public class SAVMPram
+    //{
+    //    /// <summary>
+    //    /// 是否是主设备
+    //    /// </summary>
+    //    public bool IsMain { get; set; }
+    //    /// <summary>
+    //    /// 检测项目id
+    //    /// </summary>
+    //    public Guid MainId { get; set; }
+    //}
 
 }

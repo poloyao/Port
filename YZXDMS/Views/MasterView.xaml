@@ -290,8 +290,8 @@
 
         <Grid Grid.Row="3" >
 
-            <dx:SimpleButton Content="一工位复位" Command="{Binding SpeedStartCommand}" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Glyph="{dx:DXImage Image=Reset2_32x32.png}"/>
-            <dx:SimpleButton Content="二工位复位" HorizontalAlignment="Left" Margin="152,10,0,0" VerticalAlignment="Top" Glyph="{dx:DXImage Image=Reset2_32x32.png}"/>
+            <dx:SimpleButton Content="一工位复位"  HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Glyph="{dx:DXImage Image=Reset2_32x32.png}"/>
+            <dx:SimpleButton Content="二工位复位" Command="{Binding CheckDeviceCommand}" HorizontalAlignment="Left" Margin="152,10,0,0" VerticalAlignment="Top" Glyph="{dx:DXImage Image=Reset2_32x32.png}"/>
             <dx:SimpleButton Content="三工位复位" HorizontalAlignment="Left" Margin="297,10,384,0" VerticalAlignment="Top" Glyph="{dx:DXImage Image=Reset2_32x32.png}"/>
             <dx:SimpleButton Content="四工位复位" HorizontalAlignment="Left" Margin="431,10,0,0" VerticalAlignment="Top" Glyph="{dx:DXImage Image=Reset2_32x32.png}"/>
 
@@ -300,6 +300,8 @@
             <dx:SimpleButton Content="二工位放弃" HorizontalAlignment="Left" Margin="152,0,0,10" VerticalAlignment="Bottom" Glyph="{dx:DXImage Image=Delete_32x32.png}"/>
             <dx:SimpleButton Content="三工位放弃" HorizontalAlignment="Left" Margin="297,0,384,10" VerticalAlignment="Bottom" Glyph="{dx:DXImage Image=Delete_32x32.png}"/>
             <dx:SimpleButton Content="四工位放弃" HorizontalAlignment="Left" Margin="431,0,0,10" VerticalAlignment="Bottom" Glyph="{dx:DXImage Image=Delete_32x32.png}"/>
+            <dx:SimpleButton Content="开始检测" Command="{Binding SpeedStartCommand}" Height="36" HorizontalAlignment="Left" Margin="569,0,0,10" VerticalAlignment="Bottom" Glyph="/YZXDMS;component/Img/init.png" />
+            <dx:SimpleButton Content="设备初始化" Command="{Binding InitDetectionDeviceCommand}" Height="36" HorizontalAlignment="Left" Margin="569,0,0,54" VerticalAlignment="Bottom" Glyph="/YZXDMS;component/Img/init.png" />
 
 
         </Grid>

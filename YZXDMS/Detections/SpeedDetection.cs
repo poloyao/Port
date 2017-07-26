@@ -7,6 +7,10 @@ using YZXDMS.Models;
 using YZXDMS.Helpers;
 using System.IO.Ports;
 using YZXDMS.Model;
+using YZXDMS.DataProvider;
+using System.Diagnostics;
+using System.Threading;
+
 
 namespace YZXDMS.Detections
 {
@@ -261,6 +265,10 @@ namespace YZXDMS.Detections
 
         DetectionStatus _DetectionStatus = DetectionStatus.IDLE;
 
+        List<PVCModel> PvcList;
+
+        ILatticeScreenOperate LSO;
+
         public Speed GetSpeedResultData()
         {
             System.Threading.Thread.Sleep(2000);
@@ -269,7 +277,6 @@ namespace YZXDMS.Detections
 
         public DetectionStatus GetCurrentStatus()
         {
-            //return DetectionStatus.IDLE;
             return _DetectionStatus;
         }
 
@@ -285,6 +292,9 @@ namespace YZXDMS.Detections
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// 将车籍信息、工作状态重置
+        /// </summary>
         public void Reset()
         {
             carInfo = null;
@@ -298,7 +308,7 @@ namespace YZXDMS.Detections
 
         public void SetLatticeScreen(ILatticeScreenOperate LSO)
         {
-            
+            this.LSO = LSO;
         }
 
         public void SetPort(SerialPort port)
@@ -311,21 +321,72 @@ namespace YZXDMS.Detections
             
         }
 
-
+        /// <summary>
+        /// 设备初始化
+        /// </summary>
         public void DeviceInit()
         {
             if (port.IsOpen)
                 return;
-
+            port.DataReceived -= Port_DataReceived;
             port.DataReceived += Port_DataReceived;
             //因为需要先进行设备复位，所以在此处打开串口
-            OpenPort();
-            Reset();
+            //OpenPort();
         }
 
         private void Port_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
-            
+            var serialPort = sender as System.IO.Ports.SerialPort;
+            byte[] bytesData = new byte[0];
+            byte[] bytesTemp = new byte[0];
+            int bytesRead;
+            byte result = 0x00;
+
+            try
+            {
+                //获取接收缓冲区中字节数
+                bytesRead = serialPort.BytesToRead;
+                //保存上一次没处理完的数据
+                if (bytesData.Length > 0)
+                {
+                    bytesTemp = new byte[bytesData.Length];
+                    bytesData.CopyTo(bytesTemp, 0);
+                    bytesData = new byte[bytesRead + bytesData.Length];
+                    bytesTemp.CopyTo(bytesData, 0);
+                }
+                else
+                {
+                    bytesData = new byte[bytesRead];
+                    bytesTemp = new byte[0];
+                }
+                //保存本次接收的数据
+                for (int i = 0; i < bytesRead; i++)
+                {
+                    bytesData[bytesTemp.Length + i] = Convert.ToByte(serialPort.ReadByte());//read all data
+                }
+                //后加的代码，否则容易下标越界IndexOutOfRangeException
+                if (bytesData.Length < 3)
+                    return;
+                for (int i = 0; i < bytesData.Length; i++)
+                {
+                    if ((bytesData[i] == 0xAA) && (bytesData[i + 2] == 0x0D))
+                    {
+                        result = bytesData[i + 1];
+                        if (result != 0x00)
+                        {
+                           // _resultData = new Random(Guid.NewGuid().GetHashCode()).Next(50, 100);
+                           // _resutlStatus = true;
+
+                        }
+                        //_resutlStatus = result
+                        i += 2;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
         }
 
         void OpenPort()
@@ -343,26 +404,142 @@ namespace YZXDMS.Detections
             this.carInfo = carInfo;
         }
 
+        
+
+        /// <summary>
+        /// 汽缸
+        /// </summary>
+        /// <param name="isUpOrDown"></param>
+        void AirCylinder(AirCylinderType isUpOrDown)
+        {
+
+        }
+
+        /// <summary>
+        /// 汽缸升降
+        /// </summary>
+        enum AirCylinderType
+        {
+            Up,
+            Down
+            
+        }
+
+        /// <summary>
+        /// 开始检测并返回结果
+        /// </summary>
+        /// <returns></returns>
         public IList<Speed> StartDetect()
         {
-            //假设成功的情况下
+            //-------------速度-------------
+            //复位
+            //初始化
+            //等待光电信号，开始检测
+            // 汽缸降
+            //点阵提示 40km申报
+            //等待引车员信号
+            //取当前数据（判定用）
+            //实时取数至小于0.5km时，汽缸升
+            //-------------结束---------------
+
+            DeviceInit();
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
+            
+            while (true)
+            {
+                if (PvcList[0].IsTrigger == true && sw.ElapsedMilliseconds > 2000)
+                {
+                    //提示到位
+                    LSO.SetMessage("到位");
+                    Console.WriteLine("提示到位");
+                    break;
+                }
+                else if(PvcList[0].IsTrigger == false)
+                {
+                    sw.Restart();
+                    //提示未到位
+                    LSO.SetMessage("未到位");
+                    Console.WriteLine("提示未到位");
+                }
+                Thread.Sleep(100);
+            }
+
+            AirCylinder(AirCylinderType.Down);
+            //等待
+            Thread.Sleep(1000);
+
+            LSO.SetMessage("40km申报");
+            Console.WriteLine("40km申报");
+
+
+            //等待引车员信号
             List<Speed> result = new List<Speed>();
+            while (true)
+            {
+                if (PvcList[1].IsTrigger == true)
+                {
+                    Console.WriteLine("获取结果集");
+                    //假设成功的情况下
+                    result.Add(new Speed() { CarInfoID = this.carInfo.Id, SDBPJ = "O", Mode = (int)DetectionMode.CPD });
+                    result.Add(new Speed() { CarInfoID = this.carInfo.Id, SDBPJ = "O", Mode = (int)DetectionMode.SPD });
+                    break;
+                }
+                Thread.Sleep(100);
+            }
 
-            result.Add(new Speed() { CarInfoID = this.carInfo.Id, SDBPJ = "O", Mode = (int)DetectionMode.CPD });
-            result.Add(new Speed() { CarInfoID = this.carInfo.Id, SDBPJ = "O", Mode = (int)DetectionMode.SPD });
+            //汽缸升
+            AirCylinder(AirCylinderType.Up);
+            Thread.Sleep(500);
 
+            
+
+            //处理状态可放在主控core中进行设置
             //结果无异常后恢复空闲状态,否则返回异常状态
-            //_DetectionStatus = DetectionStatus.IDLE;
+            _DetectionStatus = DetectionStatus.IDLE;
+            Console.WriteLine("复位");
             //无异常时由Reset统一重置。
             return result;
 
 
-            //throw new NotImplementedException();
+
+            //-------------速度-------------
+            //复位
+            //初始化
+            //等待光电信号，开始检测
+            // 汽缸降
+            //点阵提示 40km申报
+            //等待引车员信号
+            //取当前数据（判定用）
+            //实时取数至小于0.5km时，汽缸升
+            //-------------结束---------------
+
+
+            //-------------侧滑-------------
+            //复位
+            //初始化
+            //开始检测
+            //判断光电取数据
+            //end--------------------------
+
+
+            //-------------z轴重------------ 
+            //复位
+            //初始化
+            //开始检测
+            //判断光电取数据
+            //end--------------------------
+                        
         }
 
         public CarInfo GetCarInfo()
         {
             throw new NotImplementedException();
+        }
+
+        public void SetPVCs(IList<PVCModel> pvcs)
+        {
+            this.PvcList = new List<PVCModel>(pvcs);
         }
     }
 
@@ -416,6 +593,11 @@ namespace YZXDMS.Detections
         }
 
         public void StopDetect()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SetPVCs(IList<PVCModel> pvcs)
         {
             throw new NotImplementedException();
         }
@@ -473,6 +655,11 @@ namespace YZXDMS.Detections
         {
             throw new NotImplementedException();
         }
+
+        public void SetPVCs(IList<PVCModel> pvcs)
+        {
+            throw new NotImplementedException();
+        }
     }
     public class TestBottomDetection : IDetection
     {
@@ -526,6 +713,11 @@ namespace YZXDMS.Detections
         {
             throw new NotImplementedException();
         }
+
+        public void SetPVCs(IList<PVCModel> pvcs)
+        {
+            throw new NotImplementedException();
+        }
     }
     public class TestBalancerDetection : IDetection
     {
@@ -576,6 +768,11 @@ namespace YZXDMS.Detections
         }
 
         public void StopDetect()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SetPVCs(IList<PVCModel> pvcs)
         {
             throw new NotImplementedException();
         }

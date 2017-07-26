@@ -27,7 +27,7 @@ namespace YZXDMS.ViewModels
 
 
 
-        DispatcherTimer dispatcherTimer;// = new DispatcherTimer();
+        DispatcherTimer dispatcherTimer;
 
         public MasterViewModel()
         {
@@ -36,18 +36,8 @@ namespace YZXDMS.ViewModels
 
         }
 
-        ~MasterViewModel()
-        {
-            if (dispatcherTimer.IsEnabled)
-                dispatcherTimer.Stop();
-            
-        }
-
         void Init()
         {
-
-            //ResultItems = Core.Core.ResultItems;
-
             //使用唯一时钟，bug只能在下次进入此页面时触发
             //开启后会一直运行，没有想好触发的关闭位置
             dispatcherTimer = Core.Core.MasterDispatcherTimer;
@@ -64,7 +54,16 @@ namespace YZXDMS.ViewModels
             //Core.Core.OnRemoveDetectionHandler += Core_OnRemoveDetectionHandler;           
 
         }
-        
+
+        /// <summary>
+        /// 设备初始化
+        /// </summary>
+        public void InitDetectionDevice()
+        {
+            Core.Core.InitDetectionDevice();
+            DevExpress.Xpf.Core.DXMessageBox.Show("设备初始化完成");
+        }
+
 
         /// <summary>
         /// 时钟更新grid
@@ -78,7 +77,8 @@ namespace YZXDMS.ViewModels
             if (ResultItems == null)
                 ResultItems = new ObservableCollectionCore<DetectResult>();
             ResultItems.BeginUpdate();
-            //直接情况会闪屏，不友好
+
+            //直接清空会闪屏，不友好
             //ResultItems.Clear();
 
             foreach (var item in list)
@@ -88,7 +88,6 @@ namespace YZXDMS.ViewModels
                     ResultItems.Add(item);
                 else
                     query = item;
-                //ResultItems.Add(item);
             }
             var exc = ResultItems.Except(list);
             if (exc.Count() > 0)
@@ -158,7 +157,9 @@ namespace YZXDMS.ViewModels
              })));
             
         }
-
+        /// <summary>
+        /// 开始检测
+        /// </summary>
         public void SpeedStart()
         {
             //StartAll();
@@ -166,15 +167,21 @@ namespace YZXDMS.ViewModels
 
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        public void CheckDevice()
+        {
+            //Core.Core.InitDet();
+        }
+
+
     }
 
 
     static class ResultImgHelper
     {
         public const string CellMergingImagesPath = "pack://application:,,,/YZXDMS;component/Img/Result/";
-        // public const string CellMergingImagesPath = "YZXDMS;component/Img/Result/";
-        ///pack://application:,,,/GridDemo;
-        //AssemblyHelper.GetResourceUri(typeof(this).Assembly, string.Format("Img/{0}.png", icon));
     }
     /// <summary>
     /// 检测结果状态

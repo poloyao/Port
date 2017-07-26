@@ -3,6 +3,8 @@ using DevExpress.Mvvm.DataAnnotations;
 using DevExpress.Mvvm;
 using YZXDMS.Models;
 using System.ComponentModel;
+using YZXDMS.DataProvider;
+using System.Linq;
 
 namespace YZXDMS.ViewModels
 {
@@ -30,8 +32,40 @@ namespace YZXDMS.ViewModels
 
         public void Save()
         {
+            using (SQLiteDBContext db = new SQLiteDBContext())
+            {
+                //if (Item.Id != Guid.Empty)
+                if (Item.Id > 0)
+                {
+                    var query = db.Ports.ToList().Single(x => x.Id == Item.Id);
+                    query.Name = Item.Name;
+                    query.PortName = Item.PortName;
+                    query.BaudRate = Item.BaudRate;
+                    query.DataBits = Item.DataBits;
+                    query.Parity = Item.Parity;
+                    query.StopBits = Item.StopBits;
+                    query.RouteTotal = Item.RouteTotal;
+                    query.Protocol = Item.Protocol;
+                    query.DeviceType = Item.DeviceType;
+                    db.SaveChanges();
+                }
+                else
+                {
+                    //Item.Id = Guid.NewGuid();
+                    db.Ports.Add(Item);
+                    db.SaveChanges();
+                }
+            }
+
             IsChange = true;
             DevExpress.Xpf.Core.DXMessageBox.Show("添加成功！");
+            if (DocumentOwner != null)
+                DocumentOwner.Close(this);
+        }
+
+        public void Cancel()
+        {
+            IsChange = false;
             if (DocumentOwner != null)
                 DocumentOwner.Close(this);
         }

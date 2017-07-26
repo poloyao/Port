@@ -12,7 +12,7 @@ namespace YZXDMS.DataProvider
     /// </summary>
     public class GlobalLatticeScreen
     {
-        private static Queue<PhotoelectricModel> items { get; set; } = new Queue<PhotoelectricModel>();
+        //private static Queue<PhotoelectricModel> items { get; set; } = new Queue<PhotoelectricModel>();
 
         private static readonly GlobalLatticeScreen instance = new GlobalLatticeScreen();
 

@@ -32,7 +32,7 @@
 
 
         <StackPanel Orientation="Horizontal" Grid.Row="1" FlowDirection="RightToLeft">
-            <Button HorizontalAlignment="Right" Content="取消"/>
+            <Button HorizontalAlignment="Right" Command="{Binding CancelCommand}" Content="取消"/>
             <Button HorizontalAlignment="Right" Command="{Binding SaveCommand}" Content="保存"/>
         </StackPanel>
 

@@ -5,108 +5,109 @@ using System.Collections.ObjectModel;
 using YZXDMS.Models;
 using System.Collections.Generic;
 using System.IO.Ports;
+using YZXDMS.DataProvider;
+using System.Linq;
 
 namespace YZXDMS.ViewModels
 {
     [POCOViewModel]
     public class SettingStationViewModel
     {
-        public List<StationModel> StationItems { get; set; } = new List<StationModel>();
+        public ObservableCollection<DetectorModel> DetectorItems { get; set; }
 
+        public ObservableCollection<DetectorModel> Station1 { get; set; } = new ObservableCollection<DetectorModel>();
+        public ObservableCollection<DetectorModel> Station2 { get; set; } = new ObservableCollection<DetectorModel>();
+        public ObservableCollection<DetectorModel> Station3 { get; set; } = new ObservableCollection<DetectorModel>();
+        public ObservableCollection<DetectorModel> Station4 { get; set; } = new ObservableCollection<DetectorModel>();
+        public ObservableCollection<DetectorModel> Station5 { get; set; } = new ObservableCollection<DetectorModel>();
 
         public SettingStationViewModel()
         {
-            StationItems = new List<StationModel>();
-
-            StationItems.Add(new StationModel() { Name = "1 工位", });
-            StationItems.Add(new StationModel() { Name = "2 工位", });
-            StationItems.Add(new StationModel() { Name = "3 工位", });
-            StationItems.Add(new StationModel() { Name = "4 工位", });
-
-            //StationItems.Add(new StationModel()
-            //{
-            //    Name = "1 工位",
-            //    Description = "描述信息",
-            //    Index = 1,
-            //    //DetectionItems = new List<DetectionOrder>()
-            //    //{
-            //    //    new DetectionOrder()
-            //    //    {
-            //    //        Index = 1,
-            //    //        Detection = new Detection()
-            //    //        {
-            //    //           Name = "速度",
-            //    //            DetectionType = DetectionType.速度,
-            //    //            PortConfig = new PortConfig()
-            //    //            {
-            //    //                Name = "速度",
-            //    //                Protocol = "速度协议",
-            //    //                PortName = PortIndex.COM10,
-            //    //                BaudRate = 9600,
-            //    //                Parity = Parity.None,
-            //    //                DataBits = 8,
-            //    //                StopBits = StopBits.One,
-            //    //                DeviceType = DeviceType.速度,
-
-            //    //            },
-            //    //            AssistList = new List<AssistRoute>()
-            //    //            {
-            //    //                new AssistRoute()
-            //    //                {
-            //    //                    RouteNumber = 1,
-            //    //                    Assist = new AssistDevice()
-            //    //                    {
-            //    //                        DeviceType = AssistDeviceType.Photoelectric,
-            //    //                        PortConfig = new PortConfig()
-            //    //                        {
-            //    //                                Name = "光电",
-            //    //                            Protocol = "光电协议",
-            //    //                            PortName = PortIndex.COM1,
-            //    //                            BaudRate  = 9600,
-            //    //                            Parity = Parity.None,
-            //    //                            DataBits = 8,
-            //    //                            StopBits = StopBits.One,
-            //    //                            DeviceType = DeviceType.光电设备,
-            //    //                        },
-            //    //                        RouteTotal = 8
-            //    //                    }
-            //    //                }
-            //    //            }
-            //    //        }
-            //    //    }
-            //    //}
-
-            //});
-
-            //StationItems.Add(new StationModel()
-            //{
-            //    Name = "2 工位",
-            //    Description = "描述信息",
-            //    Index = 0,
-            //    DetectionItems = new List<DetectionOrder>()
-            //     { new DetectionOrder()
-            //     { Index = 0,
-            //     Detection = new DetectionModel()
-            //     {
-            //         Name = "项目",
-            //         config = new PortConfigModel()
-            //         {
-            //             Name = "项目1",
-            //             StartMode = StartMode.即用即关,
-            //             Port = new System.IO.Ports.SerialPort()
-            //         }
-            //     }
-            //     } }
-            //});
-
-
-            //Console.WriteLine(Newtonsoft.Json.JsonConvert.SerializeObject(StationItems));
-            //Console.WriteLine()
-            //Helpers.XmlHelper.serializeToXml(StationItems, "Station.xml");
-
-            //StationItems = Helpers.XmlHelper.DeserializerXml<List<StationModel>>("Station.xml");
-
+            Init();
         }
-        
+        /// <summary>
+        /// 初始化列表
+        /// </summary>
+        private void Init()
+        {
+            using (SQLiteDBContext db = new SQLiteDBContext())
+            {
+                //读取检测项目信息
+                var query = db.Detectors.ToList();
+                DetectorItems = new ObservableCollection<DetectorModel>();
+                //将项目分配到各工位
+                foreach (var item in query)
+                {
+                    switch (item.StationValue)
+                    {
+                        case 1:
+                            Station1.Add(item);
+                            break;
+                        case 2:
+                            Station2.Add(item);
+                            break;
+                        case 3:
+                            Station3.Add(item);
+                            break;
+                        case 4:
+                            Station4.Add(item);
+                            break;
+                        case 5:
+                            Station5.Add(item);
+                            break;
+                        default:
+                            DetectorItems.Add(item);
+                            break;
+                    }
+                }
+            }
+        }
+
+        public void Save()
+        {           
+            using (SQLiteDBContext db = new SQLiteDBContext())
+            {
+                var StationItems = db.Stations.ToList();
+
+                var query1 = db.Stations.Single(x => x.Value == 1);
+                var query2 = db.Stations.Single(x => x.Value == 2);
+                var query3 = db.Stations.Single(x => x.Value == 3);
+                var query4 = db.Stations.Single(x => x.Value == 4);
+                var query5 = db.Stations.Single(x => x.Value == 5);
+
+                var queryDet = db.Detectors.ToList();
+                foreach (var item in queryDet)
+                {
+                    //重置工位，归零
+                    item.StationValue = 0;
+                }
+
+                foreach (var item in Station1)
+                {
+                    queryDet.Single(x => x.Id == item.Id).StationValue = query1.Value;
+                }
+                foreach (var item in Station2)
+                {
+                    queryDet.Single(x => x.Id == item.Id).StationValue = query2.Value;
+                }
+                foreach (var item in Station3)
+                {
+                    queryDet.Single(x => x.Id == item.Id).StationValue = query3.Value;
+                }
+                foreach (var item in Station4)
+                {
+                    queryDet.Single(x => x.Id == item.Id).StationValue = query4.Value;
+                }
+                foreach (var item in Station5)
+                {
+                    queryDet.Single(x => x.Id == item.Id).StationValue = query5.Value;
+                }
+
+                db.SaveChanges();
+
+
+            }
+        }
+
     }
 }

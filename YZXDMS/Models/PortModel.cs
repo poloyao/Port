@@ -6,9 +6,65 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO.Ports;
 using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace YZXDMS.Models
 {
+    ///// <summary>
+    ///// 检测类型
+    ///// </summary>
+    //public enum DetectionType
+    //{
+    //    /// <summary>
+    //    /// 外检
+    //    /// </summary>
+    //    Shape,
+    //    /// <summary>
+    //    /// 侧滑
+    //    /// </summary>
+    //    SideSlide,
+    //    /// <summary>
+    //    /// 速度
+    //    /// </summary>
+    //    Speed,
+    //    /// <summary>
+    //    /// 灯光
+    //    /// </summary>
+    //    Light,
+    //    /// <summary>
+    //    /// 制动
+    //    /// </summary>
+    //    Brake,
+    //    /// <summary>
+    //    /// 称重
+    //    /// </summary>
+    //    Weigh,
+    //    /// <summary>
+    //    /// 地盘
+    //    /// </summary>
+    //    bottom,
+    //    /// <summary>
+    //    /// 地盘间隙
+    //    /// </summary>
+    //    BoottomInterval,
+    //    /// <summary>
+    //    /// 声级计
+    //    /// </summary>
+    //    SoundLevel,
+    //    /// <summary>
+    //    /// 功率
+    //    /// </summary>
+    //    Power,
+    //    /// <summary>
+    //    /// 油耗
+    //    /// </summary>
+    //    FuelConsumption,
+    //    /// <summary>
+    //    /// 尾气
+    //    /// </summary>
+    //    Exhaust
+    //}
+
     /// <summary>
     /// 串口端口
     /// </summary>
@@ -49,14 +105,38 @@ namespace YZXDMS.Models
 
     }
 
+
     /// <summary>
-    /// 启动模式
+    /// 辅助设备类型
     /// </summary>
-    public enum StartMode
+    public enum AssistDeviceType
     {
-        保持开启,
-        即用即关
+        灯屏设备 = 101,
+        光电设备 = 102,
+        录像设备 = 103,
+        拍照设备 = 104,
     }
+
+    /// <summary>
+    /// 检测类型，顺序必须同DeviceType一致
+    /// </summary>
+    public enum DetectionType
+    {
+        外检 = 0,
+        侧滑,
+        速度,
+        灯光,
+        制动,
+        称重,
+        底盘,
+        底盘间隙,
+        声级计,
+        功率,
+        油耗,
+        尾气,
+        探平衡仪,
+    }
+
 
     /// <summary>
     /// 设备性质
@@ -75,7 +155,11 @@ namespace YZXDMS.Models
 
     /// <summary>
     /// 设备类型,
-    /// 100之前为主设备，100之后未辅助设备
+    /// 100之前为主设备，100之后未辅助设备.
+    ///  灯屏设备 = 101,
+    ///  光电设备 = 102,
+    ///  录像设备 = 103,
+    ///  拍照设备 = 104,
     /// </summary>
     [Flags]
     public enum DeviceType
@@ -99,55 +183,37 @@ namespace YZXDMS.Models
         录像设备 = 103,
         拍照设备 = 104,
     }
-    
-    /// <summary>
-    /// 检测类型
-    /// </summary>
-    public enum DetectionType
-    {
-        外检 = 0,
-        侧滑,
-        速度,
-        灯光,
-        制动,
-        称重,
-        底盘,
-        底盘间隙,
-        声级计,
-        功率,
-        油耗,
-        尾气,
-        探平衡仪,
-    }
-    
 
     /// <summary>
-    /// 串口信息
+    /// 串口配置信息
     /// </summary>
-    public class PortConfig:ICloneable
+    [Table("PortConfig")]
+    public class PortConfig : ICloneable
     {
+        [Key]
+        public long Id { get; set; }
         /// <summary>
         /// 串口名称
         /// </summary>
         [Display(Name = "串口名称")]
         public virtual string Name { get; set; }
         [Display(Name = "端口")]
-        public PortIndex PortName { get; set; }
+        public PortIndex PortName { get; set; } = PortIndex.COM1;
         [Display(Name = "波特率")]
-        public int BaudRate { get; set; }
+        public int BaudRate { get; set; } = 9600;
         [Display(Name = "数据位")]
         public int DataBits { get; set; } = 8;
         [Display(Name = "奇偶校验")]
-        public Parity Parity { get; set; }
+        public Parity Parity { get; set; } = Parity.None;
         [Display(Name = "停止位")]
         public StopBits StopBits { get; set; } = StopBits.One;
 
         /// <summary>
-        /// 通道数量
+        /// 通道数量,1到8
         /// </summary>
         [Display(Name = "通道数量")]
 
-        public  int RouteTotal { get; set; } = 1;
+        public int RouteTotal { get; set; } = 1;
         /// <summary>
         /// 协议厂家
         /// </summary>
@@ -163,6 +229,7 @@ namespace YZXDMS.Models
         public object Clone()
         {
             var result = new PortConfig();
+            result.Id = this.Id;
             result.Name = this.Name;
             result.PortName = this.PortName;
             result.BaudRate = this.BaudRate;
@@ -178,7 +245,7 @@ namespace YZXDMS.Models
 
         public static PortConfig Create()
         {
-            var result = new PortConfig();
+            var result = new PortConfig();            
             result.Name = "默认";
             result.PortName = PortIndex.COM1;
             result.BaudRate = 9600;
@@ -194,133 +261,104 @@ namespace YZXDMS.Models
         }
     }
 
-
-
-
     /// <summary>
-    /// 辅助设备类型
+    /// 检测项目配置信息
     /// </summary>
-    public enum AssistDeviceType
+    [Table("Detector")]
+    public class DetectorModel
     {
-        灯屏设备,
-        光电设备,
-        录像设备,
-        拍照设备
-        ///// <summary>
-        ///// 灯屏设备
-        ///// </summary>
-        //LatticeScreen,
-        ///// <summary>
-        ///// 光电设备
-        ///// </summary>
-        //Photoelectric,
-        ///// <summary>
-        ///// 录像设备
-        ///// </summary>
-        //Video,
-        ///// <summary>
-        ///// 拍照设备
-        ///// </summary>
-        //Camera
+        [Key]
+        public long Id { get; set; }
+        public string DetectorName { get; set; }        
+
+        public DetectionType DetectorType { get; set; }
+        
+        public long PortId { get; set; }
+        
+        public int StationValue { get; set; }
+        
+        
     }
 
+    
 
     /// <summary>
-    /// 辅助设备
+    /// 检测项目辅助设备
     /// </summary>
-    public class AssistDevice:ICloneable
+    [Table("Assist")]
+    public class AssistModel
     {
-        /// <summary>
-        /// 串口配置
-        /// </summary>
-        public PortConfig PortConfig { get; set; }
+        [Key]
+        public long Id { get; set; }
+
+        public long DetectorId { get; set; }
+
+        public long PortId { get; set; }
         /// <summary>
         /// 辅助类型
         /// </summary>
-        [Display(Name = "辅助设备类型")]
-        public AssistDeviceType DeviceType { get; set; }
-
-        ///// <summary>
-        ///// 支持路数
-        ///// </summary>
-        //public int RouteTotal { get; set; }
-
-        //public int UseOrder { get; set; }
-
-
-        public object Clone()
-        {
-            AssistDevice result = new AssistDevice();
-            result.DeviceType = this.DeviceType;
-            result.PortConfig = (PortConfig)this.PortConfig.Clone();
-            return result;
-        }
-
-    }
-    
-
-    public class AssistRoute:ICloneable
-    {
-        ///// <summary>
-        ///// 辅助设备,待移除
-        ///// </summary>
-        //public AssistDevice Assist { get; set; }
-
+        public AssistDeviceType AssistType { get; set; }
+        
         /// <summary>
-        /// 串口配置
+        /// 调用线路
         /// </summary>
-        public PortConfig PortConfig { get; set; }
-
+        [Display(Name = "调用线路")]
+        public int Route { get; set; }
         /// <summary>
-        /// 调用通道
+        /// 此辅助项目同类型的排序
         /// </summary>
-        [Display(Name = "调用通道")]
-        public  int RouteNumber { get; set; }
-
-        public object Clone()
-        {
-            AssistRoute result = new AssistRoute();
-            //需要关联，直接引用
-            //result.Assist = this.Assist;//(AssistDevice)this.Assist.Clone();
-            result.PortConfig = this.PortConfig;
-            result.RouteNumber = this.RouteNumber;
-            return result;
-        }
-    }
-
-    /// <summary>
-    /// 检测项目
-    /// </summary>
-    public class Detection
-    {
-        public string Name { get; set; }
-        /// <summary>
-        /// 检测类型
-        /// </summary>
-        public DetectionType DetectionType { get; set; }
-        /// <summary>
-        /// 串口配置信息
-        /// </summary>
-        public PortConfig PortConfig { get; set; }
-        /// <summary>
-        /// 辅助设备
-        /// </summary>
-        public ObservableCollection<AssistRoute> AssistList { get; set; } = new ObservableCollection<AssistRoute>();
-
-      
-
-    }
-
-
-
-
-    /// <summary>
-    /// 检测项目排序
-    /// </summary>
-    public class DetectionOrder
-    {
-        public Detection Detection { get; set; }
-
+        [Display(Name = "序号")]
         public int Index { get; set; }
     }
+
+    /// <summary>
+    /// 用于显示的辅助
+    /// </summary>
+    public class AssistDisplayModel
+    {
+        public AssistModel Assist { get; set; }
+        public PortConfig Port { get; set; }
+    }
+
+    
+
+    /// <summary>
+    /// 工位配置
+    /// </summary>
+    [Table("Station")]
+    public class StationModel
+    {
+        [Key]
+        public long Id { get; set; }
+        public string StationName { get; set; }
+        public int Value { get; set; }
+
+    }
+
+
+
+
+    /// <summary>
+    /// 串口实例和配置
+    /// </summary>
+    public class PortWithConfig
+    {
+        public SerialPort Port { get; set; }
+
+        public PortConfig Config { get; set; }
+    }
+
+
+
+    ///// <summary>
+    ///// 启动模式
+    ///// </summary>
+    //public enum StartMode
+    //{
+    //    保持开启,
+    //    即用即关
+    //}
+
+        
+    
 }

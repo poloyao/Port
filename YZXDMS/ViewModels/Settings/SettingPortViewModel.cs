@@ -7,6 +7,7 @@ using DevExpress.Mvvm.POCO;
 using System.Linq;
 using System.Collections.ObjectModel;
 using System.Collections;
+using YZXDMS.DataProvider;
 
 namespace YZXDMS.ViewModels
 {
@@ -14,62 +15,36 @@ namespace YZXDMS.ViewModels
     public class SettingPortViewModel
     {
 
-        public ObservableCollection<PortConfig> Items { get; set; } = new ObservableCollection<PortConfig>();
+        public virtual ObservableCollection<PortConfig> Items { get; set; } = new ObservableCollection<PortConfig>();
 
         protected IDocumentManagerService documentManagerService { get { return this.GetService<IDocumentManagerService>(); } }
 
         public SettingPortViewModel()
         {
-
-            var configs = Helpers.DeviceHelper.GetPortConfigItems();
-            //如果回传的值未null 则从新创建xml文件
-            if (configs == null)
-                return;
-            Items = new ObservableCollection<PortConfig>(configs);
-
-            //如果没有Port.xml文件，则搜索Detection.xml文件，根据此文件结构创建port.xml文件
-            //Items = Helpers.XmlHelper.DeserializerXml<ObservableCollection<PortConfig>>("Port.xml");
-            //if (Items == null)
-            //{
-            //    List<Detection> det = Helpers.XmlHelper.DeserializerXml<List<Detection>>("Detection.xml");
-            //    if (det != null)
-            //    {
-            //        Items = new ObservableCollection<PortConfig>();
-
-            //        foreach (var detItem in det)
-            //        {
-            //            if (detItem.PortConfig == null)
-            //                continue;
-            //            Items.Add(detItem.PortConfig);
-
-            //            if (detItem.AssistList == null)
-            //                continue;
-            //            foreach (var assistItem in detItem.AssistList)
-            //            {
-            //                if (assistItem.Assist.PortConfig == null)
-            //                    continue;
-
-            //                //此处可以忽略，在循环完毕后，删除同类项。但需要创建比较器
-            //                List<PortConfig> tempds = new List<PortConfig>();
-            //                foreach (var ds in Items)
-            //                {
-            //                    var comp = Helpers.DataHelper.EntityComparison(ds, assistItem.Assist.PortConfig);
-            //                    if(!comp)
-            //                        tempds.Add(assistItem.Assist.PortConfig);
-            //                }
-            //                tempds.ForEach(x => { Items.Insert(Items.Count(), x); });
-            //            }
-            //        }
-
-            //        //var kkkk = Items.Distinct(System.Collections.Generic.Comparer.Default);
-            //    }                
-            //}
-            
-
-
+            UpdatePortItems();            
         }
 
+        private void UpdatePortItems()
+        {
+            using (SQLiteDBContext db = new SQLiteDBContext())
+            {
+                var port = db.Ports.ToList();
+                Items = new ObservableCollection<PortConfig>(port);
+            }
+        }
 
+        private void DeletePortItem(PortConfig port)
+        {
+            using (SQLiteDBContext db = new SQLiteDBContext())
+            {
+                //var item = db.Ports.SingleOrDefault(x => x.Id == port.Id);
+                //db.Ports.ToList().Where(x=>x.Id == Guid.Parse("5ae34417-ea9f-4dec-974a-fdc6ce02056e"))
+                var item = db.Ports.ToList().SingleOrDefault(x => x.Id == port.Id);
+                db.Ports.Remove(item);
+                db.SaveChanges();
+            }
+            UpdatePortItems();
+        }
 
         public void AddItem()
         {
@@ -79,15 +54,7 @@ namespace YZXDMS.ViewModels
             var VM = (PortViewModel)doc.Content;
             doc.Show();
 
-            if (VM.IsChange)
-            {
-                if (Items == null)
-                    Items = new ObservableCollection<PortConfig>();
-
-                Items.Add(VM.Item);
-
-                Helpers.XmlHelper.serializeToXml(Items, "Port.xml");
-            }
+            UpdatePortItems();            
         }
 
         [Command(CanExecuteMethodName = "CanDeleteItem")]
@@ -98,9 +65,8 @@ namespace YZXDMS.ViewModels
                 return;
 
             //删除后刷新配置文件并重新加载
-            Items.Remove(item);
-            Helpers.XmlHelper.serializeToXml(Items, "Port.xml");
 
+            DeletePortItem(item);
         }
 
         public bool CanDeleteItem(PortConfig item)
@@ -113,7 +79,7 @@ namespace YZXDMS.ViewModels
 
         public void Selected(PortConfig item)
         {
-            if (item == null)
+             if (item == null)
                 return;
 
             PortConfig itemClone = (PortConfig)item.Clone();
@@ -124,10 +90,14 @@ namespace YZXDMS.ViewModels
             doc.Show();
             if (VM.IsChange)
             {
-                Items.Remove(item);
-                Items.Add(VM.Item);
-                Helpers.XmlHelper.serializeToXml(Items, "Port.xml");
+                UpdatePortItems();
             }
+            //if (VM.IsChange)
+            //{
+            //    Items.Remove(item);
+            //    Items.Add(VM.Item);
+            //    Helpers.XmlHelper.serializeToXml(Items, "Port.xml");
+            //}
         }
 
     }

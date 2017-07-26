@@ -6,94 +6,104 @@
              xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
 		     xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
              xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm" xmlns:ViewModels="clr-namespace:YZXDMS.ViewModels"
+             xmlns:dd="urn:gong-wpf-dragdrop"
              mc:Ignorable="d"
              DataContext="{dxmvvm:ViewModelSource Type=ViewModels:SettingStationViewModel}"
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="500" d:DesignWidth="500">
     <UserControl.Resources>
-        <DataTemplate x:Key="FlowLayoutControlTemplate">
-            <dxlc:GroupBox x:Name="select" Content="{Binding}" 
-                Header="{Binding Name}"  
-                Height="100" Width="100"
-                MaximizeElementVisibility="Visible">
-                <dxlc:GroupBox.ContentTemplate>
+        <Style x:Key="CustomUnboundListViewItemStyle" TargetType="{x:Type ListViewItem}">
+            <Setter Property="ContentTemplate">
+                <Setter.Value>
                     <DataTemplate>
-                        <StackPanel>
-                            <Label Content="{Binding Description}" />
-                        </StackPanel>
+                        <Grid>
+                            <TextBlock VerticalAlignment="Center" Text="{Binding DetectorName}" />
+                        </Grid>
                     </DataTemplate>
-                </dxlc:GroupBox.ContentTemplate>
-                <dxlc:GroupBox.MaximizedContentTemplate>
-                    <DataTemplate>
-                        <dxlc:LayoutControl Orientation="Vertical" DataContext="{Binding}">
-                            <dxlc:LayoutGroup Orientation="Vertical">
-
-                                <dxlc:LayoutItem>
-                                    <Label Content="{Binding Name}" Height="Auto"/>
-                                </dxlc:LayoutItem>
-                                <dxlc:FlowLayoutControl Orientation="Horizontal" StretchContent="True" ItemsSource="{Binding DetectionItems}">
-                                    <dxlc:FlowLayoutControl.ItemTemplate>
-                                        <DataTemplate>
-                                            <dxlc:GroupBox Content="{Binding Detection}" Header="{Binding Detection.Name}">
-                                                <dxlc:GroupBox.ContentTemplate>
-                                                    <DataTemplate>
-                                                        <Border Background="Blue" CornerRadius="3">
-                                                            <Grid Height="100" Width="100"/>
-                                                        </Border>
-                                                    </DataTemplate>
-                                                </dxlc:GroupBox.ContentTemplate>
-                                            </dxlc:GroupBox>
-                                        </DataTemplate>
-                                    </dxlc:FlowLayoutControl.ItemTemplate>
-                                </dxlc:FlowLayoutControl>
-
-                                <dxlc:LayoutGroup Orientation="Horizontal">
-                                    <dxlc:LayoutItem Label="添加检测项目" >
-                                        <dxe:ComboBoxEdit >
-                                            <dxe:ComboBoxEditItem Content="aaaa"/>
-                                            <dxe:ComboBoxEditItem Content="bbbb"/>
-                                        </dxe:ComboBoxEdit>
-                                    </dxlc:LayoutItem>
-                                    <dxlc:LayoutItem HorizontalAlignment="Right" VerticalAlignment="Top">
-                                        <dx:SimpleButton Command="{Binding SaveCommand}" Content="添加"/>
-                                    </dxlc:LayoutItem>
-                                </dxlc:LayoutGroup>
-                            </dxlc:LayoutGroup>
-                        </dxlc:LayoutControl>
-                    </DataTemplate>
-                </dxlc:GroupBox.MaximizedContentTemplate>
-            </dxlc:GroupBox>
-        </DataTemplate>
-        <DataTemplate x:Key="DetectFlowLayoutControlTemplate">
-            <dxlc:GroupBox Content="{Binding Assist}" 
-                Header="{Binding RouteNumber}" >
-                <dxlc:GroupBox.ContentTemplate>
-                    <DataTemplate>
-                        <StackPanel DataContext="{Binding ''}">
-                            <Label Content="{Binding DeviceType}" />
-                            <Label Content="{Binding PortConfig.Name}" />
-                            <Label Content="{Binding PortConfig.PortName}" />
-                        </StackPanel>
-                    </DataTemplate>
-                </dxlc:GroupBox.ContentTemplate>
-            </dxlc:GroupBox>
-        </DataTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="4*"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
 
-        <dxlc:FlowLayoutControl x:Name="FLC"
+        <GroupBox Header="一工位" Grid.Row="0">
+            <ListView 
+                ItemsSource="{Binding Station1}"
+                  ItemContainerStyle="{DynamicResource CustomUnboundListViewItemStyle}"
+                 dd:DragDrop.IsDragSource="True"
+                 dd:DragDrop.IsDropTarget="True"
+                 dd:DragDrop.UseDefaultDragAdorner ="True"
+                 dd:DragDrop.UseDefaultEffectDataTemplate="True"/>
+        </GroupBox>
+        <GroupBox Header="二工位" Grid.Row="1">
+            <ListView 
+                ItemsSource="{Binding Station2}"
+                  ItemContainerStyle="{DynamicResource CustomUnboundListViewItemStyle}"
+                 dd:DragDrop.IsDragSource="True"
+                 dd:DragDrop.IsDropTarget="True"
+                 dd:DragDrop.UseDefaultDragAdorner ="True"
+                 dd:DragDrop.UseDefaultEffectDataTemplate="True"/>
+        </GroupBox>
+        <GroupBox Header="三工位" Grid.Row="2">
+            <ListView 
+                ItemsSource="{Binding Station3}"
+                  ItemContainerStyle="{DynamicResource CustomUnboundListViewItemStyle}"
+                 dd:DragDrop.IsDragSource="True"
+                 dd:DragDrop.IsDropTarget="True"
+                 dd:DragDrop.UseDefaultDragAdorner ="True"
+                 dd:DragDrop.UseDefaultEffectDataTemplate="True"/>
+        </GroupBox>
+        <GroupBox Header="四工位" Grid.Row="3">
+            <ListView 
+                ItemsSource="{Binding Station4}"
+                  ItemContainerStyle="{DynamicResource CustomUnboundListViewItemStyle}"
+                 dd:DragDrop.IsDragSource="True"
+                 dd:DragDrop.IsDropTarget="True"
+                 dd:DragDrop.UseDefaultDragAdorner ="True"
+                 dd:DragDrop.UseDefaultEffectDataTemplate="True"/>
+        </GroupBox>
+        <GroupBox Header="外检项目" Grid.Row="4">
+            <ListView 
+                ItemsSource="{Binding Station5}"
+                  ItemContainerStyle="{DynamicResource CustomUnboundListViewItemStyle}"
+                 dd:DragDrop.IsDragSource="True"
+                 dd:DragDrop.IsDropTarget="True"
+                 dd:DragDrop.UseDefaultDragAdorner ="True"
+                 dd:DragDrop.UseDefaultEffectDataTemplate="True"/>
+        </GroupBox>
+
+
+        <ListView Grid.RowSpan="4" Grid.Column="1"  Margin="5"
+                 ItemsSource="{Binding DetectorItems}"
+                 DisplayMemberPath="DetectorName"
+                 dd:DragDrop.IsDragSource="True"
+                 dd:DragDrop.IsDropTarget="True"
+                 dd:DragDrop.UseDefaultDragAdorner ="True"
+                 dd:DragDrop.UseDefaultEffectDataTemplate="True" ItemContainerStyle="{DynamicResource CustomUnboundListViewItemStyle}"/>
+        
+        
+        
+        <Button x:Name="button" Command="{Binding SaveCommand}" Content="Button" HorizontalAlignment="Left" Margin="18,10,0,0" Grid.Row="4" Grid.Column="1" VerticalAlignment="Top" Width="75"/>
+
+
+
+
+        <!--<dxlc:FlowLayoutControl x:Name="FLC"
                                 AllowItemMoving="True"
                                 ItemsSource="{Binding StationItems}"  
                                 Orientation="Horizontal" StretchContent="False"
                                 
-                                ItemTemplate="{DynamicResource FlowLayoutControlTemplate}" />
+                                ItemTemplate="{DynamicResource FlowLayoutControlTemplate}" />-->
 
-        <!--<dxlc:FlowLayoutControl ItemsSource="{Binding ElementName=FLC,Path=ItemsSource[0].DetectionItems[0].Detection.AssistList}" 
-                                Orientation="Horizontal"
-                                Grid.Row="1" 
-                                ItemTemplate="{DynamicResource DetectFlowLayoutControlTemplate}"/>-->
     </Grid>
 </UserControl>
