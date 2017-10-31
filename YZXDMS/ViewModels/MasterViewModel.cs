@@ -43,7 +43,7 @@ namespace YZXDMS.ViewModels
             dispatcherTimer = Core.Core.MasterDispatcherTimer;
             if (dispatcherTimer.IsEnabled)
                 dispatcherTimer.Stop();
-            
+
 
             dispatcherTimer.Interval = new TimeSpan(0, 0, 1);
             dispatcherTimer.IsEnabled = true;
@@ -61,6 +61,7 @@ namespace YZXDMS.ViewModels
         public void InitDetectionDevice()
         {
             Core.Core.InitDetectionDevice();
+            Core.Core.InitStationInfo();
             DevExpress.Xpf.Core.DXMessageBox.Show("设备初始化完成");
         }
 
@@ -111,14 +112,14 @@ namespace YZXDMS.ViewModels
         {
             sd = new TestSpeedDetection();
             var sdStatus = sd.GetCurrentStatus();
-            
+
             sd.SetPort(new System.IO.Ports.SerialPort());
 
 
-           
-            
+
+
         }
-        
+
         public void StartAll()
         {
 
@@ -141,7 +142,7 @@ namespace YZXDMS.ViewModels
 
                      sd.StartDetect();
 
-                    // var srd = sd.GetSpeedResultData();
+                     // var srd = sd.GetSpeedResultData();
 
                      dispatcherService.BeginInvoke(() =>
                      {
@@ -150,12 +151,12 @@ namespace YZXDMS.ViewModels
                          ResultItems.EndUpdate();
                      });
 
-                     
-                     
+
+
                      break;
                  }
              })));
-            
+
         }
         /// <summary>
         /// 开始检测
@@ -164,6 +165,7 @@ namespace YZXDMS.ViewModels
         {
             //StartAll();
             Core.Core.StartDetection();
+
 
         }
 
@@ -177,6 +179,45 @@ namespace YZXDMS.ViewModels
 
 
     }
+
+
+    /// <summary>
+    /// 工位流程图
+    /// </summary>
+    public class StationFlow:ICloneable
+    {
+        public string CarId { get; set; }
+        /// <summary>
+        /// 流水号
+        /// </summary>
+        public string SerialData { get; set; }
+        /// <summary>
+        /// 工位号码
+        /// </summary>
+        public int StationValue { get; set; }
+        /// <summary>
+        /// 此工位的待检项目列表
+        /// </summary>
+        public List<Models.DetectorModel> DetectorItems { get; set; } = new List<Models.DetectorModel>();
+
+        public DetectionStatus StationStatus { get; set; } = DetectionStatus.IDLE;
+
+        public List<Task> taskItems = new List<Task>();
+
+        public object Clone()
+        {
+            StationFlow sf = new StationFlow();
+            sf.CarId = this.CarId;
+            sf.SerialData = this.SerialData;
+            sf.StationValue = this.StationValue;
+            sf.DetectorItems = this.DetectorItems;
+            sf.StationStatus = this.StationStatus;
+            sf.taskItems = this.taskItems;
+
+            return sf;
+        }
+    }
+    
 
 
     static class ResultImgHelper

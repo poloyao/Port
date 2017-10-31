@@ -277,6 +277,7 @@ namespace YZXDMS.Models
         
         public int StationValue { get; set; }
         
+        public int StationIndex { get; set; }
         
     }
 
@@ -332,8 +333,24 @@ namespace YZXDMS.Models
         public long Id { get; set; }
         public string StationName { get; set; }
         public int Value { get; set; }
+        /// <summary>
+        /// 是否自动检测 默认true
+        /// </summary>
+        public bool IsAutoTest { get; set; } = true;
 
     }
+
+    ///// <summary>
+    ///// 工位关系表
+    ///// </summary>
+    //[Table("StationRoles")]
+    //public class StationRoles
+    //{
+    //    public long Id { get; set; }
+    //    public long StationId { get; set; }
+    //    public int StationIndex { get; set; }
+    //    public long DetectionId { get; set; }
+    //}
 
 
 

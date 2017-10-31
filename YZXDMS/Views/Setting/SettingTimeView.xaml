@@ -4,150 +4,159 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm" xmlns:ViewModels="clr-namespace:YZXDMS.ViewModels"
-             xmlns:dxlc="http://schemas.devexpress.com/winfx/2008/xaml/layoutcontrol" xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors" x:Class="YZXDMS.Views.SettingTimeView"
+             xmlns:dxlc="http://schemas.devexpress.com/winfx/2008/xaml/layoutcontrol"
+             xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+             xmlns:dxdo="http://schemas.devexpress.com/winfx/2008/xaml/docking"
+             x:Class="YZXDMS.Views.SettingTimeView"
              mc:Ignorable="d"
              DataContext="{dxmvvm:ViewModelSource Type={x:Type ViewModels:SettingTimeViewModel}}"
              d:DesignHeight="800" d:DesignWidth="800">
     <Grid>
-        <dxlc:LayoutControl Orientation="Vertical">
-            
-            <!--<dxlc:LayoutGroup Orientation="Horizontal">
-                
-            </dxlc:LayoutGroup>-->
-            
-            <dxlc:LayoutGroup View="GroupBox" Header="点阵屏">
-                <dxlc:LayoutGroup Orientation="Vertical">
-                    <dxlc:LayoutItem Label="点阵刷新时间">
-                        <dxe:SpinEdit />
-                    </dxlc:LayoutItem>
-                    <dxlc:LayoutItem Label="检测结果显示时间">
-                        <dxe:SpinEdit />
-                    </dxlc:LayoutItem>
-                </dxlc:LayoutGroup>
-                <dxlc:LayoutGroup Orientation="Vertical">
-                    <dxlc:LayoutItem Label="牌照号码后显示时间">
-                        <dxe:SpinEdit />
-                    </dxlc:LayoutItem>
-                    <dxlc:LayoutItem Label="牌照号码前显示时间">
-                        <dxe:SpinEdit />
-                    </dxlc:LayoutItem>
-                </dxlc:LayoutGroup>
-            </dxlc:LayoutGroup>
+        <dxdo:DockLayoutManager>
+            <dxdo:LayoutGroup Orientation="Vertical">
+                <dxdo:LayoutPanel Caption="Panel2" AllowClose="False" ShowCaption="False">
+                    <dxlc:LayoutControl Orientation="Vertical" DataContext="{Binding DisplayItem}">
 
-            <dxlc:LayoutGroup View="GroupBox" Header="制动">
-                <dxlc:LayoutGroup Orientation="Vertical">
-                    <dxlc:LayoutItem Label="制动光电入场时间">
-                        <dxe:SpinEdit />
-                    </dxlc:LayoutItem>
-                    <dxlc:LayoutItem Label="制动检测时间">
-                        <dxe:SpinEdit />
-                    </dxlc:LayoutItem>
-                    <dxlc:LayoutItem Label="制动拖滞检测时间">
-                        <dxe:SpinEdit />
-                    </dxlc:LayoutItem>
-                </dxlc:LayoutGroup>
-                <dxlc:LayoutGroup Orientation="Vertical">
-                    <dxlc:LayoutItem Label="制动支架升起时间">
-                        <dxe:SpinEdit />
-                    </dxlc:LayoutItem>
-                    <dxlc:LayoutItem Label="制动支架下降时间">
-                        <dxe:SpinEdit />
-                    </dxlc:LayoutItem>
-                    <dxlc:LayoutItem Label="加载制动台升起时间">
-                        <dxe:SpinEdit />
-                    </dxlc:LayoutItem>
-                    <dxlc:LayoutItem Label="加载制动台下降时间">
-                        <dxe:SpinEdit />
-                    </dxlc:LayoutItem>
-                </dxlc:LayoutGroup>
-            </dxlc:LayoutGroup>
+                        <dxlc:LayoutGroup View="GroupBox" Header="点阵屏" DataContext="{Binding LatticeScreenTime}">
+                            <dxlc:LayoutGroup Orientation="Vertical">
+                                <dxlc:LayoutItem Label="点阵刷新时间">
+                                    <dxe:SpinEdit EditValue="{Binding Refresh}"  Increment="100" Mask="n0" />
+                                </dxlc:LayoutItem>
+                                <dxlc:LayoutItem Label="检测结果显示时间">
+                                    <dxe:SpinEdit  EditValue="{Binding Result}"  Increment="100" Mask="n0"/>
+                                </dxlc:LayoutItem>
+                            </dxlc:LayoutGroup>
+                            <dxlc:LayoutGroup Orientation="Vertical">
+                                <dxlc:LayoutItem Label="牌照号码后显示时间">
+                                    <dxe:SpinEdit  EditValue="{Binding After}"  Increment="100" Mask="n0"/>
+                                </dxlc:LayoutItem>
+                                <dxlc:LayoutItem Label="牌照号码前显示时间">
+                                    <dxe:SpinEdit  EditValue="{Binding Before}"  Increment="100" Mask="n0"/>
+                                </dxlc:LayoutItem>
+                            </dxlc:LayoutGroup>
+                        </dxlc:LayoutGroup>
+
+                        <dxlc:LayoutGroup View="GroupBox" Header="制动" DataContext="{Binding BrakeTime}">
+                            <dxlc:LayoutGroup Orientation="Vertical">
+                                <dxlc:LayoutItem Label="制动光电入场时间">
+                                    <dxe:SpinEdit EditValue="{Binding PVC}"  Increment="100" Mask="n0"/>
+                                </dxlc:LayoutItem>
+                                <dxlc:LayoutItem Label="制动检测时间">
+                                    <dxe:SpinEdit  EditValue="{Binding Test}"  Increment="100" Mask="n0"/>
+                                </dxlc:LayoutItem>
+                                <dxlc:LayoutItem Label="制动拖滞检测时间">
+                                    <dxe:SpinEdit  EditValue="{Binding Dragging}"  Increment="100" Mask="n0"/>
+                                </dxlc:LayoutItem>
+                            </dxlc:LayoutGroup>
+                            <dxlc:LayoutGroup Orientation="Vertical">
+                                <dxlc:LayoutItem Label="制动支架升起时间">
+                                    <dxe:SpinEdit  EditValue="{Binding StentUp}"  Increment="100" Mask="n0"/>
+                                </dxlc:LayoutItem>
+                                <dxlc:LayoutItem Label="制动支架下降时间">
+                                    <dxe:SpinEdit EditValue="{Binding StentDown}"  Increment="100" Mask="n0"/>
+                                </dxlc:LayoutItem>
+                                <dxlc:LayoutItem Label="加载制动台升起时间">
+                                    <dxe:SpinEdit  EditValue="{Binding StationUp}"  Increment="100" Mask="n0"/>
+                                </dxlc:LayoutItem>
+                                <dxlc:LayoutItem Label="加载制动台下降时间">
+                                    <dxe:SpinEdit EditValue="{Binding StationDown}"  Increment="100" Mask="n0"/>
+                                </dxlc:LayoutItem>
+                            </dxlc:LayoutGroup>
+                        </dxlc:LayoutGroup>
 
 
-            <dxlc:LayoutGroup View="GroupBox" Header="烟度检测">
-                <dxlc:LayoutGroup Orientation="Vertical">
-                    <dxlc:LayoutItem Label="烟度踏油门时间">
-                        <dxe:SpinEdit />
-                    </dxlc:LayoutItem>
-                    <dxlc:LayoutItem Label="烟度放油门时间">
-                        <dxe:SpinEdit />
-                    </dxlc:LayoutItem>
-                    <dxlc:LayoutItem Label="废气检测时间">
-                        <dxe:SpinEdit />
-                    </dxlc:LayoutItem>
-                </dxlc:LayoutGroup>
-                <dxlc:LayoutGroup Orientation="Vertical">
-                    <dxlc:LayoutItem Label="烟度检测时间">
-                        <dxe:SpinEdit />
-                    </dxlc:LayoutItem>
-                    <dxlc:LayoutItem Label="烟度插入探针时间">
-                        <dxe:SpinEdit />
-                    </dxlc:LayoutItem>
-                </dxlc:LayoutGroup>
-            </dxlc:LayoutGroup>
+                        <dxlc:LayoutGroup View="GroupBox" Header="烟度检测" DataContext="{Binding SmokeDegreeTime}">
+                            <dxlc:LayoutGroup Orientation="Vertical">
+                                <dxlc:LayoutItem Label="烟度踏油门时间">
+                                    <dxe:SpinEdit  EditValue="{Binding AcceleratorIn}"  Increment="100" Mask="n0"/>
+                                </dxlc:LayoutItem>
+                                <dxlc:LayoutItem Label="烟度放油门时间">
+                                    <dxe:SpinEdit  EditValue="{Binding AcceleratorOut}"  Increment="100" Mask="n0"/>
+                                </dxlc:LayoutItem>
+                                <dxlc:LayoutItem Label="废气检测时间">
+                                    <dxe:SpinEdit  EditValue="{Binding ExhaustGas}"  Increment="100" Mask="n0"/>
+                                </dxlc:LayoutItem>
+                            </dxlc:LayoutGroup>
+                            <dxlc:LayoutGroup Orientation="Vertical">
+                                <dxlc:LayoutItem Label="烟度检测时间">
+                                    <dxe:SpinEdit  EditValue="{Binding Test}"  Increment="100" Mask="n0"/>
+                                </dxlc:LayoutItem>
+                                <dxlc:LayoutItem Label="烟度插入探针时间">
+                                    <dxe:SpinEdit  EditValue="{Binding Probe}"  Increment="100" Mask="n0"/>
+                                </dxlc:LayoutItem>
+                            </dxlc:LayoutGroup>
+                        </dxlc:LayoutGroup>
 
-            <dxlc:LayoutGroup View="GroupBox" Header="速度" >
-                <dxlc:LayoutItem Label="速度支架升起时间" >
-                    <dxe:SpinEdit />
-                </dxlc:LayoutItem>
-                <dxlc:LayoutItem Label="速度支架降下时间" >
-                    <dxe:SpinEdit />
-                </dxlc:LayoutItem>
-            </dxlc:LayoutGroup>
+                        <dxlc:LayoutGroup View="GroupBox" Header="速度" DataContext="{Binding SpeedTime}">
+                            <dxlc:LayoutItem Label="速度支架升起时间" >
+                                <dxe:SpinEdit  EditValue="{Binding StentUp}"  Increment="100" Mask="n0"/>
+                            </dxlc:LayoutItem>
+                            <dxlc:LayoutItem Label="速度支架降下时间" >
+                                <dxe:SpinEdit  EditValue="{Binding StentDown}"  Increment="100" Mask="n0"/>
+                            </dxlc:LayoutItem>
+                        </dxlc:LayoutGroup>
 
-            <dxlc:LayoutGroup View="GroupBox" Header="大灯">
-                <dxlc:LayoutGroup Orientation="Vertical">
-                    <dxlc:LayoutItem Label="大灯光电入场时间">
-                        <dxe:SpinEdit />
-                    </dxlc:LayoutItem>
-                    <dxlc:LayoutItem Label="大灯二次运行时间">
-                        <dxe:SpinEdit />
-                    </dxlc:LayoutItem>
-                </dxlc:LayoutGroup>
-                <dxlc:LayoutGroup Orientation="Vertical">
-                    <dxlc:LayoutItem Label="大灯最长检测时间">
-                        <dxe:SpinEdit />
-                    </dxlc:LayoutItem>
-                </dxlc:LayoutGroup>
-            </dxlc:LayoutGroup>
+                        <dxlc:LayoutGroup View="GroupBox" Header="大灯" DataContext="{Binding LightTime}">
+                            <dxlc:LayoutGroup Orientation="Vertical">
+                                <dxlc:LayoutItem Label="大灯光电入场时间">
+                                    <dxe:SpinEdit  EditValue="{Binding PVC}"  Increment="100" Mask="n0"/>
+                                </dxlc:LayoutItem>
+                                <dxlc:LayoutItem Label="大灯二次运行时间">
+                                    <dxe:SpinEdit  EditValue="{Binding Second}"  Increment="100" Mask="n0"/>
+                                </dxlc:LayoutItem>
+                            </dxlc:LayoutGroup>
+                            <dxlc:LayoutGroup Orientation="Vertical">
+                                <dxlc:LayoutItem Label="大灯最长检测时间">
+                                    <dxe:SpinEdit  EditValue="{Binding Max}"  Increment="100" Mask="n0"/>
+                                </dxlc:LayoutItem>
+                            </dxlc:LayoutGroup>
+                        </dxlc:LayoutGroup>
 
-            <dxlc:LayoutGroup View="GroupBox" Header="其他" >
-                <dxlc:LayoutGroup Orientation="Vertical" >
-                    <dxlc:LayoutItem Label="轴重检测时间">
-                        <dxe:SpinEdit />
-                    </dxlc:LayoutItem>
-                    <dxlc:LayoutItem Label="轴重光电入场时间">
-                        <dxe:SpinEdit />
-                    </dxlc:LayoutItem>
-                    <dxlc:LayoutItem Label="侧滑检测时间">
-                        <dxe:SpinEdit />
-                    </dxlc:LayoutItem>
-                    <dxlc:LayoutItem Label="轮偏检测时间">
-                        <dxe:SpinEdit />
-                    </dxlc:LayoutItem>
-                    <dxlc:LayoutItem Label="底盘报警时间">
-                        <dxe:SpinEdit />
-                    </dxlc:LayoutItem>
-                  
-                </dxlc:LayoutGroup>
-                <dxlc:LayoutGroup Orientation="Vertical" >
-                    <dxlc:LayoutItem Label="轮偏检测时间">
-                        <dxe:SpinEdit />
-                    </dxlc:LayoutItem>
-                    <dxlc:LayoutItem Label="第三滚筒到位时间">
-                        <dxe:SpinEdit />
-                    </dxlc:LayoutItem>
-                    <dxlc:LayoutItem Label="摩制下降时间">
-                        <dxe:SpinEdit />
-                    </dxlc:LayoutItem>
-                    <dxlc:LayoutItem Label="摩速下降时间">
-                        <dxe:SpinEdit />
-                    </dxlc:LayoutItem>
-                    <dxlc:LayoutItem Label="摩制速到位电机起时间">
-                        <dxe:SpinEdit />
-                    </dxlc:LayoutItem>
-                </dxlc:LayoutGroup>
-            </dxlc:LayoutGroup>
-            
-        </dxlc:LayoutControl>
+                        <dxlc:LayoutGroup View="GroupBox" Header="其他" >
+                            <dxlc:LayoutGroup Orientation="Vertical" >
+                                <dxlc:LayoutItem Label="轴重检测时间">
+                                    <dxe:SpinEdit />
+                                </dxlc:LayoutItem>
+                                <dxlc:LayoutItem Label="轴重光电入场时间">
+                                    <dxe:SpinEdit />
+                                </dxlc:LayoutItem>
+                                <dxlc:LayoutItem Label="侧滑检测时间">
+                                    <dxe:SpinEdit />
+                                </dxlc:LayoutItem>
+                                <dxlc:LayoutItem Label="轮偏检测时间">
+                                    <dxe:SpinEdit />
+                                </dxlc:LayoutItem>
+                                <dxlc:LayoutItem Label="底盘报警时间">
+                                    <dxe:SpinEdit />
+                                </dxlc:LayoutItem>
+
+                            </dxlc:LayoutGroup>
+                            <dxlc:LayoutGroup Orientation="Vertical" >
+                                <dxlc:LayoutItem Label="轮偏检测时间">
+                                    <dxe:SpinEdit />
+                                </dxlc:LayoutItem>
+                                <dxlc:LayoutItem Label="第三滚筒到位时间">
+                                    <dxe:SpinEdit />
+                                </dxlc:LayoutItem>
+                                <dxlc:LayoutItem Label="摩制下降时间">
+                                    <dxe:SpinEdit />
+                                </dxlc:LayoutItem>
+                                <dxlc:LayoutItem Label="摩速下降时间">
+                                    <dxe:SpinEdit />
+                                </dxlc:LayoutItem>
+                                <dxlc:LayoutItem Label="摩制速到位电机起时间">
+                                    <dxe:SpinEdit />
+                                </dxlc:LayoutItem>
+                            </dxlc:LayoutGroup>
+                        </dxlc:LayoutGroup>
+
+                    </dxlc:LayoutControl>
+
+                </dxdo:LayoutPanel>
+                <dxdo:LayoutPanel Caption="Panel1"  ItemHeight="Auto" AllowClose="False" ShowCaption="False">
+                    <Button Command="{Binding SaveCommand}" HorizontalAlignment="Right">保存</Button>
+                </dxdo:LayoutPanel>
+            </dxdo:LayoutGroup>
+        </dxdo:DockLayoutManager>
     </Grid>
 </UserControl>

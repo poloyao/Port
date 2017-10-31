@@ -15,6 +15,9 @@ using YZXDMS.ViewModels;
 
 namespace YZXDMS.Core
 {
+    /// <summary>
+    /// 核心代码。控制检测数据，流程数据
+    /// </summary>
     public class Core
     {
         private static readonly Core instance = new Core();
@@ -74,8 +77,14 @@ namespace YZXDMS.Core
         /// <returns></returns>
         public static IDBProvider GetDBProvider()
         {
-            return new SQLServerDBProvider();
+            if (idb == null)
+                idb = new SQLServerDBProvider();
+
+            return idb;
+            //return new SQLServerDBProvider();
         }
+
+        static IDBProvider idb;
 
         public static Users User { get; set; }
 
@@ -132,7 +141,7 @@ namespace YZXDMS.Core
             }
 
             #region 测试
-                     
+
             ////ResultItems[0].Speed = DetectResultStatus.Wait;
             //ResultItems[0].Balancer = DetectResultStatus.NotChecked;
             ////ResultItems[0].Brake = DetectResultStatus.NotChecked;
@@ -188,7 +197,7 @@ namespace YZXDMS.Core
 
 
 
-        
+
 
         static ISpeedDetection speedD;
 
@@ -202,10 +211,10 @@ namespace YZXDMS.Core
         static readonly object ResultLock = new object();
 
         /// <summary>
-        /// 结果集队列
+        /// 结果集队列，全局队列
         /// </summary>
         static Queue<DetectResult> ResultQueue = new Queue<DetectResult>();
-        
+
         /// <summary>
         /// 速度队列
         /// </summary>
@@ -226,9 +235,43 @@ namespace YZXDMS.Core
         /// 制动队列
         /// </summary>
         static Queue<DetectResult> BrakeQueue = new Queue<DetectResult>();
+        /// <summary>
+        /// 工位队列数据集
+        /// </summary>
+        static List<Queue<string>> StationQueue = new List<Queue<string>>();
+        /// <summary>
+        /// 工位流程列表
+        /// </summary>
+        static List<StationFlow> StationFlowItems = new List<StationFlow>();
+
+        /// <summary>
+        /// 初始化工位流程信息
+        /// </summary>
+        public static void InitStationInfo()
+        {
+            using (SQLiteDBContext db = new SQLiteDBContext())
+            {
+                var stations = db.Stations.OrderBy(x => x.Value).ToList();
+                var detectors = db.Detectors.OrderBy(x => x.StationIndex).ToList();
+                //List<StationFlow> sfs = new List<StationFlow>();
+                foreach (var item in stations)
+                {
+                    //排除非系统检测工位内的项目
+                    if (!item.IsAutoTest)
+                        continue;
+                    StationFlow sf = new StationFlow();
+                    sf.StationValue = item.Value;
+                    var dets = detectors.Where(x => x.StationValue == item.Value).ToList();
+                    if (dets.Count > 0)
+                        sf.DetectorItems.AddRange(dets);
+                    StationFlowItems.Add(sf);
+                    StationQueue.Add(new Queue<string>());
+                }
 
 
-        
+            }
+        }
+
 
         /// <summary>
         /// 初始化检测项目的串口信息
@@ -274,7 +317,7 @@ namespace YZXDMS.Core
 
             InitSpeedDetection();
 
-            shapeD = new TestShapeDetection(); 
+            shapeD = new TestShapeDetection();
 
             brakeD = new TestBrakeDetection();
 
@@ -286,7 +329,7 @@ namespace YZXDMS.Core
         /// <summary>
         /// 初始化速度检测单元
         /// </summary>
-         static void InitSpeedDetection()
+        static void InitSpeedDetection()
         {
             //初始化检测模块
             speedD = new TestSpeedDetection();
@@ -328,10 +371,10 @@ namespace YZXDMS.Core
                 DevExpress.Xpf.Core.DXMessageBox.Show("未检测到速度模块所用的辅助设备");
                 return;
             }
-            
+
         }
 
-     
+
 
         /// <summary>
         /// 开始检测,获取当前待检列表车辆，
@@ -339,10 +382,14 @@ namespace YZXDMS.Core
         public static void StartDetection()
         {
 
+            //获取到各个工作台的检测项目
+
+
+
             //判断是否需要进入此检测模块
             if (CurrentDetectionList.Count() == 0)
                 return;
-            
+
             lock (ResultLock)
             {
                 for (int i = 0; i < ResultItems.Count(); i++)
@@ -363,8 +410,8 @@ namespace YZXDMS.Core
                     BrakeQueue.Enqueue(item);
                     //启动
                     StartDetect(item);
-                    
-                   
+
+
                 }
             }
 
@@ -376,42 +423,51 @@ namespace YZXDMS.Core
         /// <param name="currentResult"></param>
         private static void StartDetect(DetectResult currentResult)
         {
+            List<Task> tasks = new List<Task>();
             Console.WriteLine($"创建{currentResult.CarID} 线程");
             var db = GetDBProvider();
+            #region 此处代码有点诡异                
+            var sfi = SetStationFlows(currentResult);
+            #endregion
             Task task = new TaskFactory().StartNew(() =>
             {
                 //首线程，处理准备逻辑
-            })
-         
-            .ContinueWith((action) =>
-            {
-                //StartSpeedUnit(currentResult);
-            })
-            .ContinueWith((action) =>
-            {
-                StartShapeUnit(currentResult);
-            })
-            .ContinueWith((action) =>
-            {
-                StartBalancerUnit(currentResult);
-            })
-            .ContinueWith((action) =>
-            {
-                StartBottomUnit(currentResult);
-            })
-            .ContinueWith((action) =>
-            {
-                StartBrakeUnit(currentResult);
-            })
-            .ContinueWith((action) =>
-            {
-                //全部检测项目完成后更新队列
-                //将完毕检验完毕的移除队列
-                //MyBug 不合格车辆是否暂不移除？
+                //按照工位逻辑开启项目检测线程
+               
+                
+                for (int i = 0; i < StationFlowItems.Count(); i++)
+                {
+                    while (true)
+                    {
+                        Thread.Sleep(10);
+                        switch (StationFlowItems[i].StationStatus)
+                        {
+                            case DetectionStatus.IDLE:
+                                break;
+                            case DetectionStatus.WORK:
+                                continue;
+                            case DetectionStatus.ABN:
+                                continue;
+                        }
+                        //跟流水号对比是否是队列前排数据
+                        if (StationQueue[i].Peek() != currentResult.SerialData)
+                            continue;
 
-                //等会再移除
+                        StationFlowItems[i].StationStatus = DetectionStatus.WORK;
+                        foreach (var innerTask in sfi[i].taskItems)
+                        {
+                            innerTask.Start();
+                            innerTask.Wait();
+                        }
+                        StationFlowItems[i].StationStatus = DetectionStatus.IDLE;
+                        StationQueue[i].Dequeue();
+                        break;
+                    }
+                }
+
+
+                //最后一个线程结束后，统一进行完成操作
                 Thread.Sleep(2000);
-
                 lock (SyncCurrentDetectionList)
                 {
                     var sing = ResultItems.Single(x => x.SerialData == currentResult.SerialData);
@@ -423,14 +479,129 @@ namespace YZXDMS.Core
                 {
                     Console.WriteLine($"移除{currentResult.CarID}");
                     ResultQueue.Dequeue();
-                }
+                }     
             });
 
+            #region MyRegion
+
+            //.ContinueWith((action) =>
+            //{
+            //    //StartSpeedUnit(currentResult);
+            //})
+            //.ContinueWith((action) =>
+            //{
+            //    StartShapeUnit(currentResult);
+            //})
+            //.ContinueWith((action) =>
+            //{
+            //    StartBalancerUnit(currentResult);
+            //})
+            //.ContinueWith((action) =>
+            //{
+            //    StartBottomUnit(currentResult);
+            //})
+            //.ContinueWith((action) =>
+            //{
+            //    StartBrakeUnit(currentResult);
+            //})
+            //.ContinueWith((action) =>
+            //{
+            //    //全部检测项目完成后更新队列
+            //    //将完毕检验完毕的移除队列
+            //    //MyBug 不合格车辆是否暂不移除？
+
+            //    //等会再移除
+            //    Thread.Sleep(2000);
+
+            //    lock (SyncCurrentDetectionList)
+            //    {
+            //        var sing = ResultItems.Single(x => x.SerialData == currentResult.SerialData);
+            //        ResultItems.Remove(sing);
+            //    }
+            //    var _current = CurrentDetectionList.Single(x => x.jylsh == currentResult.SerialData);
+            //    CurrentDetectionList.Remove(_current);
+            //    lock (SDLock)
+            //    {
+            //        Console.WriteLine($"移除{currentResult.CarID}");
+            //        ResultQueue.Dequeue();
+            //    }
+            //});
+
+            #endregion
+
+        }
+        /// <summary>
+        /// 配置车辆的检测流程信息
+        /// </summary>
+        /// <param name="currentResult"></param>
+        /// <returns></returns>
+        private static List<StationFlow> SetStationFlows(DetectResult currentResult)
+        {
+            var sfi = new List<StationFlow>();
+            int i = 0;
+            foreach (var item in StationFlowItems)
+            {
+                StationQueue[i].Enqueue(currentResult.SerialData);
+                i++;
+                StationFlow sf = new StationFlow();
+                sf.CarId = currentResult.CarID;
+                sf.SerialData = currentResult.SerialData;
+
+                foreach (var detect in item.DetectorItems)
+                {                    
+                    switch (detect.DetectorType)
+                    {
+                        case DetectionType.外检:
+                            sf.taskItems.Add(new Task(() => { StartShapeUnit(currentResult); }));
+                            break;
+                        case DetectionType.侧滑:
+                            sf.taskItems.Add(new Task(() => { }));
+                            break;
+                        case DetectionType.速度:
+                            //item.taskItems.Add(new Task(() => { StartSpeedUnit(currentResult); }));
+                            sf.taskItems.Add(new Task(() => { }));
+                            break;
+                        case DetectionType.灯光:
+                            sf.taskItems.Add(new Task(() => { }));
+                            break;
+                        case DetectionType.制动:
+                            sf.taskItems.Add(new Task(() => { StartBrakeUnit(currentResult); }));
+                            break;
+                        case DetectionType.称重:
+                            sf.taskItems.Add(new Task(() => { }));
+                            break;
+                        case DetectionType.底盘:
+                            sf.taskItems.Add(new Task(() => { StartBottomUnit(currentResult); }));
+                            break;
+                        case DetectionType.底盘间隙:
+                            sf.taskItems.Add(new Task(() => { }));
+                            break;
+                        case DetectionType.声级计:
+                            sf.taskItems.Add(new Task(() => { }));
+                            break;
+                        case DetectionType.功率:
+                            sf.taskItems.Add(new Task(() => { }));
+                            break;
+                        case DetectionType.油耗:
+                            sf.taskItems.Add(new Task(() => { }));
+                            break;
+                        case DetectionType.尾气:
+                            sf.taskItems.Add(new Task(() => { }));
+                            break;
+                        case DetectionType.探平衡仪:
+                            sf.taskItems.Add(new Task(() => { StartBalancerUnit(currentResult); }));
+                            break;
+                    }                    
+                }
+                sfi.Add(sf);
+            }
+
+            return sfi;
         }
 
         #region 启动检测项目单元
 
-       
+
         private static void StartSpeedUnit(DetectResult currentResult)
         {
             var db = GetDBProvider();
@@ -438,6 +609,7 @@ namespace YZXDMS.Core
             while (isWhile)
             {
                 Thread.Sleep(30);
+
                 if (SpeedQueue.Peek() != currentResult)
                     continue;
 
@@ -486,7 +658,7 @@ namespace YZXDMS.Core
             SpeedQueue.Dequeue();
             Console.WriteLine($"{currentResult.CarID} 使用Speed完毕");
         }
-       
+
 
         private static void StartBrakeUnit(DetectResult currentResult)
         {
@@ -644,7 +816,7 @@ namespace YZXDMS.Core
                 ShapeQueue.Dequeue();
                 Console.WriteLine($"{currentResult.CarID} 使用Shape完毕");
                 return;
-            }            
+            }
 
             currentResult.Shape = DetectResultStatus.Qualified;
 
@@ -665,7 +837,7 @@ namespace YZXDMS.Core
         /// </summary>
         private static void SimulationSleep()
         {
-            Thread.Sleep(new Random(Guid.NewGuid().GetHashCode()).Next(1,3) * 1000);
+            Thread.Sleep(new Random(Guid.NewGuid().GetHashCode()).Next(1, 3) * 1000);
         }
 
 

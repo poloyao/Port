@@ -34,6 +34,7 @@ namespace YZXDMS.ViewModels
             {
                 //读取检测项目信息
                 var query = db.Detectors.ToList();
+                query = query.OrderBy(x => x.StationIndex).ToList();
                 DetectorItems = new ObservableCollection<DetectorModel>();
                 //将项目分配到各工位
                 foreach (var item in query)
@@ -82,25 +83,60 @@ namespace YZXDMS.ViewModels
                     item.StationValue = 0;
                 }
 
-                foreach (var item in Station1)
+                //foreach (var item in Station1)
+                //{
+                //    queryDet.Single(x => x.Id == item.Id).StationValue = query1.Value;
+                //}              
+
+                //foreach (var item in Station2)
+                //{
+                //    queryDet.Single(x => x.Id == item.Id).StationValue = query2.Value;
+                //}
+                //foreach (var item in Station3)
+                //{
+                //    queryDet.Single(x => x.Id == item.Id).StationValue = query3.Value;
+                //}
+                //foreach (var item in Station4)
+                //{
+                //    queryDet.Single(x => x.Id == item.Id).StationValue = query4.Value;
+                //}
+                //foreach (var item in Station5)
+                //{
+                //    queryDet.Single(x => x.Id == item.Id).StationValue = query5.Value;
+                //}
+
+                for (int i = 0; i < Station1.Count(); i++)
                 {
-                    queryDet.Single(x => x.Id == item.Id).StationValue = query1.Value;
+                    var query = queryDet.Single(x => x.Id == Station1[i].Id);
+                    query.StationValue = query1.Value;
+                    query.StationIndex = i + 1;
                 }
-                foreach (var item in Station2)
+
+                for (int i = 0; i < Station2.Count(); i++)
                 {
-                    queryDet.Single(x => x.Id == item.Id).StationValue = query2.Value;
+                    var query = queryDet.Single(x => x.Id == Station2[i].Id);
+                    query.StationValue = query2.Value;
+                    query.StationIndex = i + 1;
                 }
-                foreach (var item in Station3)
+
+                for (int i = 0; i < Station3.Count(); i++)
                 {
-                    queryDet.Single(x => x.Id == item.Id).StationValue = query3.Value;
+                    var query = queryDet.Single(x => x.Id == Station3[i].Id);
+                    query.StationValue = query3.Value;
+                    query.StationIndex = i + 1;
                 }
-                foreach (var item in Station4)
+
+                for (int i = 0; i < Station4.Count(); i++)
                 {
-                    queryDet.Single(x => x.Id == item.Id).StationValue = query4.Value;
+                    var query = queryDet.Single(x => x.Id == Station4[i].Id);
+                    query.StationValue = query4.Value;
+                    query.StationIndex = i + 1;
                 }
-                foreach (var item in Station5)
+                for (int i = 0; i < Station5.Count(); i++)
                 {
-                    queryDet.Single(x => x.Id == item.Id).StationValue = query5.Value;
+                    var query = queryDet.Single(x => x.Id == Station5[i].Id);
+                    query.StationValue = query5.Value;
+                    query.StationIndex = i + 1;
                 }
 
                 db.SaveChanges();

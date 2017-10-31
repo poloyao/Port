@@ -27,7 +27,7 @@ namespace YZXDMS.Helpers
             string mysqlConnectionString = "server=192.168.1.133;user id=root;password=root;database=jyjgxt";//System.Configuration.ConfigurationManager.ConnectionStrings["Libor_MySql_QuoteCenter_ConnectionString"].ToString();
 
             if (MysqlConnection == null)
-                using (MysqlConnection = new MySql.Data.MySqlClient.MySqlConnection(mysqlConnectionString)) { };
+                MysqlConnection = new MySql.Data.MySqlClient.MySqlConnection(mysqlConnectionString);
 
             if (MysqlConnection.State == System.Data.ConnectionState.Closed)
                 MysqlConnection.Open();

@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:YZXDMS"
         xmlns:view="clr-namespace:YZXDMS.Views"
         mc:Ignorable="d"
-        Title="MainWindow" Height="800" Width="1200">
+        Title="MainWindow" Height="800" Width="1200" Icon="Logo.ico">
     <Grid>
         <!--<Grid.RowDefinitions>
             <RowDefinition Height="310"/>

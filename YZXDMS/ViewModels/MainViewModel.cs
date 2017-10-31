@@ -9,6 +9,10 @@ using System.Windows.Threading;
 
 namespace YZXDMS.ViewModels
 {
+    /// <summary>
+    /// 主界面控制器
+    /// 初始化界面模块与可显示界面
+    /// </summary>
     [POCOViewModel]
     public class MainViewModel
     {
@@ -36,10 +40,10 @@ namespace YZXDMS.ViewModels
             List<ModuleInfo> modules = new List<ModuleInfo>()
             {
                  ViewModelSource.Create(()=>new ModuleInfo("SettingPortView",this,"串口设置")).SetIcon("setting"),                 
-                 ViewModelSource.Create(()=>new ModuleInfo("SettingLinkPortView",this,"模块设置")).SetIcon("car"),
-                 ViewModelSource.Create(()=>new ModuleInfo("SettingStationView",this,"工位设置")).SetIcon("car"),
-                 ViewModelSource.Create(()=>new ModuleInfo("AssignView",this,"待检车辆")).SetIcon("car"),
-                 ViewModelSource.Create(()=>new ModuleInfo("MasterView",this,"主控检测")).SetIcon("car"),
+                 ViewModelSource.Create(()=>new ModuleInfo("SettingLinkPortView",this,"模块设置")).SetIcon("menu_mode"),
+                 ViewModelSource.Create(()=>new ModuleInfo("SettingStationView",this,"工位设置")).SetIcon("menu_station"),
+                 ViewModelSource.Create(()=>new ModuleInfo("AssignView",this,"待检车辆")).SetIcon("menu_wait"),
+                 ViewModelSource.Create(()=>new ModuleInfo("MasterView",this,"主控检测")).SetIcon("menu_master"),
                  //ViewModelSource.Create(()=>new ModuleInfo("QueryCarView",this,"车辆查询")).SetIcon("car"),
                  //ViewModelSource.Create(()=>new ModuleInfo("PrintView",this,"导出/打印")).SetIcon("car"),
                  //ViewModelSource.Create(()=>new ModuleInfo("TestyView",this,"实验1")).SetIcon("car"),
